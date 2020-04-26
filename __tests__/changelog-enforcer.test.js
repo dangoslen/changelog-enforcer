@@ -5,25 +5,7 @@ const changelogEnforcer = require('../src/changelog-enforcer')
 // Inputs for mock @actions/core
 let inputs = {}
 
-// Core and exec mocks
-const infoMock = jest.fn()
-const debugMock = jest.fn()
-const statusMock = jest.fn()
-const execMock = jest.fn()
-
 describe('the changelog-enforcer', () => {
-  
-  beforeAll(() => {
-    jest.spyOn(core, 'info').mockImplementation(infoMock)
-    jest.spyOn(core, 'debug').mockImplementation(debugMock)
-    jest.spyOn(core, 'setFailed').mockImplementation(statusMock)
-
-    jest.spyOn(exec, 'exec').mockImplementation(execMock)
-
-    jest.spyOn(core, 'getInput').mockImplementation((name) => {
-      return inputs[name]
-    })
-  })
 
   afterAll(() => {
     // Restore
@@ -32,6 +14,10 @@ describe('the changelog-enforcer', () => {
 
   beforeEach(() => {
     jest.clearAllMocks()
+
+    jest.spyOn(core, 'getInput').mockImplementation((name) => {
+      return inputs[name]
+    })
   })
 
   it('should skip enforcing when label is present', () => {
@@ -39,55 +25,45 @@ describe('the changelog-enforcer', () => {
     inputs['skipLabel'] = 'Skip-Changelog' 
     inputs['changeLogPath'] = 'CHANGELOG.md' 
 
-    changelogEnforcer.enforce()
+    const infoSpy = jest.spyOn(core, 'info').mockImplementation(jest.fn())
+    const failureSpy = jest.spyOn(core, 'error').mockImplementation(jest.fn())
+    const execSpy = jest.spyOn(exec, 'exec').mockImplementation((command, args, options) => { return 0 })
 
-    expect(infoMock.mock.calls.length).toBe(2)
-    expect(execMock.mock.calls.length).toBe(0)
+    changelogEnforcer.enforce()
+    .then(() => {
+      expect(infoSpy.mock.calls.length).toBe(2)
+      expect(execSpy).not.toHaveBeenCalled()
+      expect(failureSpy).not.toHaveBeenCalled()
+    })
   })
 
-  it('should enforce when label is not present', () => {
+  it('should enforce when label is not present; file is not present', () => {
     // Mock getInput
     inputs['skipLabel'] = 'A different label' 
     inputs['changeLogPath'] = 'CHANGELOG.md' 
 
-    changelogEnforcer.enforce()
+    const infoSpy = jest.spyOn(core, 'info').mockImplementation(jest.fn())
+    const failureSpy = jest.spyOn(core, 'setFailed').mockImplementation(jest.fn())
+    const execSpy = jest.spyOn(exec, 'exec').mockImplementation((command, args, options) => {
+      const stdout = 
+`M       .env.js
+A       an_added_changed_file.js`
 
-    expect(infoMock.mock.calls.length).toBe(2)
-    expect(execMock.mock.calls.length).toBe(1)
-
-    const command = execMock.mock.calls[0][0]
-    expect(command).toBe(`git diff origin/master --name-only | grep 'CHANGELOG.md'`)
-  })
-
-  it('should enforce a different changelog path', () => {
-    // Mock getInput
-    inputs['skipLabel'] = 'A different label' 
-    inputs['changeLogPath'] = './an/alternate/path/to/changelog' 
-
-    changelogEnforcer.enforce()
-
-    expect(infoMock.mock.calls.length).toBe(2)
-    expect(execMock.mock.calls.length).toBe(1)
-
-    const command = execMock.mock.calls[0][0]
-    expect(command).toBe(`git diff origin/master --name-only | grep './an/alternate/path/to/changelog'`)
-  })
-
-  it('should set the status when something fails', () => {
-    // Mock getInput
-    inputs['skipLabel'] = 'A different label' 
-    inputs['changeLogPath'] = './an/alternate/path/to/changelog' 
-
-    jest.spyOn(exec, 'exec').mockImplementation((...args) => {
-      throw new Error('a message');
+      options.listeners.stdout(stdout)
+      return 0
     })
 
     changelogEnforcer.enforce()
+    .then(() => {
+      expect(infoSpy.mock.calls.length).toBe(2)
+      expect(execSpy).toHaveBeenCalled()
+      expect(failureSpy).toHaveBeenCalled()
 
-    expect(infoMock.mock.calls.length).toBe(2)
-    expect(statusMock.mock.calls.length).toBe(1)
-
-    const message = statusMock.mock.calls[0][0]
-    expect(message).toBe(`a message`)
+      const command = execSpy.mock.calls[0][0]
+      const commandArgs = execSpy.mock.calls[0][1].join(' ')
+      expect(command).toBe('git')
+      expect(commandArgs).toBe('diff origin/master --name-status --diff-filter=AM')
+    })
   })
+
 })

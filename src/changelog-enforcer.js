@@ -14,21 +14,32 @@ module.exports.enforce = async function() {
         const baseRef = pullRequest.base.ref
 
         if (!labelNames.includes(skipLabel)) {
-            core.debug(`Executing changelog enforcement`)
-
-            let myOutput = ''
+            let output = ''
             const options = {}
             options.listeners = {
                 stdout: (data) => {
-                    myOutput += data.toString();
+                    output += data.toString();
                 }
             }
         
-            await exec.exec(`git`, [`diff`, `origin/${baseRef}`, `--name-status`], options)
+            await exec.exec('git', ['diff', `origin/${baseRef}`, '--name-status', '--diff-filter=AM'], options)
 
-            core.info(`${myOutput}`)
+            const fileNames = generateUpdatedFileList(output)   
+            if (!fileNames.includes(changeLogPath)) {
+                throw new Error(`No update to ${changeLogPath} found!`)
+            }
         }
     } catch(error) {
         core.setFailed(error.message);
     }
 };
+
+function generateUpdatedFileList(output) {
+    const changes = output.split(/\r?\n/)
+    let fileNames = []
+    changes.map(change => {
+        const fileName = change.replace(/(^[A-Z])(\s*)(.*)(\n)?$/g, '$3')
+        fileNames.push(fileName)
+    })
+    return fileNames;
+}
