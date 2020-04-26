@@ -15,7 +15,7 @@ module.exports.enforce = async function() {
 
         if (!labelNames.includes(skipLabel)) {
             core.debug(`Executing changelog enforcement`)
-            await exec.exec(`git diff origin/${baseRef} --name-only`)
+            await exec.exec(`git`, [`diff`, `origin/${baseRef}`, `--name-only`, `| grep '${changeLogPath}'`])
         }
     } catch(error) {
         core.setFailed(error.message);
