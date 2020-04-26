@@ -15,5 +15,5 @@ runs:
   using: 'node12'
   main: 'dist/index.js'
 branding:
-  icon: 'x-octagon'  
+  icon: 'check-square'  
   color: 'orange'
