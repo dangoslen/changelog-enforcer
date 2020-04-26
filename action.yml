@@ -1,13 +1,14 @@
-name: 'Wait'
-description: 'Wait a designated number of milliseconds'
+name: 'Changelog Enforcer'
+description: 'Enforces a repository changelog to be kept up to date.'
 inputs:
-  milliseconds:  # id of input
-    description: 'number of milliseconds to wait'
+  changeLogPath:  # id of input
+    description: 'Path to the changelog file relative to the repository. Comparison is done using `git diff ... | grep ${changeLogPath}`'
     required: true
-    default: '1000'
-outputs:
-  time: # output will be available to future steps 
-    description: 'The message to output'
+    default: 'CHANGELOG.md'
+  skipLabel:
+    description: 'Name of the label used to skip enforcing a changelog change'
+    required: true
+    default: 'Skip-Changelog'
 runs:
   using: 'node12'
   main: 'dist/index.js'

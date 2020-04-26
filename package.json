@@ -10,21 +10,27 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/javascript-action.git"
+    "url": "git+https://github.com/dangoslen/changelog-enforcer.git"
   },
   "keywords": [
     "GitHub",
     "Actions",
-    "JavaScript"
+    "JavaScript",
+    "Changelog"
   ],
-  "author": "GitHub",
+  "author": "@dangoslen (from GitHub Actions Template)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/actions/javascript-action/issues"
+    "url": "https://github.com/dangoslen/changelog-enforcerissues"
   },
-  "homepage": "https://github.com/actions/javascript-action#readme",
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "homepage": "https://github.com/dangoslen/changelog-enforcer#readme",
   "dependencies": {
-    "@actions/core": "^1.1.1"
+    "@actions/core": "^1.1.1",
+    "@actions/exec": "^1.0.3",
+    "@actions/github": "^2.1.1"
   },
   "devDependencies": {
     "@zeit/ncc": "^0.20.5",
