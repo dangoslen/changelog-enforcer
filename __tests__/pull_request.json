@@ -50,7 +50,8 @@
   
       ],
       "labels": [ 
-          { "name": "Skip-Changelog" }
+          { "name": "Skip-Changelog" },
+          { "name": "bug" }
       ],
       "milestone": null,
       "commits_url": "https://api.github.com/repos/Codertocat/Hello-World/pulls/2/commits",
