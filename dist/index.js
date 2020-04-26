@@ -26467,7 +26467,7 @@ module.exports.enforce = async function() {
                 }
             }
         
-            await exec.exec(`git diff origin/${baseRef} --name-status`, options)
+            await exec.exec(`git`, [`diff`, `origin/${baseRef}`, `--name-status`], options)
 
             core.info(`${myOutput}`)
         }
