@@ -1,6 +1,5 @@
 name: 'Changelog Enforcer'
 author: '@dangoslen'
-
 description: 'Enforces a repository changelog to be kept up to date.'
 inputs:
   changeLogPath:  # id of input
