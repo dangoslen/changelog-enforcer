@@ -37,7 +37,7 @@ describe('the changelog-enforcer', () => {
     })
   })
 
-  it('should enforce when label is not present; file is not present', () => {
+  it('should enforce when label is not present; changelog is not present', () => {
     // Mock getInput
     inputs['skipLabel'] = 'A different label' 
     inputs['changeLogPath'] = 'CHANGELOG.md' 
@@ -66,4 +66,32 @@ A       an_added_changed_file.js`
     })
   })
 
+  it('should enforce when label is not present; changelog is present', () => {
+    // Mock getInput
+    inputs['skipLabel'] = 'A different label' 
+    inputs['changeLogPath'] = 'CHANGELOG.md' 
+
+    const infoSpy = jest.spyOn(core, 'info').mockImplementation(jest.fn())
+    const failureSpy = jest.spyOn(core, 'setFailed').mockImplementation(jest.fn())
+    const execSpy = jest.spyOn(exec, 'exec').mockImplementation((command, args, options) => {
+      const stdout = 
+`M       .env.js
+M       CHANGELOG.md`
+
+      options.listeners.stdout(stdout)
+      return 0
+    })
+
+    changelogEnforcer.enforce()
+    .then(() => {
+      expect(infoSpy.mock.calls.length).toBe(2)
+      expect(execSpy).toHaveBeenCalled()
+      expect(failureSpy).not.toHaveBeenCalled()
+
+      const command = execSpy.mock.calls[0][0]
+      const commandArgs = execSpy.mock.calls[0][1].join(' ')
+      expect(command).toBe('git')
+      expect(commandArgs).toBe('diff origin/master --name-status --diff-filter=AM')
+    })
+  })
 })
