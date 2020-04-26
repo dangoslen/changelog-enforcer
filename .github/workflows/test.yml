@@ -1,6 +1,7 @@
 name: "units-test"
 on:
   pull_request:
+      types: [opened, synchronize, reopened, ready_for_review, labeled, unlabeled]
 
 jobs:
   # unit tests
