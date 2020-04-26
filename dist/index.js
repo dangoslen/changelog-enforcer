@@ -26467,14 +26467,16 @@ module.exports.enforce = async function() {
                     myOutput += data.toString();
                 }
             }
+        
+            await exec.exec(`git diff origin/${baseRef} --name-status`, options)
 
-            await exec.exec(`git diff origin/${baseRef} --name-only`, options)
             core.info(`${myOutput}`)
         }
     } catch(error) {
         core.setFailed(error.message);
     }
 };
+
 
 /***/ }),
 
