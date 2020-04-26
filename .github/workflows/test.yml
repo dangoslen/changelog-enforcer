@@ -1,10 +1,7 @@
 name: "units-test"
 on:
   pull_request:
-  push:
-    branches:
-      - master
-      - 'releases/*'
+      types: [opened, synchronize, reopened, ready_for_review, labeled, unlabeled]
 
 jobs:
   # unit tests
@@ -21,5 +18,3 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - uses: ./
-      with:
-        milliseconds: 1000
