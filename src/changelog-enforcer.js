@@ -17,7 +17,6 @@ module.exports.enforce = async function() {
             core.debug(`Executing changelog enforcement`)
 
             let myOutput = ''
-            let myError = ''
             const options = {}
             options.listeners = {
                 stdout: (data) => {
