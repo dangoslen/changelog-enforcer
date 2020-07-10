@@ -16,7 +16,6 @@ jobs:
         shell: bash
       - name: Get Changelog Entry
         id: changelog_reader
-        if: ${{ }}
         uses: mindsers/changelog-reader-action@v1
         with:
           version: ${{ steps.read_version.outputs.version }}
