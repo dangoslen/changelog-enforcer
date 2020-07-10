@@ -2,6 +2,10 @@
 
 Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v1.1.1]
+### Fixes
+- Referencing proper step id in workflow for creating releases
+
 ## [v1.1.0]
 ### Added
 - Using [Changelog Reader](https://github.com/marketplace/actions/changelog-reader) to automate creating GitHub Releases from this `CHANGELOG.md`
