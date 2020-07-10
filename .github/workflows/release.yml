@@ -26,7 +26,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.tag_name.outputs.version }}
+          tag_name: ${{ steps.read_version.outputs.version }}
           release_name: Changelog Enforcer ${{ steps.tag_name.outputs.version }}
           body: ${{ steps.changelog_reader.outputs.log_entry }} 
           draft: false
