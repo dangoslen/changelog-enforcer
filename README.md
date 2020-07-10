@@ -27,7 +27,7 @@ jobs:
         skipLabel: 'Skip-Changelog'
 ```
 
-### Properties
+### Inputs
 There are two properties with sane defaults provided
 
 `changeLogPath` - default: `CHANGELOG.md`
