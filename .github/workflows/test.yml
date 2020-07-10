@@ -9,6 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
+    - name: Read version
+      run: |
+        echo ::set-output name=version::$(cat VERSION)
     - run: npm ci
     - run: npm test
 
