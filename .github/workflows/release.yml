@@ -1,0 +1,33 @@
+on:
+  push:
+    branches:
+      - 'master'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Read version
+        id: read_version
+        run: |
+          echo ::set-output name=version::$(cat VERSION)
+        shell: bash
+      - name: Get Changelog Entry
+        id: changelog_reader
+        uses: mindsers/changelog-reader-action@v1
+        with:
+          version: ${{ steps.read_version.outputs.version }}
+          path: ./CHANGELOG.md
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.tag_name.outputs.version }}
+          release_name: Changelog Enforcer ${{ steps.tag_name.outputs.version }}
+          body: ${{ steps.changelog_reader.outputs.log_entry }} 
+          draft: false
+          prerelease: false
