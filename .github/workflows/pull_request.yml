@@ -1,4 +1,4 @@
-name: "units-test"
+name: "Pull Request Workflow"
 on:
   pull_request:
       types: [opened, synchronize, reopened, ready_for_review, labeled, unlabeled]
@@ -17,4 +17,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
+    - name: Check for Release
+        id: check_release
+        run: |
+          TAG=$(git tag -l ${{ steps.read_version.outputs.version }})
+          EXISTS=$([[ -z "$TAG" ]])
+          echo ::set-output name=exists::$EXISTS
+        shell: bash
     - uses: ./
