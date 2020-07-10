@@ -5,21 +5,15 @@ on:
 
 jobs:
   # unit tests
-  units:
+  unit-tests:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - name: Read version
-      id: read_version
-      run: |
-        echo ::set-output name=version::$(cat VERSION)
     - run: npm ci
     - run: npm test
-    - run: |
-        echo ${{ steps.read_version.outputs.version }}
 
   # test action works running from the graph  
-  test:
+  enforce-changelog:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
