@@ -25,11 +25,11 @@ jobs:
         id: check_release
         run: |
           TAG=$(git tag -l ${{ steps.read_version.outputs.version }})
-          MISSING=$([[ ! -z "$TAG" ]] && echo "true" || echo "false")
+          MISSING=$([[ ! -z "$TAG" ]] && echo 'true' || echo 'false')
           echo ::set-output name=missing::$MISSING
         shell: bash
       - name: Create Release
-        if: ${{ steps.check_release.outputs.missing }}
+        if: ${{ steps.check_release.outputs.missing == 'true' }}
         id: create_release
         uses: actions/create-release@v1
         env:
