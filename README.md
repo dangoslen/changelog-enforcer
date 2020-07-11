@@ -10,7 +10,7 @@ To use, follow the typical GitHub Action `uses` syntax.
 
 **Requires the common [Checkout Action](https://github.com/marketplace/actions/checkout) as shown below! The enforcement of change is done all using local `git` commands and requires the repository be checked out!**
 
-```
+```yaml
 name: "Pull Request Workflow"
 on:
   pull_request:
