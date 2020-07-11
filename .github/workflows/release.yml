@@ -1,3 +1,4 @@
+name: "Release Workflow"
 on:
   push:
     branches:
@@ -7,12 +8,19 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v2
       - name: Read version
         id: read_version
         run: |
           echo ::set-output name=version::$(cat VERSION)
+        shell: bash
+      - name: Check for Release
+        id: check_release
+        run: |
+          TAG=$(git tag -l ${{ steps.read_version.outputs.version }})
+          EXISTS=$([[ -z "$TAG" ]])
+          echo ::set-output name=exists::$EXISTS
         shell: bash
       - name: Get Changelog Entry
         id: changelog_reader
@@ -20,7 +28,15 @@ jobs:
         with:
           version: ${{ steps.read_version.outputs.version }}
           path: ./CHANGELOG.md
+      - name: Check for Release
+        id: check_release
+        run: |
+          TAG=$(git tag -l ${{ steps.read_version.outputs.version }})
+          EXISTS=EXISTS=$([[ ! -z "$TAG" ]] && echo "false" || echo "true")
+          echo ::set-output name=exists::$EXISTS
+        shell: bash
       - name: Create Release
+        if: ${{ steps.check_release.outputs.exists }}
         id: create_release
         uses: actions/create-release@v1
         env:
