@@ -28,4 +28,4 @@ npm test
 This will run `npm lint` and lint code with [ESLint](https://eslint.org/)
 
 ## Packaging
-Currently, whenever a change is made to actual source, it must be packaged for consumption by the developer. This is done via the [Building](#-building) step above. There are plans to eventually make this automated on for both pull requests and releases. 
+Currently, whenever a change is made to actual source, it must be packaged for consumption by the developer. This is done via the [Building](#_building) step above. There are plans to eventually make this automated on for both pull requests and releases. 

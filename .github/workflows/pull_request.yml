@@ -29,4 +29,8 @@ jobs:
         EXISTS=EXISTS=$([[ ! -z "$TAG" ]] && echo "false" || echo "true")
         echo ::set-output name=exists::$EXISTS
       shell: bash
+    - name: Skip
+      if: {{ steps.check_release.outputs.exists }}
+      run: |
+        echo "Skipped"
     - uses: ./
