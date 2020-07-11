@@ -12,10 +12,10 @@ jobs:
     - run: npm ci
     - run: npm test
     - name: Read version
-        id: read_version
-        run: |
-          echo ::set-output name=version::$(cat VERSION)
-        shell: bash
+      id: read_version
+      run: |
+        echo ::set-output name=version::$(cat VERSION)
+      shell: bash
     - name: Check for Release
       id: check_release
       run: |
