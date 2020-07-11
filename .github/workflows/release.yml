@@ -15,13 +15,6 @@ jobs:
         run: |
           echo ::set-output name=version::$(cat VERSION)
         shell: bash
-      - name: Check for Release
-        id: check_release
-        run: |
-          TAG=$(git tag -l ${{ steps.read_version.outputs.version }})
-          EXISTS=$([[ -z "$TAG" ]])
-          echo ::set-output name=exists::$EXISTS
-        shell: bash
       - name: Get Changelog Entry
         id: changelog_reader
         uses: mindsers/changelog-reader-action@v1
