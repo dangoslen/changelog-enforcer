@@ -24,7 +24,7 @@ jobs:
         echo ::set-output name=missing::$MISSING
       shell: bash
     - name: Test
-      if: ${{ steps.check_release.outputs.missing }}
+      if: ${{ steps.check_release.outputs.missing == 'false' }}
       run: |
         echo "Should Not Run"
 
