@@ -17,6 +17,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
+     - name: Read version
+      id: read_version
+      run: |
+        echo ::set-output name=version::$(cat VERSION)
+      shell: bash
     - name: Check for Release
       id: check_release
       run: |
