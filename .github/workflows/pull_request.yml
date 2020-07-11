@@ -26,7 +26,7 @@ jobs:
       id: check_release
       run: |
         TAG=$(git tag -l ${{ steps.read_version.outputs.version }})
-        EXISTS=$([[ -z "$TAG" ]])
+        EXISTS=EXISTS=$([[ ! -z "$TAG" ]] && echo "false" || echo "true")
         echo ::set-output name=exists::$EXISTS
       shell: bash
     - uses: ./
