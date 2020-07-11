@@ -1,5 +1,6 @@
 
 ![units-test](https://github.com/dangoslen/changelog-enforcer/workflows/units-test/badge.svg?branch=master)
+![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/dangoslen/changelog-enforcer?color=orange&label=Latest&style=plastic))
 
 ## Changelog Enforcer
 The purpose of this action is to enforce a change to a ongoing changelog file. Inspired by [Keep A Changelog](https://keepachangelog.com/en/1.0.0/), this action helps development teams to keep a change file up to date as new features or fixes are implemented. 
@@ -35,3 +36,7 @@ There are two properties with sane defaults provided
 
 `skipLabel` - default: `Skip-Changelog` 
 * the name of a GitHub label that skips execution of the Changelog Enforcer. This is useful for small changes such as configuration that doesn't need to be reflected in the changelog. By using a label, the developer and any reviewer can agree if the change should be reflected in the changelog, and if not can apply a label. The Changelog Enforcer will re-check if the `labeled` and `unlabeled` event types are specified in the workflow.
+
+### Creating Releases Automatically
+Using this Action and the [Changelog Reader](https://github.com/mindsers/changelog-reader-action), plus a few standard GitHub created Actions, we can keep the changelog of a project up to date and create a GitHub release automatically with contents from the changelog. See this project's [release.yml](./.github/workflows/release.yml) for how to set up a simple workflow to create a new release based on a `VERSION` file and a changelog.
+
