@@ -13,14 +13,15 @@ jobs:
       - run: npm test
       # Generation the new distribution
       - run: npm run package
-      - uses: EndBug/add-and-commit@v4 # You can change this to use a specific version
+      - name: package-and-commit
+        uses: EndBug/add-and-commit@v4 # You can change this to use a specific version
         with:
           # The arguments for the `git add` command (see the paragraph below for more info)
           # Default: '.'
           add: 'dist'
           author_name: Dan Goslen
           author_email: dwgoslen@gmail.com
-          message: 'Auto-building distribution'  
+          message: Auto-building distribution
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
