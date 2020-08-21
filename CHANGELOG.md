@@ -6,6 +6,9 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Security
 - `lodash@4.17.15` to `lodash@4.17.19`
 
+### Documentation
+- adds test
+
 ## [v1.1.1]
 ### Fixes
 - Referencing proper step id in workflow for creating releases
