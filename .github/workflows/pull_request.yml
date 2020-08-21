@@ -12,7 +12,7 @@ jobs:
     - run: npm install
     - run: npm test
     # Generation the new distribution
-    - run: ncc build index.js -o dist
+    - run: npm run package
 
   # test action works running from the graph  
   enforce-changelog:
