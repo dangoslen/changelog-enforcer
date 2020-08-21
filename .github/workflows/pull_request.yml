@@ -6,6 +6,8 @@ on:
 jobs:
   # unit tests
   unit-tests:
+  if: "!contains(github.event.head_commit.author_name, 'GitHub Action')"
+
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -19,12 +21,11 @@ jobs:
           # The arguments for the `git add` command (see the paragraph below for more info)
           # Default: '.'
           add: 'dist'
-          author_name: 'Dan Goslen'
-          author_email: 'dwgoslen@gmail.com'
+          author_name: 'GitHub Action'
           message: 'Auto-building distribution'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
+
   # test action works running from the graph  
   enforce-changelog:
     runs-on: ubuntu-latest
