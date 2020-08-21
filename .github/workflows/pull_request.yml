@@ -22,9 +22,9 @@ jobs:
           author_name: 'Dan Goslen'
           author_email: 'dwgoslen@gmail.com'
           message: 'Auto-building distribution'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
   # test action works running from the graph  
   enforce-changelog:
     runs-on: ubuntu-latest
