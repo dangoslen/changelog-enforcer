@@ -1,4 +1,3 @@
-
 ![units-test](https://github.com/dangoslen/changelog-enforcer/workflows/units-test/badge.svg?branch=master)
 ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/dangoslen/changelog-enforcer?color=orange&label=Latest&style=plastic)
 
@@ -28,7 +27,7 @@ jobs:
         skipLabel: 'Skip-Changelog'
 ```
 
-### Inputs
+### Inputs / Properties
 There are two properties with sane defaults provided
 
 `changeLogPath` - default: `CHANGELOG.md`
