@@ -2,6 +2,13 @@
 
 Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v1.2.0]
+### Added
+- Automatically builds the distribution on pull requests if all tests and enforcement pass
+
+### Updated
+- Small `README` updates
+
 ## [v1.1.2]
 ### Security
 - `lodash@4.17.15` to `lodash@4.17.19`

@@ -1,6 +1,7 @@
-
-![units-test](https://github.com/dangoslen/changelog-enforcer/workflows/units-test/badge.svg?branch=master)
-![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/dangoslen/changelog-enforcer?color=orange&label=Latest&style=plastic)
+<p align="center">
+  <img src="https://github.com/dangoslen/changelog-enforcer/workflows/units-test/badge.svg?branch=master" alt="unit tests badge" />
+  <img src="https://img.shields.io/github/v/release/dangoslen/changelog-enforcer?color=orange&label=Latest&style=plastic" alt="latest version" />
+ </p>
 
 ## Changelog Enforcer
 The purpose of this action is to enforce a change to a ongoing changelog file. Inspired by [Keep A Changelog](https://keepachangelog.com/en/1.0.0/), this action helps development teams to keep a change file up to date as new features or fixes are implemented. 
@@ -28,7 +29,7 @@ jobs:
         skipLabel: 'Skip-Changelog'
 ```
 
-### Inputs
+### Inputs / Properties
 There are two properties with sane defaults provided
 
 `changeLogPath` - default: `CHANGELOG.md`

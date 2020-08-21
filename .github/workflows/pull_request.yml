@@ -1,20 +1,33 @@
 name: "Pull Request Workflow"
 on:
   pull_request:
-      types: [opened, synchronize, reopened, ready_for_review, labeled, unlabeled]
+    types: [opened, synchronize, reopened, ready_for_review, labeled, unlabeled]
 
 jobs:
   # unit tests
   unit-tests:
+    if: "!contains(github.event.head_commit.author_name, 'GitHub Action')"
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - run: npm ci
-    - run: npm test
+      - uses: actions/checkout@v1
+      - run: npm install
+      - run: npm test
+      # Generation the new distribution
+      - run: npm run package
+      - name: package-and-commit
+        uses: EndBug/add-and-commit@v4 # You can change this to use a specific version
+        with:
+          # The arguments for the `git add` command (see the paragraph below for more info)
+          # Default: '.'
+          add: 'dist'
+          author_name: 'GitHub Action'
+          message: 'Auto-building distribution'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   # test action works running from the graph  
   enforce-changelog:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - uses: ./
+      - uses: actions/checkout@v1
+      - uses: ./
