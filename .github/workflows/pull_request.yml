@@ -18,8 +18,8 @@ jobs:
           # The arguments for the `git add` command (see the paragraph below for more info)
           # Default: '.'
           add: 'dist'
-          author_name: Your Name
-          author_email: dwgoslen@gmail.com'
+          author_name: Dan Goslen
+          author_email: dwgoslen@gmail.com
           message: 'Auto-building distribution'  
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
