@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - run: npm ci
+    - run: npm install
     - run: npm test
     # Generation the new distribution
     - run: ncc build index.js -o dist
