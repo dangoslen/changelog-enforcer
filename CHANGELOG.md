@@ -2,6 +2,11 @@
 
 Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v1.3.0]
+### Security
+- `node-fetch@2.6.0` to `node-fetch@2.6.1`
+- `yargs-parser@13.1.1` to `yargs-parser@13.1.2`
+
 ## [v1.2.0]
 ### Added
 - Automatically builds the distribution on pull requests if all tests and enforcement pass
