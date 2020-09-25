@@ -23056,12 +23056,12 @@ async function ensureBranchExists(baseRef) {
     const branches = output.split(/\r?\n/)
     let branchNames = []
     branches.map(change => {
-        const branchName = change.replace(/(^\s*[\w+/-]*)(\s*)([\w+].*)\n?$/g, '$1')
+        const branchName = change.replace(/(^\s*[\w+/-]*)(\s*)([\w+].*)\n?$/g, '$1').trim()
         branchNames.push(branchName)
     })
 
     if (!branchNames.includes(`remotes/origin/${baseRef}`)) {
-        await exec.exec('git', ['fetch', `origin ${baseRef}`], {})
+        await exec.exec('git', ['-c protocol.version=2', 'fetch', '--depth=1', `origin ${baseRef}`], {})
     }
 }
 

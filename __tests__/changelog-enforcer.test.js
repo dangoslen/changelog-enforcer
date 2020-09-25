@@ -55,8 +55,9 @@ A       an_added_changed_file.js`
       }
       if (args[0] == 'branch') {
         stdout =
-`remotes/origin/master somecommithash
-remotes/origin/changes someotherhash`
+` * (HEAD detached at pull/27/merge) 6a67f6e Merge 
+    remotes/origin/master somecommithash
+    remotes/origin/changes someotherhash`
       }
       options.listeners.stdout(stdout)
       return 0
@@ -90,7 +91,7 @@ remotes/origin/changes someotherhash`
     const infoSpy = jest.spyOn(core, 'info').mockImplementation(jest.fn())
     const failureSpy = jest.spyOn(core, 'setFailed').mockImplementation(jest.fn())
     const execSpy = jest.spyOn(exec, 'exec').mockImplementation((command, args, options) => {
-      if (args[0] == 'fetch') {
+      if (args[1] == 'fetch') {
         return 0
       }
       
@@ -102,7 +103,8 @@ M       CHANGELOG.md`
       }
       if (args[0] == 'branch') {
         stdout =
-`remotes/origin/changes someotherhash`
+` * (HEAD detached at pull/27/merge) 6a67f6e Merge 
+    pull/27/merge  6a67f6f`
       }
       options.listeners.stdout(stdout)
       return 0
@@ -122,7 +124,7 @@ M       CHANGELOG.md`
       const command_fetch = execSpy.mock.calls[1][0]
       const command_fetch_args = execSpy.mock.calls[1][1].join(' ')
       expect(command_fetch).toBe('git')
-      expect(command_fetch_args).toBe('fetch origin master')
+      expect(command_fetch_args).toBe('-c protocol.version=2 fetch --depth=1 origin master')
 
       const command_diff = execSpy.mock.calls[2][0]
       const command_diff_args = execSpy.mock.calls[2][1].join(' ')
