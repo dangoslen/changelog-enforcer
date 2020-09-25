@@ -20,7 +20,7 @@ describe('the changelog-enforcer', () => {
     })
   })
 
-  it('should skip enforcing when label is present', () => {
+  it('should skip enforcing when label is present', (done) => {
     // Mock getInput
     inputs['skipLabel'] = 'Skip-Changelog' 
     inputs['changeLogPath'] = 'CHANGELOG.md' 
@@ -34,10 +34,12 @@ describe('the changelog-enforcer', () => {
       expect(infoSpy.mock.calls.length).toBe(2)
       expect(execSpy).not.toHaveBeenCalled()
       expect(failureSpy).not.toHaveBeenCalled()
+
+      done()
     })
   })
 
-  it('should enforce when label is not present; changelog is not present', () => {
+  it('should enforce when label is not present; changelog is not present; branch checked out', (done) => {
     // Mock getInput
     inputs['skipLabel'] = 'A different label' 
     inputs['changeLogPath'] = 'CHANGELOG.md' 
@@ -53,7 +55,8 @@ A       an_added_changed_file.js`
       }
       if (args[0] == 'branch') {
         stdout =
-`(HEAD detached at hash)`
+`remotes/origin/master somecommithash
+remotes/origin/changes someotherhash`
       }
       options.listeners.stdout(stdout)
       return 0
@@ -68,16 +71,18 @@ A       an_added_changed_file.js`
       const command_branch = execSpy.mock.calls[0][0]
       const command_branch_args = execSpy.mock.calls[0][1].join(' ')
       expect(command_branch).toBe('git')
-      expect(command_branch_args).toBe('branch')
+      expect(command_branch_args).toBe('branch --verbose --all')
 
       const command_diff = execSpy.mock.calls[1][0]
       const command_diff_args = execSpy.mock.calls[1][1].join(' ')
       expect(command_diff).toBe('git')
       expect(command_diff_args).toBe('diff origin/master --name-status --diff-filter=AM')
+      
+      done()
     })
   })
-
-  it('should enforce when label is not present; changelog is present', () => {
+  
+  it('should enforce when label is not present; changelog is present; branch not checked out', (done) => {
     // Mock getInput
     inputs['skipLabel'] = 'A different label' 
     inputs['changeLogPath'] = 'CHANGELOG.md' 
@@ -85,14 +90,19 @@ A       an_added_changed_file.js`
     const infoSpy = jest.spyOn(core, 'info').mockImplementation(jest.fn())
     const failureSpy = jest.spyOn(core, 'setFailed').mockImplementation(jest.fn())
     const execSpy = jest.spyOn(exec, 'exec').mockImplementation((command, args, options) => {
+      if (args[0] == 'fetch') {
+        return 0
+      }
+      
       let stdout = ''
-      if (args[0] == 'diff')
+      if (args[0] == 'diff') {
         stdout = 
 `M       .env.js
 M       CHANGELOG.md`
+      }
       if (args[0] == 'branch') {
         stdout =
-      `(HEAD detached at hash)`
+`remotes/origin/changes someotherhash`
       }
       options.listeners.stdout(stdout)
       return 0
@@ -101,18 +111,25 @@ M       CHANGELOG.md`
     changelogEnforcer.enforce()
     .then(() => {
       expect(infoSpy.mock.calls.length).toBe(2)
-      expect(execSpy.mock.calls.length).toBe(2)
+      expect(execSpy.mock.calls.length).toBe(3)
       expect(failureSpy).not.toHaveBeenCalled()
 
       const command_branch = execSpy.mock.calls[0][0]
       const command_branch_args = execSpy.mock.calls[0][1].join(' ')
       expect(command_branch).toBe('git')
-      expect(command_branch_args).toBe('branch')
+      expect(command_branch_args).toBe('branch --verbose --all')
 
-      const command_diff = execSpy.mock.calls[1][0]
-      const command_diff_args = execSpy.mock.calls[1][1].join(' ')
+      const command_fetch = execSpy.mock.calls[1][0]
+      const command_fetch_args = execSpy.mock.calls[1][1].join(' ')
+      expect(command_fetch).toBe('git')
+      expect(command_fetch_args).toBe('fetch origin/master')
+
+      const command_diff = execSpy.mock.calls[2][0]
+      const command_diff_args = execSpy.mock.calls[2][1].join(' ')
       expect(command_diff).toBe('git')
       expect(command_diff_args).toBe('diff origin/master --name-status --diff-filter=AM')
+
+      done()
     })
   })
 })

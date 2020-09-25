@@ -31,3 +31,10 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - uses: ./
+
+  # test action works running from the graph  
+  enforce-changelog-v2:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./

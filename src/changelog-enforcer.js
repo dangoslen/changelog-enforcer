@@ -19,6 +19,7 @@ module.exports.enforce = async function() {
             await ensureBranchExists(baseRef)
             await checkChangeLog(baseRef, changeLogPath)
         }
+        return
     } catch(error) {
         core.setFailed(error.message);
     }
@@ -33,21 +34,22 @@ async function ensureBranchExists(baseRef) {
         }
     }
 
-    await exec.exec('git', ['branch', '--verbose', '--all'], options_check)
+    await exec.exec('git', ['branch', '--verbose', '--all'], options)
 
     const branches = output.split(/\r?\n/)
     let branchNames = []
-    changes.map(change => {
-        const branchName = change.replace(/(^[A-Z/0-9]*)(\s{1})(.*)(\n)?$/g, '$1')
+    branches.map(change => {
+        const branchName = change.replace(/(^[\w+/]*)(\s{1})(.*)(\n)?$/g, '$1')
         branchNames.push(branchName)
     })
 
     if (!branchNames.includes(`remotes/origin/${baseRef}`)) {
-        await exec.exec('git', ['fetch', `origin/${baseRef}`])
+        await exec.exec('git', ['fetch', `origin/${baseRef}`], {})
     }
+    return
 }
 
-async function generateUpdatedFileList(baseRef) {
+async function checkChangeLog(baseRef, changeLogPath) {
     let output = ''
     const options = {}
     options.listeners = {
@@ -68,5 +70,6 @@ async function generateUpdatedFileList(baseRef) {
     if (!fileNames.includes(changeLogPath)) {
         throw new Error(`No update to ${changeLogPath} found!`)
     }
+    return
 }
 
