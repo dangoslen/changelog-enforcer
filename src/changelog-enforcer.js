@@ -2,8 +2,6 @@ const core = require('@actions/core')
 const github = require('@actions/github')
 const exec = require('@actions/exec')
 
-const detachedHead = '(HEAD detached'
-
 module.exports.enforce = async function() {
     try {
         const skipLabel = core.getInput('skipLabel')
@@ -19,7 +17,6 @@ module.exports.enforce = async function() {
             await ensureBranchExists(baseRef)
             await checkChangeLog(baseRef, changeLogPath)
         }
-        return
     } catch(error) {
         core.setFailed(error.message);
     }
@@ -39,14 +36,13 @@ async function ensureBranchExists(baseRef) {
     const branches = output.split(/\r?\n/)
     let branchNames = []
     branches.map(change => {
-        const branchName = change.replace(/(^[\w+/]*)(\s{1})(.*)(\n)?$/g, '$1')
+        const branchName = change.replace(/(^\s*[\w+/-]*)(\s*)([\w+].*)\n?$/g, '$1')
         branchNames.push(branchName)
     })
 
     if (!branchNames.includes(`remotes/origin/${baseRef}`)) {
         await exec.exec('git', ['fetch', `origin/${baseRef}`], {})
     }
-    return
 }
 
 async function checkChangeLog(baseRef, changeLogPath) {
@@ -70,6 +66,5 @@ async function checkChangeLog(baseRef, changeLogPath) {
     if (!fileNames.includes(changeLogPath)) {
         throw new Error(`No update to ${changeLogPath} found!`)
     }
-    return
 }
 
