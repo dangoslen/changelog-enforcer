@@ -23061,7 +23061,7 @@ async function ensureBranchExists(baseRef) {
     })
 
     if (!branchNames.includes(`remotes/origin/${baseRef}`)) {
-        await exec.exec('git', ['fetch', `origin/${baseRef}`], {})
+        await exec.exec('git', ['fetch', `origin ${baseRef}`], {})
     }
 }
 
