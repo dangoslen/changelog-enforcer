@@ -91,7 +91,7 @@ A       an_added_changed_file.js`
     const infoSpy = jest.spyOn(core, 'info').mockImplementation(jest.fn())
     const failureSpy = jest.spyOn(core, 'setFailed').mockImplementation(jest.fn())
     const execSpy = jest.spyOn(exec, 'exec').mockImplementation((command, args, options) => {
-      if (args[1] == 'fetch') {
+      if (args[2] == 'fetch') {
         return 0
       }
       
