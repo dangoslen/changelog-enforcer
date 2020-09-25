@@ -122,7 +122,7 @@ M       CHANGELOG.md`
       const command_fetch = execSpy.mock.calls[1][0]
       const command_fetch_args = execSpy.mock.calls[1][1].join(' ')
       expect(command_fetch).toBe('git')
-      expect(command_fetch_args).toBe('fetch origin/master')
+      expect(command_fetch_args).toBe('fetch origin master')
 
       const command_diff = execSpy.mock.calls[2][0]
       const command_diff_args = execSpy.mock.calls[2][1].join(' ')
