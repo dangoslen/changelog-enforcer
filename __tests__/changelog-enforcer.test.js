@@ -45,10 +45,16 @@ describe('the changelog-enforcer', () => {
     const infoSpy = jest.spyOn(core, 'info').mockImplementation(jest.fn())
     const failureSpy = jest.spyOn(core, 'setFailed').mockImplementation(jest.fn())
     const execSpy = jest.spyOn(exec, 'exec').mockImplementation((command, args, options) => {
-      const stdout = 
+      let stdout = ''
+      if (args[0] == 'diff') {
+        stdout = 
 `M       .env.js
 A       an_added_changed_file.js`
-
+      }
+      if (args[0] == 'branch') {
+        stdout =
+`(HEAD detached at hash)`
+      }
       options.listeners.stdout(stdout)
       return 0
     })
@@ -56,13 +62,18 @@ A       an_added_changed_file.js`
     changelogEnforcer.enforce()
     .then(() => {
       expect(infoSpy.mock.calls.length).toBe(2)
-      expect(execSpy).toHaveBeenCalled()
+      expect(execSpy.mock.calls.length).toBe(2)
       expect(failureSpy).toHaveBeenCalled()
 
-      const command = execSpy.mock.calls[0][0]
-      const commandArgs = execSpy.mock.calls[0][1].join(' ')
-      expect(command).toBe('git')
-      expect(commandArgs).toBe('diff origin/master --name-status --diff-filter=AM')
+      const command_branch = execSpy.mock.calls[0][0]
+      const command_branch_args = execSpy.mock.calls[0][1].join(' ')
+      expect(command_branch).toBe('git')
+      expect(command_branch_args).toBe('branch')
+
+      const command_diff = execSpy.mock.calls[1][0]
+      const command_diff_args = execSpy.mock.calls[1][1].join(' ')
+      expect(command_diff).toBe('git')
+      expect(command_diff_args).toBe('diff origin/master --name-status --diff-filter=AM')
     })
   })
 
@@ -74,10 +85,15 @@ A       an_added_changed_file.js`
     const infoSpy = jest.spyOn(core, 'info').mockImplementation(jest.fn())
     const failureSpy = jest.spyOn(core, 'setFailed').mockImplementation(jest.fn())
     const execSpy = jest.spyOn(exec, 'exec').mockImplementation((command, args, options) => {
-      const stdout = 
+      let stdout = ''
+      if (args[0] == 'diff')
+        stdout = 
 `M       .env.js
 M       CHANGELOG.md`
-
+      if (args[0] == 'branch') {
+        stdout =
+      `(HEAD detached at hash)`
+      }
       options.listeners.stdout(stdout)
       return 0
     })
@@ -85,13 +101,18 @@ M       CHANGELOG.md`
     changelogEnforcer.enforce()
     .then(() => {
       expect(infoSpy.mock.calls.length).toBe(2)
-      expect(execSpy).toHaveBeenCalled()
+      expect(execSpy.mock.calls.length).toBe(2)
       expect(failureSpy).not.toHaveBeenCalled()
 
-      const command = execSpy.mock.calls[0][0]
-      const commandArgs = execSpy.mock.calls[0][1].join(' ')
-      expect(command).toBe('git')
-      expect(commandArgs).toBe('diff origin/master --name-status --diff-filter=AM')
+      const command_branch = execSpy.mock.calls[0][0]
+      const command_branch_args = execSpy.mock.calls[0][1].join(' ')
+      expect(command_branch).toBe('git')
+      expect(command_branch_args).toBe('branch')
+
+      const command_diff = execSpy.mock.calls[1][0]
+      const command_diff_args = execSpy.mock.calls[1][1].join(' ')
+      expect(command_diff).toBe('git')
+      expect(command_diff_args).toBe('diff origin/master --name-status --diff-filter=AM')
     })
   })
 })
