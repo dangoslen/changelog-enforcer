@@ -6,7 +6,8 @@
   "scripts": {
     "lint": "eslint index.js",
     "package": "ncc build index.js -o dist",
-    "test": "eslint index.js && jest"
+    "test": "eslint index.js && jest --coverage",
+    "test:badges": "npm test && make-coverage-badge"
   },
   "repository": {
     "type": "git",
@@ -32,6 +33,7 @@
     "@actions/exec": "^1.0.3",
     "@actions/github": "^2.1.1",
     "dist": "^0.1.2",
+    "make-coverage-badge": "^1.2.0",
     "uglify-js": "^2.6.0"
   },
   "devDependencies": {
