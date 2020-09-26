@@ -2,6 +2,16 @@
 
 Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v1.4.0]
+### Summary
+Please upgrade to use with `actions/checkout@v2`!
+
+### Fixes
+- Now works with both `actions/checkout@v1` and `actions/checkout@v2`
+
+### Adds
+- Code coverage checks via `jest` and coverage badge via `make-coverage-badge`
+
 ## [v1.3.0]
 ### Security
 - `node-fetch@2.6.0` to `node-fetch@2.6.1`

@@ -1,6 +1,7 @@
 <p align="center">
   <img src="https://github.com/dangoslen/changelog-enforcer/workflows/units-test/badge.svg?branch=master" alt="unit tests badge" />
   <img src="https://img.shields.io/github/v/release/dangoslen/changelog-enforcer?color=orange&label=Latest&style=plastic" alt="latest version" />
+  <img src="./coverage/badge.svg" alt="coverage badge" />
  </p>
 
 ## Changelog Enforcer
@@ -22,7 +23,7 @@ jobs:
   changelog:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - uses: dangoslen/changelog-enforcer@v1.1.1
       with:
         changeLogPath: 'CHANGELOG.md'
