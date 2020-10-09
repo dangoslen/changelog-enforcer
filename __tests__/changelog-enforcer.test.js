@@ -23,7 +23,8 @@ describe('the changelog-enforcer', () => {
   it('should skip enforcing when label is present', (done) => {
     // Mock getInput
     inputs['skipLabel'] = 'Skip-Changelog' 
-    inputs['changeLogPath'] = 'CHANGELOG.md' 
+    inputs['changeLogPath'] = 'CHANGELOG.md'
+    inputs['expectedLatestVersion'] = '' 
 
     const infoSpy = jest.spyOn(core, 'info').mockImplementation(jest.fn())
     const failureSpy = jest.spyOn(core, 'error').mockImplementation(jest.fn())
@@ -31,7 +32,7 @@ describe('the changelog-enforcer', () => {
 
     changelogEnforcer.enforce()
     .then(() => {
-      expect(infoSpy.mock.calls.length).toBe(2)
+      expect(infoSpy.mock.calls.length).toBe(3)
       expect(execSpy).not.toHaveBeenCalled()
       expect(failureSpy).not.toHaveBeenCalled()
 
@@ -43,6 +44,7 @@ describe('the changelog-enforcer', () => {
     // Mock getInput
     inputs['skipLabel'] = 'A different label' 
     inputs['changeLogPath'] = 'CHANGELOG.md' 
+    inputs['expectedLatestVersion'] = '' 
 
     const infoSpy = jest.spyOn(core, 'info').mockImplementation(jest.fn())
     const failureSpy = jest.spyOn(core, 'setFailed').mockImplementation(jest.fn())
@@ -65,7 +67,7 @@ A       an_added_changed_file.js`
 
     changelogEnforcer.enforce()
     .then(() => {
-      expect(infoSpy.mock.calls.length).toBe(2)
+      expect(infoSpy.mock.calls.length).toBe(3)
       expect(execSpy.mock.calls.length).toBe(2)
       expect(failureSpy).toHaveBeenCalled()
 
@@ -87,6 +89,7 @@ A       an_added_changed_file.js`
     // Mock getInput
     inputs['skipLabel'] = 'A different label' 
     inputs['changeLogPath'] = 'CHANGELOG.md' 
+    inputs['expectedLatestVersion'] = '' 
 
     const infoSpy = jest.spyOn(core, 'info').mockImplementation(jest.fn())
     const failureSpy = jest.spyOn(core, 'setFailed').mockImplementation(jest.fn())
@@ -112,7 +115,7 @@ M       CHANGELOG.md`
 
     changelogEnforcer.enforce()
     .then(() => {
-      expect(infoSpy.mock.calls.length).toBe(2)
+      expect(infoSpy.mock.calls.length).toBe(3)
       expect(execSpy.mock.calls.length).toBe(3)
       expect(failureSpy).not.toHaveBeenCalled()
 

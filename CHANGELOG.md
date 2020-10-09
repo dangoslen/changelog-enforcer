@@ -2,6 +2,8 @@
 
 Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+####
+
 ## [v1.4.1]
 ### Security
 - `@actions/core@1.1.1` to `@actions/core@1.2.6`
