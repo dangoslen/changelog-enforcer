@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - id: read-version
-        script: |
+        run: |
           echo ::set-output version=$(cat VERSION)
       - uses: ./
         with:
