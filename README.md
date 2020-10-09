@@ -1,6 +1,13 @@
 <p align="center">
+  <a href="https://github.com/search?o=desc&q=dangoslen%2Fchangelog-enforcer+path%3A.github%2Fworkflows+language%3AYAML&s=&type=Code" target="_blank" title="Public workflows that use this action.">
+    <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fapi-git-master.endbug.vercel.app%2Fapi%2Fgithub-actions%2Fused-by%3Faction%3Ddangoslen%2Fchangelog-enforcer%26badge%3Dtrue" alt="Public workflows that use this action.">
+  </a>
   <img src="https://github.com/dangoslen/changelog-enforcer/workflows/units-test/badge.svg?branch=master" alt="unit tests badge" />
+<<<<<<< HEAD
   <img src="https://img.shields.io/github/v/release/dangoslen/changelog-enforcer?color=orange&label=Latest&style=plastic" alt="latest version" />
+=======
+  <img src="https://img.shields.io/github/v/release/dangoslen/changelog-enforcer?color=orange&label=Latest" alt="latest version" />
+>>>>>>> master
   <img src="./coverage/badge.svg" alt="coverage badge" />
  </p>
 
@@ -24,7 +31,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+<<<<<<< HEAD
     - uses: dangoslen/changelog-enforcer@v1.1.1
+=======
+    - uses: dangoslen/changelog-enforcer@v1.4.0
+>>>>>>> master
       with:
         changeLogPath: 'CHANGELOG.md'
         skipLabel: 'Skip-Changelog'
