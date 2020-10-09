@@ -23021,13 +23021,16 @@ exports.Deprecation = Deprecation;
 const core = __webpack_require__(186)
 const github = __webpack_require__(438)
 const exec = __webpack_require__(514)
+const fs = __webpack_require__(747)
 
 module.exports.enforce = async function() {
     try {
         const skipLabel = core.getInput('skipLabel')
         const changeLogPath = core.getInput('changeLogPath')
+        const expectedLatestVersion = core.getInput('expectedLatestVersion')
         core.info(`Skip Label: ${skipLabel}`)
         core.info(`Changelog Path: ${changeLogPath}`)
+        core.info(`Expected Latest Version: ${expectedLatestVersion}`)
 
         const pullRequest = github.context.payload.pull_request
         const labelNames = pullRequest.labels.map(l => l.name)
@@ -23036,6 +23039,7 @@ module.exports.enforce = async function() {
         if (!labelNames.includes(skipLabel)) {
             await ensureBranchExists(baseRef)
             await checkChangeLog(baseRef, changeLogPath)
+            await validateLatestVersion(changeLogPath, expectedLatestVersion)
         }
     } catch(error) {
         core.setFailed(error.message);
@@ -23085,6 +23089,20 @@ async function checkChangeLog(baseRef, changeLogPath) {
     
     if (!fileNames.includes(changeLogPath)) {
         throw new Error(`No update to ${changeLogPath} found!`)
+    }
+}
+
+async function validateLatestVersion(changeLogPath, expectedLatestVersion) {
+    if (expectedLatestVersion == null || expectedLatestVersion.length == 0) {
+        return
+    }
+
+    const escaped = expectedLatestVersion.replace('[', '\[').replace(']', '\]')
+    const pattern = new RegExp(`/^${expectedLatestVersion}/`, 'mg')
+    const changelog = fs.readFileSync(changeLogPath);
+     
+    if (!pattern.test(changeLogPath)) {
+        throw new Error(`Changelog does not contain the expected latest version!`)
     }
 }
 
