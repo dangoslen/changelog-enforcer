@@ -11,13 +11,13 @@ inputs:
     required: true
     default: 'Skip-Changelog'
   expectedLatestVersion: 
-    description: """
-      The start of the line of the latest expected verion in the changelog. 
+    description: |
+      "The start of the line of the latest expected verion in the changelog. 
       If using the KeepAChangelog.com format, use # [v${version}]. If you are 
       using a different format, you will need to provide the exact match of the 
-      line marking a new version in the changelog"""
+      line marking a new version in the changelog"
     required: false
-    default: '''
+    default: ''
 runs:
   using: 'node12'
   main: 'dist/index.js'
