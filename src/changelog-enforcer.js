@@ -1,16 +1,19 @@
 const core = require('@actions/core')
 const github = require('@actions/github')
 const exec = require('@actions/exec')
-const fs = require('fs')
+const versionExtractor = require('./version-extractor')
 
 module.exports.enforce = async function() {
     try {
         const skipLabel = core.getInput('skipLabel')
         const changeLogPath = core.getInput('changeLogPath')
         const expectedLatestVersion = core.getInput('expectedLatestVersion')
+        const versionPattern = core.getInput('versionPattern')
+
         core.info(`Skip Label: ${skipLabel}`)
         core.info(`Changelog Path: ${changeLogPath}`)
         core.info(`Expected Latest Version: ${expectedLatestVersion}`)
+        core.info(`Version Pattern: ${expectedLatestVersion}`)
 
         const pullRequest = github.context.payload.pull_request
         const labelNames = pullRequest.labels.map(l => l.name)
@@ -19,7 +22,7 @@ module.exports.enforce = async function() {
         if (!labelNames.includes(skipLabel)) {
             await ensureBranchExists(baseRef)
             await checkChangeLog(baseRef, changeLogPath)
-            await validateLatestVersion(changeLogPath, expectedLatestVersion)
+            await validateLatestVersion(expectedLatestVersion, versionPattern, changeLogPath)
         }
     } catch(error) {
         core.setFailed(error.message);
@@ -72,17 +75,14 @@ async function checkChangeLog(baseRef, changeLogPath) {
     }
 }
 
-async function validateLatestVersion(changeLogPath, expectedLatestVersion) {
+async function validateLatestVersion(expectedLatestVersion, versionPattern, changeLogPath) {
     if (expectedLatestVersion == null || expectedLatestVersion.length == 0) {
         return
     }
 
-    const escaped = expectedLatestVersion.replace('[', '\[').replace(']', '\]')
-    const pattern = new RegExp(`/^${expectedLatestVersion}/`, 'mg')
-    const changelog = fs.readFileSync(changeLogPath);
-     
-    if (!pattern.test(changeLogPath)) {
-        throw new Error(`Changelog does not contain the expected latest version!`)
+    const versions = versionExtractor.getVersions(versionPattern, changeLogPath)
+    if (versions[0] != expectedLatestVersion) {
+        throw new Error(`The latest version in the changelog does not match the expected latest version of ${expectedLatestVersion}!`)
     }
 }
 
