@@ -2,7 +2,7 @@
 
 Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-## [v1.4.2]
+## Unreleased
 
 ## [v1.4.1]
 ### Security
