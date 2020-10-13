@@ -81,8 +81,11 @@ async function validateLatestVersion(expectedLatestVersion, versionPattern, chan
     }
 
     const versions = versionExtractor.getVersions(versionPattern, changeLogPath)
-    const latest = versions[0]
-    if (latest != expectedLatestVersion && latest.toUpperCase() != "UNRELEASED") {
+    let latest = versions[0]
+    if (latest.toUpperCase() == "UNRELEASED") {
+        latest = versions[1]
+    }
+    if (latest != expectedLatestVersion) {
         throw new Error(`The latest version in the changelog does not match the expected latest version of ${expectedLatestVersion}!`)
     }
 }
