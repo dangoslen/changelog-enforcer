@@ -2,7 +2,7 @@ name: 'Changelog Enforcer'
 author: '@dangoslen'
 description: 'Enforces a repository changelog to be kept up to date.'
 inputs:
-  changeLogPath:  # id of input
+  changeLogPath:
     description: 'Path to the changelog file relative to the repository'
     required: true
     default: 'CHANGELOG.md'
@@ -10,6 +10,18 @@ inputs:
     description: 'Name of the label used to skip enforcing a changelog change'
     required: true
     default: 'Skip-Changelog'
+  expectedLatestVersion: 
+    description: "The latest version of the software expected in the changelog. Should be in the form of 'v1.1.0' etc."
+    required: true
+    default: ''
+  versionPattern:
+    description: |
+      "A regex pattern used to extract the versions from the changelog. Changelog Enforcer assumes the use of the KeepAChangelog.com convention, and 
+      as such looks for a line starting with '## [version] - date. Your regex should match the version as the 2nd match group.
+      The regex pattern is used with global and multiline flags. Also note that since this
+      is passed as a String, you will need to escape a backslash \ character via \\"
+    required: true
+    default: "^## \\[((v|V)?\\d*\\.\\d*\\.\\d*-?\\w*|unreleased|Unreleased|UNRELEASED)\\]"
 runs:
   using: 'node12'
   main: 'dist/index.js'
