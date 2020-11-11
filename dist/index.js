@@ -22611,6 +22611,28 @@ module.exports = function(fn) {
 
 /***/ }),
 
+/***/ 568:
+/***/ (function(module, __unusedexports, __webpack_require__) {
+
+const fs = __webpack_require__(747)
+
+module.exports.getVersions = function (pattern, changeLogPath) {
+    const regex = new RegExp(`${pattern}`, 'gm')
+    const changelog = fs.readFileSync(changeLogPath, 'utf8')
+    let groups = false
+    let versions = []
+    do {
+        groups = regex.exec(changelog)
+        if (groups) {
+            // The actual group we want to match is the version
+            versions.push(groups[1])
+        }
+    } while(groups)
+    return versions
+}
+
+/***/ }),
+
 /***/ 578:
 /***/ (function(module, __unusedexports, __webpack_require__) {
 
@@ -23021,13 +23043,19 @@ exports.Deprecation = Deprecation;
 const core = __webpack_require__(186)
 const github = __webpack_require__(438)
 const exec = __webpack_require__(514)
+const versionExtractor = __webpack_require__(568)
 
 module.exports.enforce = async function() {
     try {
         const skipLabel = core.getInput('skipLabel')
         const changeLogPath = core.getInput('changeLogPath')
+        const expectedLatestVersion = core.getInput('expectedLatestVersion')
+        const versionPattern = core.getInput('versionPattern')
+
         core.info(`Skip Label: ${skipLabel}`)
         core.info(`Changelog Path: ${changeLogPath}`)
+        core.info(`Expected Latest Version: ${expectedLatestVersion}`)
+        core.info(`Version Pattern: ${versionPattern}`)
 
         const pullRequest = github.context.payload.pull_request
         const labelNames = pullRequest.labels.map(l => l.name)
@@ -23036,6 +23064,7 @@ module.exports.enforce = async function() {
         if (!labelNames.includes(skipLabel)) {
             await ensureBranchExists(baseRef)
             await checkChangeLog(baseRef, changeLogPath)
+            await validateLatestVersion(expectedLatestVersion, versionPattern, changeLogPath)
         }
     } catch(error) {
         core.setFailed(error.message);
@@ -23085,6 +23114,21 @@ async function checkChangeLog(baseRef, changeLogPath) {
     
     if (!fileNames.includes(changeLogPath)) {
         throw new Error(`No update to ${changeLogPath} found!`)
+    }
+}
+
+async function validateLatestVersion(expectedLatestVersion, versionPattern, changeLogPath) {
+    if (expectedLatestVersion == null || expectedLatestVersion.length == 0) {
+        return
+    }
+
+    const versions = versionExtractor.getVersions(versionPattern, changeLogPath)
+    let latest = versions[0]
+    if (latest.toUpperCase() == "UNRELEASED") {
+        latest = versions[1]
+    }
+    if (latest != expectedLatestVersion) {
+        throw new Error(`The latest version in the changelog does not match the expected latest version of ${expectedLatestVersion}!`)
     }
 }
 

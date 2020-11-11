@@ -18,7 +18,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+      - id: read-version
+        run: |
+          echo "::set-output name=version::$(cat ./VERSION)"
       - uses: ./
+        with:
+          expectedLatestVersion: '${{ steps.read-version.outputs.version }}'
 
   # test action works running from the graph  
   enforce-changelog-v2:
