@@ -13,7 +13,7 @@ module.exports.enforce = async function() {
         core.info(`Skip Label: ${skipLabel}`)
         core.info(`Changelog Path: ${changeLogPath}`)
         core.info(`Expected Latest Version: ${expectedLatestVersion}`)
-        core.info(`Version Pattern: ${expectedLatestVersion}`)
+        core.info(`Version Pattern: ${versionPattern}`)
 
         const pullRequest = github.context.payload.pull_request
         const labelNames = pullRequest.labels.map(l => l.name)
