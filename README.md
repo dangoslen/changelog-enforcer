@@ -27,20 +27,30 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: dangoslen/changelog-enforcer@v1.4.0
+    - uses: dangoslen/changelog-enforcer@v1.5.0
       with:
         changeLogPath: 'CHANGELOG.md'
         skipLabel: 'Skip-Changelog'
 ```
 
 ### Inputs / Properties
-There are two properties with sane defaults provided
+Below are the properties allowed by the changelog. These properties are shipped with sane defaults for typical use, esepcially for changelogs inline with the [KeepAChangelog](Keepachangelog.org).
 
-`changeLogPath` - default: `CHANGELOG.md`
-* the path to your changelog file. Should be from the perspective of the root directory to `git`. The file being checked for updates must be either an add (`A`) or modified (`M`) status to `git` to qualify as updated. 
+`changeLogPath`
+* Default: `CHANGELOG.md`
+* The path to your changelog file. Should be from the perspective of the root directory to `git`. The file being checked for updates must be either an add (`A`) or modified (`M`) status to `git` to qualify as updated. 
 
-`skipLabel` - default: `Skip-Changelog` 
-* the name of a GitHub label that skips execution of the Changelog Enforcer. This is useful for small changes such as configuration that doesn't need to be reflected in the changelog. By using a label, the developer and any reviewer can agree if the change should be reflected in the changelog, and if not can apply a label. The Changelog Enforcer will re-check if the `labeled` and `unlabeled` event types are specified in the workflow.
+`skipLabel` 
+* Default: `Skip-Changelog` 
+* The name of a GitHub label that skips execution of the Changelog Enforcer. This is useful for small changes such as configuration that doesn't need to be reflected in the changelog. By using a label, the developer and any reviewer can agree if the change should be reflected in the changelog, and if not can apply a label. The Changelog Enforcer will re-check if the `labeled` and `unlabeled` event types are specified in the workflow.
+
+`expectedLatestVersion`
+* Default: ``
+* The latest version of the software expected in the changelog. Should be in the form of 'v1.1.0' etc.
+
+`versionPattern`
+* Default: `## \\[((v|V)?\\d*\\.\\d*\\.\\d*-?\\w*|unreleased|Unreleased|UNRELEASED)\\]`
+* A regex pattern used to extract the versions from the changelog. Changelog Enforcer assumes the use of the KeepAChangelog.com convention, and as such looks for a line starting with `## [version] - date`. Your regex should match the version as the 2nd match group. The regex pattern is used with global and multiline flags. Also note that since this is passed as a String, you will need to escape a backslash `\` character via `\\`
 
 ### Creating Releases Automatically
 Using this Action and the [Changelog Reader](https://github.com/mindsers/changelog-reader-action), plus a few standard GitHub created Actions, we can keep the changelog of a project up to date and create a GitHub release automatically with contents from the changelog. See this project's [release.yml](./.github/workflows/release.yml) for how to set up a simple workflow to create a new release based on a `VERSION` file and a changelog.
