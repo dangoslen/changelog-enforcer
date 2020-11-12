@@ -34,7 +34,7 @@ jobs:
 ```
 
 ### Inputs / Properties
-Below are the properties allowed by the changelog. These properties are shipped with sane defaults for typical use, esepcially for changelogs inline with the [KeepAChangelog](Keepachangelog.org).
+Below are the properties allowed by the Changelog Enforcer. These properties are shipped with sane defaults for typical use, esepcially for changelogs inline with the [KeepAChangelog](Keepachangelog.org) format.
 
 `changeLogPath`
 * Default: `CHANGELOG.md`
@@ -46,7 +46,7 @@ Below are the properties allowed by the changelog. These properties are shipped 
 
 `expectedLatestVersion`
 * Default: ``
-* The latest version of the software expected in the changelog. Should be in the form of 'v1.1.0' etc.
+* The latest version of the software expected in the changelog. Should be in the form of `v1.1.0`, `v3.5.6` etc.
 
 `versionPattern`
 * Default: `## \\[((v|V)?\\d*\\.\\d*\\.\\d*-?\\w*|unreleased|Unreleased|UNRELEASED)\\]`
