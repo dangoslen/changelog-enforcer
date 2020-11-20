@@ -2,6 +2,10 @@
 
 Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [Unreleased]
+### Changed
+- `@actions/exec` from `1.0.3` to `1.0.4`
+
 ## [v1.5.0]
 ### Added
 - New input parameter `expectedLatestVersion`. 
