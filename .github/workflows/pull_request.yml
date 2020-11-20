@@ -6,13 +6,15 @@ on:
 jobs:
   # unit tests
   unit-tests:
-    if: "!contains(github.event.head_commit.author_name, 'GitHub Action')"
+    if: "!contains(github.event.head_commit.author_name, 'GitHub Actions')"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - run: npm run package
+      - uses: actions/checkout@v2
+        with: 
+          ref: ${{ github.head_ref }}
       - run: npm install
       - run: npm test
+      - run: npm run package
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "Auto commit packaged action"
