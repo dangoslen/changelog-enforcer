@@ -1,0 +1,21 @@
+# docs.github.com/en/github/administering-a-repository/configuration-options-for-dependency-updates
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    labels:
+      - dependabot
+      - javascript
+      - Skip-Changelog
+    open-pull-requests-limit: 3
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    labels:
+      - dependabot
+      - github-actions
+      - Skip-Changelog
+    open-pull-requests-limit: 3
+    schedule:
+      interval: "daily"
