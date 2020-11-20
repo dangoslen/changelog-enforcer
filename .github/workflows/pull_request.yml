@@ -10,8 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+      - run: npm run package
       - run: npm install
       - run: npm test
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "Auto commit packaged action"
 
   # test action works running from the graph  
   enforce-changelog:
