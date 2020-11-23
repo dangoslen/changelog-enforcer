@@ -27,7 +27,7 @@ jobs:
       - uses: actions/checkout@v1
       - id: read-version
         run: |
-          echo "::set-output name=version::$(cat ./VERSION)"
+          echo "::set-output name=version::$(cat VERSION)"
       - uses: ./
         with:
           expectedLatestVersion: '${{ steps.read-version.outputs.version }}'
@@ -39,3 +39,39 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: ./
+
+  preview-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Read version
+        id: read_version
+        run: |
+          echo ::set-output name=version::$(cat VERSION)
+        shell: bash
+      - name: Get Changelog Entry
+        id: changelog_reader
+        uses: mindsers/changelog-reader-action@v2
+        with:
+          version: ${{ steps.read_version.outputs.version }}
+          path: ./CHANGELOG.md
+      - name: Check for Release
+        id: check_release
+        run: |
+          TAG=$(git tag -l ${{ steps.read_version.outputs.version }})
+          MISSING=$([[ -z "$TAG" ]] && echo 'true' || echo 'false')
+          echo ::set-output name=missing::$MISSING
+        shell: bash
+      - name: Preview Changelog
+        if: ${{ steps.check_release.outputs.missing == 'true' }}
+        uses: unsplash/comment-on-pr@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          msg: |
+            <details>
+              <summary>Preview of Release Notes to be Created</summary>
+
+              ${{ steps.changelog_reader.outputs.changes }}
+
+            </details>
