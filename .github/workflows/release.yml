@@ -17,7 +17,7 @@ jobs:
         shell: bash
       - name: Get Changelog Entry
         id: changelog_reader
-        uses: mindsers/changelog-reader-action@v1
+        uses: mindsers/changelog-reader-action@v2
         with:
           version: ${{ steps.read_version.outputs.version }}
           path: ./CHANGELOG.md
@@ -37,6 +37,6 @@ jobs:
         with:
           tag_name: ${{ steps.read_version.outputs.version }}
           release_name: Changelog Enforcer ${{ steps.read_version.outputs.version }}
-          body: ${{ steps.changelog_reader.outputs.log_entry }} 
+          body: ${{ steps.changelog_reader.outputs.changes }} 
           draft: false
           prerelease: false
