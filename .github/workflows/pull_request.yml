@@ -61,7 +61,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           msg: |
-            "<details>
+            <details>
               <summary>Preview of Release Notes to be Created</summary>
               ${{ steps.changelog_reader.outputs.changes }}             
-            </details>""
+            </details>
