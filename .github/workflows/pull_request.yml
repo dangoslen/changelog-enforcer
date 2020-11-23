@@ -6,28 +6,73 @@ on:
 jobs:
   # unit tests
   unit-tests:
-    if: "!contains(github.event.head_commit.author_name, 'GitHub Action')"
+    if: "!contains(github.event.head_commit.author_name, 'GitHub Actions')"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2.3.4
+        with: 
+          ref: ${{ github.head_ref }}
       - run: npm install
       - run: npm test
+      - run: npm run package
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "Auto commit packaged action"
 
   # test action works running from the graph  
   enforce-changelog:
+    needs: unit-tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2.3.4
       - id: read-version
         run: |
-          echo "::set-output name=version::$(cat ./VERSION)"
+          echo "::set-output name=version::$(cat VERSION)"
       - uses: ./
         with:
           expectedLatestVersion: '${{ steps.read-version.outputs.version }}'
 
   # test action works running from the graph  
   enforce-changelog-v2:
+    needs: unit-tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.3.4
+      - uses: ./
+
+  preview-release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: ./
+      - name: Read version
+        id: read_version
+        run: |
+          echo ::set-output name=version::$(cat VERSION)
+        shell: bash
+      - name: Get Changelog Entry
+        id: changelog_reader
+        uses: mindsers/changelog-reader-action@v2
+        with:
+          version: ${{ steps.read_version.outputs.version }}
+          path: ./CHANGELOG.md
+      - name: Check for Release
+        id: check_release
+        run: |
+          TAG=$(git ls-remote --tags origin | grep ${{ steps.read_version.outputs.version }} || [[ $? == 1 ]] && echo '')
+          MISSING=$([[ -z "$TAG" ]] && echo 'true' || echo 'false')
+          echo ::set-output name=missing::$MISSING
+        shell: bash
+      - name: Preview Changelog
+        if: ${{ steps.check_release.outputs.missing == 'true' }}
+        uses: unsplash/comment-on-pr@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          check_for_duplicate_msg: true
+          msg: |
+            <details>
+              <summary>Preview of Release Notes to be Created</summary>
+
+              ${{ steps.changelog_reader.outputs.changes }}
+
+            </details>

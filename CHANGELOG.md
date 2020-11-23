@@ -2,6 +2,17 @@
 
 Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v1.5.1]
+### Added
+- Improved GitHub actions workflow for testing and packaging
+- Preview of release notes for a new version
+
+### Dependencies
+- `@actions/exec` from `1.0.3` to `1.0.4`
+- `@actions/github` from `2.1.1` to `4.0.0`
+- `eslint` from `6.3.0` to `7.14.0`
+- `changelog-reader-action` from `v1` to `v2`
+
 ## [v1.5.0]
 ### Added
 - New input parameter `expectedLatestVersion`. 
