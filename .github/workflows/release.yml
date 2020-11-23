@@ -37,6 +37,6 @@ jobs:
         with:
           tag_name: ${{ steps.read_version.outputs.version }}
           release_name: Changelog Enforcer ${{ steps.read_version.outputs.version }}
-          body: ${{ steps.changelog_reader.outputs.log_entry }} 
+          body: ${{ steps.changelog_reader.outputs.changes }} 
           draft: false
           prerelease: false
