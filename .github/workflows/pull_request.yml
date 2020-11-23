@@ -21,6 +21,7 @@ jobs:
 
   # test action works running from the graph  
   enforce-changelog:
+    needs: unit-tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -33,6 +34,7 @@ jobs:
 
   # test action works running from the graph  
   enforce-changelog-v2:
+    needs: unit-tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
