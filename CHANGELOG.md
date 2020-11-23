@@ -2,7 +2,11 @@
 
 Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-## [Unreleased]
+## [v1.5.1]
+### Added
+- Improved GitHub actions workflow for testing and packaging
+- Preview of release notes for a new version
+
 ### Dependencies
 - `@actions/exec` from `1.0.3` to `1.0.4`
 - `@actions/github` from `2.1.1` to `4.0.0`
