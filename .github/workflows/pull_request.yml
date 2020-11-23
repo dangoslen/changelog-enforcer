@@ -48,7 +48,7 @@ jobs:
       run: |
         echo ::set-output name=version::$(cat VERSION)
       shell: bash
-     - name: Get Changelog Entry
+    - name: Get Changelog Entry
       id: changelog_reader
       uses: mindsers/changelog-reader-action@v2
       with:
