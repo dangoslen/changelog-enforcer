@@ -9,7 +9,7 @@ jobs:
     if: "!contains(github.event.head_commit.author_name, 'GitHub Action')"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2.3.4
       - run: npm install
       - run: npm test
 
@@ -17,7 +17,7 @@ jobs:
   enforce-changelog:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2.3.4
       - id: read-version
         run: |
           echo "::set-output name=version::$(cat ./VERSION)"
@@ -29,5 +29,5 @@ jobs:
   enforce-changelog-v2:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2.3.4
       - uses: ./
