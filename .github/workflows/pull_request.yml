@@ -63,5 +63,7 @@ jobs:
           msg: |
             <details>
               <summary>Preview of Release Notes to be Created</summary>
-              ${{ steps.changelog_reader.outputs.changes }}             
+
+              ${{ steps.changelog_reader.outputs.changes }}
+
             </details>
