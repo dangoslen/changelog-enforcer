@@ -55,7 +55,15 @@ jobs:
         with:
           version: ${{ steps.read_version.outputs.version }}
           path: ./CHANGELOG.md
+      - name: Check for Release
+        id: check_release
+        run: |
+          TAG=$(git tag -l ${{ steps.read_version.outputs.version }})
+          MISSING=$([[ -z "$TAG" ]] && echo 'true' || echo 'false')
+          echo ::set-output name=missing::$MISSING
+        shell: bash
       - name: Preview Changelog
+        if: ${{ steps.check_release.outputs.missing == 'true' }}
         uses: unsplash/comment-on-pr@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
