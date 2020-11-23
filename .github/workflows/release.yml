@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v2
       - name: Read version
         id: read_version
         run: |
@@ -24,7 +24,7 @@ jobs:
       - name: Check for Release
         id: check_release
         run: |
-          TAG=$(git tag -l ${{ steps.read_version.outputs.version }})
+          TAG=$(git ls-remote --tags origin | grep ${{ steps.read_version.outputs.version }})
           MISSING=$([[ -z "$TAG" ]] && echo 'true' || echo 'false')
           echo ::set-output name=missing::$MISSING
         shell: bash
