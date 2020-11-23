@@ -24,7 +24,7 @@ jobs:
       - name: Check for Release
         id: check_release
         run: |
-          TAG=$(git ls-remote --tags origin | grep ${{ steps.read_version.outputs.version }} | cat)
+          TAG=$(git ls-remote --tags origin | grep ${{ steps.read_version.outputs.version }} || [[ $? == 1 ]] && echo '')
           MISSING=$([[ -z "$TAG" ]] && echo 'true' || echo 'false')
           echo ::set-output name=missing::$MISSING
         shell: bash
