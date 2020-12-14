@@ -12,7 +12,7 @@ inputs:
     
       Name of the label used to skip enforcing a changelog changed"
     required: true
-    default: 'Skip-Changelog'
+    default: ''
   skipLabels:
     description: | 
       "List of labels used to skip enforcing of the changelog during a pull request. Each label name is comma seperated and only one label needs to be 

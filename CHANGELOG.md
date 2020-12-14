@@ -2,6 +2,13 @@
 
 Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v1.6.0]
+### Added
+- New `skipLabels` input varialbe to supply a list of 
+
+### Changed
+- Deprecates the `skipLabel` 
+
 ## [v1.5.1]
 ### Added
 - Improved GitHub actions workflow for testing and packaging

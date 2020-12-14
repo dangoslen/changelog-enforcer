@@ -2,15 +2,19 @@ const core = require('@actions/core')
 const github = require('@actions/github')
 const exec = require('@actions/exec')
 const versionExtractor = require('./version-extractor')
+const labelExtractor = require('./label-extractor')
 
 module.exports.enforce = async function() {
     try {
         const skipLabel = core.getInput('skipLabel')
+        const skipLabels = core.getInput('skipLabels')
         const changeLogPath = core.getInput('changeLogPath')
         const expectedLatestVersion = core.getInput('expectedLatestVersion')
         const versionPattern = core.getInput('versionPattern')
 
-        core.info(`Skip Label: ${skipLabel}`)
+        const skipLabelList = getLabels(skipLabel, skipLabels)
+
+        core.info(`Skip  Label List: ${skipLabelList}`)
         core.info(`Changelog Path: ${changeLogPath}`)
         core.info(`Expected Latest Version: ${expectedLatestVersion}`)
         core.info(`Version Pattern: ${versionPattern}`)
@@ -19,7 +23,7 @@ module.exports.enforce = async function() {
         const labelNames = pullRequest.labels.map(l => l.name)
         const baseRef = pullRequest.base.ref
 
-        if (!labelNames.includes(skipLabel)) {
+        if (!shouldSkip(labelNames, skipLabelList)) {
             await ensureBranchExists(baseRef)
             await checkChangeLog(baseRef, changeLogPath)
             await validateLatestVersion(expectedLatestVersion, versionPattern, changeLogPath)
@@ -28,6 +32,17 @@ module.exports.enforce = async function() {
         core.setFailed(error.message);
     }
 };
+
+function getLabels(skipLabel, skipLabels) {
+    if (skipLabel != '') {
+        return [skipLabel]
+    }
+    return labelExtractor.getLabels(skipLabels)
+}
+
+function shouldSkip(labelNames, skipLabelList) {
+    return labelNames.some(l => skipLabelList.includes(l))
+}
 
 async function ensureBranchExists(baseRef) {
     let output = ''

@@ -5,7 +5,6 @@ module.exports.getLabels = function (labelsString) {
     let labels = []
     do {
         groups = regex.exec(labelsString)
-        console.log(groups)
         if (groups) {
             // Removes the trailing comma and removes all whitespace
             label = groups[0].replace(",", "").trim()
