@@ -4,13 +4,14 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [v1.6.0]
 ### Added
-- New `skipLabels` input varialbe to supply a list of 
+- New `skipLabels` input variable to supply a list of labels to skip enforcement for. See the [Inputs / Properties](./README.md#inputs-/-properties) section in the `README.md` for more information.
 
 ### Changed
-- Deprecates the `skipLabel` 
+- Deprecates the `skipLabel` input variable in favor of the `skipLabels` input variable
 
 ### Dependencies
 - `eslint` from `7.14.0` to `7.15.0`.
+- `uglify-js` from `2.6.0` to `3.12.1`.
 
 ## [v1.5.1]
 ### Added
