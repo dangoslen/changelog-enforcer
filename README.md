@@ -27,10 +27,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: dangoslen/changelog-enforcer@v1.5.0
+    - uses: dangoslen/changelog-enforcer@v1.6.0
       with:
         changeLogPath: 'CHANGELOG.md'
-        skipLabel: 'Skip-Changelog'
+        skipLabels: 'Skip-Changelog'
 ```
 
 ### Inputs / Properties
