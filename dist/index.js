@@ -7027,7 +7027,7 @@ module.exports.enforce = async function() {
 
         const skipLabelList = getLabels(skipLabel, skipLabels)
 
-        core.info(`Skip  Label List: ${skipLabelList}`)
+        core.info(`Skip Labels: ${skipLabelList}`)
         core.info(`Changelog Path: ${changeLogPath}`)
         core.info(`Expected Latest Version: ${expectedLatestVersion}`)
         core.info(`Version Pattern: ${versionPattern}`)
