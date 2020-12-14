@@ -9,6 +9,9 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Changed
 - Deprecates the `skipLabel` 
 
+### Dependencies
+- `eslint` from `7.14.0` to `7.15.0`.
+
 ## [v1.5.1]
 ### Added
 - Improved GitHub actions workflow for testing and packaging
