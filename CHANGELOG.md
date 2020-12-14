@@ -4,7 +4,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [v1.6.0]
 ### Added
-- New `skipLabels` input variable to supply a list of labels to skip enforcement for. See the [Inputs / Properties](./README.md#inputs-/-properties) section in the `README.md` for more information.
+- New `skipLabels` input variable to supply a list of labels to skip enforcement for. See the [Inputs / Properties](https://github.com/dangoslen/changelog-enforcer#inputs--properties) section in the `README.md` for more information.
 
 ### Changed
 - Deprecates the `skipLabel` input variable in favor of the `skipLabels` input variable
