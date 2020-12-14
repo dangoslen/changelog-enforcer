@@ -3,7 +3,6 @@ const exec = require('@actions/exec')
 const versionExtractor = require('../src/version-extractor')
 const changelogEnforcer = require('../src/changelog-enforcer')
 
-const SKIP_LABEL = "Skip-Changelog"
 const SKIP_LABELS = "SomeLabel,Skip-Changelog,Skip-Release"
 const CHANGELOG = "CHANGELOG.md"
 const VERSION_PATTERN = "^## \\[((v|V)?\\d*\\.\\d*\\.\\d*-?\\w*|unreleased|Unreleased|UNRELEASED)\\]"
@@ -21,7 +20,7 @@ describe('the changelog-enforcer', () => {
   beforeEach(() => {
     jest.clearAllMocks()
 
-    inputs['skipLabel'] = SKIP_LABEL
+    inputs['skipLabel'] = ''
     inputs['skipLabels'] = SKIP_LABELS
     inputs['changeLogPath'] = CHANGELOG
     inputs['expectedLatestVersion'] = '' 
@@ -47,16 +46,18 @@ describe('the changelog-enforcer', () => {
     })
   })
 
-  it('should skip enforcing when label is present from skip labels', (done) => {
-    inputs['skipLabel'] = ''
+  it('should skip enforcing when label is present from old input variable', (done) => {
+    inputs['skipLabel'] = 'Skip-Changelog'
     
     const infoSpy = jest.spyOn(core, 'info').mockImplementation(jest.fn())
+    const warnSpy = jest.spyOn(core, 'warning').mockImplementation(jest.fn())
     const failureSpy = jest.spyOn(core, 'error').mockImplementation(jest.fn())
     const execSpy = jest.spyOn(exec, 'exec').mockImplementation((command, args, options) => { return 0 })
 
     changelogEnforcer.enforce()
     .then(() => {
       expect(infoSpy.mock.calls.length).toBe(4)
+      expect(warnSpy.mock.calls.length).toBe(1)
       expect(execSpy).not.toHaveBeenCalled()
       expect(failureSpy).not.toHaveBeenCalled()
 
@@ -65,7 +66,7 @@ describe('the changelog-enforcer', () => {
   })
 
   it('should enforce when label is not present; changelog is changed; branch checked out; latest version does not match', (done) => {
-    inputs['skipLabel'] = 'A different label' 
+    inputs['skipLabels'] = 'A different label' 
     inputs['expectedLatestVersion'] = 'v1.10'
 
     const infoSpy = jest.spyOn(core, 'info').mockImplementation(jest.fn())
@@ -113,7 +114,7 @@ A       an_added_changed_file.js`
   })
 
   it('should not enforce when label is not present; changelog is changed; branch checked out; latest version is Unreleased', (done) => {
-    inputs['skipLabel'] = 'A different label' 
+    inputs['skipLabels'] = 'A different label' 
     inputs['expectedLatestVersion'] = 'v1.10'
 
     const infoSpy = jest.spyOn(core, 'info').mockImplementation(jest.fn())
@@ -162,8 +163,7 @@ A       an_added_changed_file.js`
   })
 
   it('should enforce when label is not present; changelog is not changed; branch checked out', (done) => {
-    // Mock getInput
-    inputs['skipLabel'] = 'A different label' 
+    inputs['skipLabels'] = 'A different label' 
 
     const infoSpy = jest.spyOn(core, 'info').mockImplementation(jest.fn())
     const failureSpy = jest.spyOn(core, 'setFailed').mockImplementation(jest.fn())
@@ -205,8 +205,7 @@ A       an_added_changed_file.js`
   })
   
   it('should enforce when label is not present; changelog is changed; branch not checked out', (done) => {
-    // Mock getInput
-    inputs['skipLabel'] = 'A different label' 
+    inputs['skipLabels'] = 'A different label' 
 
     const infoSpy = jest.spyOn(core, 'info').mockImplementation(jest.fn())
     const failureSpy = jest.spyOn(core, 'setFailed').mockImplementation(jest.fn())

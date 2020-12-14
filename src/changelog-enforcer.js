@@ -35,6 +35,8 @@ module.exports.enforce = async function() {
 
 function getLabels(skipLabel, skipLabels) {
     if (skipLabel != '') {
+        core.warning(`The skipLabel input variable is deprecated and will be removed in a future release. \
+            Please use the skipLabels input variable instead.`)
         return [skipLabel]
     }
     return labelExtractor.getLabels(skipLabels)
