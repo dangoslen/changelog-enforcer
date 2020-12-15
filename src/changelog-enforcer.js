@@ -39,7 +39,7 @@ module.exports.enforce = async function() {
 
 function getLabels(skipLabel, skipLabels) {
     if (skipLabel != '') {
-        core.warning(LABELS_WARN_MESSAGE)
+        core.warning(LABELS_WARNING_MESSAGE)
         return [skipLabel]
     } 
     return labelExtractor.getLabels(skipLabels)

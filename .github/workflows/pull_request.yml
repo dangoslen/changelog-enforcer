@@ -13,7 +13,7 @@ jobs:
         with: 
           ref: ${{ github.head_ref }}
       - run: npm install
-      - run: npm test
+      - run: npm run test:badges
       - run: npm run package
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
