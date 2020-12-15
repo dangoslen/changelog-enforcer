@@ -27,29 +27,39 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: dangoslen/changelog-enforcer@v1.5.0
+    - uses: dangoslen/changelog-enforcer@v1.6.0
       with:
         changeLogPath: 'CHANGELOG.md'
-        skipLabel: 'Skip-Changelog'
+        skipLabels: 'Skip-Changelog'
 ```
 
 ### Inputs / Properties
 Below are the properties allowed by the Changelog Enforcer. These properties are shipped with sane defaults for typical use, esepcially for changelogs inline with the [KeepAChangelog](Keepachangelog.org) format.
 
-`changeLogPath`
+#### `changeLogPath`
 * Default: `CHANGELOG.md`
 * The path to your changelog file. Should be from the perspective of the root directory to `git`. The file being checked for updates must be either an add (`A`) or modified (`M`) status to `git` to qualify as updated. 
 
-`skipLabel` 
-* Default: `Skip-Changelog` 
+#### `skipLabel`
+* **DEPRECATED - use `skipLabels` input instead**
+* Default: `''`
 * The name of a GitHub label that skips execution of the Changelog Enforcer. This is useful for small changes such as configuration that doesn't need to be reflected in the changelog. By using a label, the developer and any reviewer can agree if the change should be reflected in the changelog, and if not can apply a label. The Changelog Enforcer will re-check if the `labeled` and `unlabeled` event types are specified in the workflow.
 
-`expectedLatestVersion`
-* Default: ``
+#### `skipLabels` 
+* Default: `'Skip-Changelog'` 
+* List of labels used to skip enforcing of the changelog during a pull request. Each label name is comma seperated and only one label needs to be present for enforcement to be skipped. 
+
+  For example, if `label-1,label-2` was supplied as the `skipLabels`, `label-1` _or_ `label-2` would skip the enforcer. Each label is trimmed for leading and trailing spaces since GitHub labels do not allow for leading or trailing spaces. Thus, the following lists are equivalent:
+  * `label-1,label-2`
+  * `label-1 , label-2`
+  * `label-1  ,label-2`
+
+#### `expectedLatestVersion`
+* Default: `''`
 * The latest version of the software expected in the changelog. Should be in the form of `v1.1.0`, `v3.5.6` etc.
 
-`versionPattern`
-* Default: `## \\[((v|V)?\\d*\\.\\d*\\.\\d*-?\\w*|unreleased|Unreleased|UNRELEASED)\\]`
+#### `versionPattern`
+* Default: `'## \\[((v|V)?\\d*\\.\\d*\\.\\d*-?\\w*|unreleased|Unreleased|UNRELEASED)\\]'`
 * A regex pattern used to extract the versions from the changelog. Changelog Enforcer assumes the use of the KeepAChangelog.com convention, and as such looks for a line starting with `## [version] - date`. Your regex should match the version as the 2nd match group. The regex pattern is used with global and multiline flags. Also note that since this is passed as a String, you will need to escape a backslash `\` character via `\\`
 
 ### Creating Releases Automatically

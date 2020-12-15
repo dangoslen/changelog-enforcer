@@ -7,7 +7,23 @@ inputs:
     required: true
     default: 'CHANGELOG.md'
   skipLabel:
-    description: 'Name of the label used to skip enforcing a changelog change'
+    description: |
+      "DEPCRECATED as of v1.6.0. Please use the `skipLabels` input var instead. 
+    
+      Name of the label used to skip enforcing a changelog changed"
+    required: true
+    default: ''
+  skipLabels:
+    description: | 
+      "List of labels used to skip enforcing of the changelog during a pull request. Each label name is comma seperated and only one label needs to be 
+      present for enforcement to be skipped.
+
+      For example, if `label-1,label-2` was supplied as the `skipLabels`, `label-1` _or_ `label-2` would skip the enforcer. 
+
+      Each label is trimmed for leading and trailing spaces since GitHub labels do not allow for leading or trailing spaces. Thus, the following lists are equivalent:
+      * `label-1,label-2`
+      * `label-1 , label-2`
+      * `label-1  ,label-2`"
     required: true
     default: 'Skip-Changelog'
   expectedLatestVersion: 

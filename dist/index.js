@@ -7015,15 +7015,23 @@ const core = __webpack_require__(2186)
 const github = __webpack_require__(5438)
 const exec = __webpack_require__(1514)
 const versionExtractor = __webpack_require__(5568)
+const labelExtractor = __webpack_require__(863)
+
+const LABELS_WARNING_MESSAGE =
+`The skipLabel input variable is deprecated and will be removed in a future release. \
+Please use the skipLabels input variable instead.`
 
 module.exports.enforce = async function() {
     try {
         const skipLabel = core.getInput('skipLabel')
+        const skipLabels = core.getInput('skipLabels')
         const changeLogPath = core.getInput('changeLogPath')
         const expectedLatestVersion = core.getInput('expectedLatestVersion')
         const versionPattern = core.getInput('versionPattern')
 
-        core.info(`Skip Label: ${skipLabel}`)
+        const skipLabelList = getLabels(skipLabel, skipLabels)
+
+        core.info(`Skip Labels: ${skipLabelList}`)
         core.info(`Changelog Path: ${changeLogPath}`)
         core.info(`Expected Latest Version: ${expectedLatestVersion}`)
         core.info(`Version Pattern: ${versionPattern}`)
@@ -7032,7 +7040,7 @@ module.exports.enforce = async function() {
         const labelNames = pullRequest.labels.map(l => l.name)
         const baseRef = pullRequest.base.ref
 
-        if (!labelNames.includes(skipLabel)) {
+        if (!shouldSkip(labelNames, skipLabelList)) {
             await ensureBranchExists(baseRef)
             await checkChangeLog(baseRef, changeLogPath)
             await validateLatestVersion(expectedLatestVersion, versionPattern, changeLogPath)
@@ -7041,6 +7049,18 @@ module.exports.enforce = async function() {
         core.setFailed(error.message);
     }
 };
+
+function getLabels(skipLabel, skipLabels) {
+    if (skipLabel != '') {
+        core.warning(LABELS_WARNING_MESSAGE)
+        return [skipLabel]
+    } 
+    return labelExtractor.getLabels(skipLabels)
+}
+
+function shouldSkip(labelNames, skipLabelList) {
+    return labelNames.some(l => skipLabelList.includes(l))
+}
 
 async function ensureBranchExists(baseRef) {
     let output = ''
@@ -7104,6 +7124,27 @@ async function validateLatestVersion(expectedLatestVersion, versionPattern, chan
 }
 
 
+
+/***/ }),
+
+/***/ 863:
+/***/ ((module) => {
+
+module.exports.getLabels = function (labelsString) {
+    // Matches words (\w), dashes (-), plus signs (+), questions marks (\?), semi-colons (;), brackets (\[\]) and parenthesis (\(\))
+    // Leaves the trailing comma if there is one and is removed when parsing each group matched
+    const regex = new RegExp(/([\w-+\?;\[\]\(\)])+(,?)/, 'g')
+    let labels = []
+    do {
+        groups = regex.exec(labelsString)
+        if (groups) {
+            // Removes the trailing comma and removes all whitespace
+            label = groups[0].replace(",", "").trim()
+            labels.push(label)
+        }
+    } while(groups)
+    return labels
+}
 
 /***/ }),
 
