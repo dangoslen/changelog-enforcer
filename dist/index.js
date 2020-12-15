@@ -7017,6 +7017,10 @@ const exec = __webpack_require__(1514)
 const versionExtractor = __webpack_require__(5568)
 const labelExtractor = __webpack_require__(863)
 
+const LABELS_WARNING_MESSAGE =
+`The skipLabel input variable is deprecated and will be removed in a future release. \
+Please use the skipLabels input variable instead.`
+
 module.exports.enforce = async function() {
     try {
         const skipLabel = core.getInput('skipLabel')
@@ -7048,10 +7052,9 @@ module.exports.enforce = async function() {
 
 function getLabels(skipLabel, skipLabels) {
     if (skipLabel != '') {
-        core.warning(`The skipLabel input variable is deprecated and will be removed in a future release. \
-            Please use the skipLabels input variable instead.`)
+        core.warning(LABELS_WARNING_MESSAGE)
         return [skipLabel]
-    }
+    } 
     return labelExtractor.getLabels(skipLabels)
 }
 
