@@ -4,6 +4,10 @@ const exec = require('@actions/exec')
 const versionExtractor = require('./version-extractor')
 const labelExtractor = require('./label-extractor')
 
+const LABELS_WARNING_MESSAGE =
+`The skipLabel input variable is deprecated and will be removed in a future release. \
+Please use the skipLabels input variable instead.`
+
 module.exports.enforce = async function() {
     try {
         const skipLabel = core.getInput('skipLabel')
@@ -35,10 +39,9 @@ module.exports.enforce = async function() {
 
 function getLabels(skipLabel, skipLabels) {
     if (skipLabel != '') {
-        core.warning(`The skipLabel input variable is deprecated and will be removed in a future release. \
-            Please use the skipLabels input variable instead.`)
+        core.warning(LABELS_WARN_MESSAGE)
         return [skipLabel]
-    }
+    } 
     return labelExtractor.getLabels(skipLabels)
 }
 

@@ -64,7 +64,7 @@ describe('the changelog-enforcer', () => {
       done()
     })
   })
-
+  
   it('should enforce when label is not present; changelog is changed; branch checked out; latest version does not match', (done) => {
     inputs['skipLabels'] = 'A different label' 
     inputs['expectedLatestVersion'] = 'v1.10'
