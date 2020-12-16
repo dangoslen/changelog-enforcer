@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: dangoslen/changelog-enforcer@v1.6.0
+    - uses: dangoslen/changelog-enforcer@v1.6.1
       with:
         changeLogPath: 'CHANGELOG.md'
         skipLabels: 'Skip-Changelog'

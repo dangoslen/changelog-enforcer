@@ -1,6 +1,11 @@
+
 # CHANGELOG
 
 Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
+
+## [v1.6.1]
+### Fixed
+- Fixes #58 by properly accounting for whitespace characters in label names.
 
 ## [v1.6.0]
 ### Added
