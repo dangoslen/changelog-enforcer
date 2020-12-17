@@ -6,7 +6,6 @@ on:
 jobs:
   # unit tests
   unit-tests:
-    if: "!contains(github.event.head_commit.author_name, 'GitHub Actions')"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2.3.4
