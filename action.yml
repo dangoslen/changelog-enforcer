@@ -9,13 +9,6 @@ inputs:
     description: 'Path to the changelog file relative to the repository'
     required: true
     default: 'CHANGELOG.md'
-  skipLabel:
-    description: |
-      "DEPCRECATED as of v1.6.0. Please use the `skipLabels` input var instead. 
-    
-      Name of the label used to skip enforcing a changelog changed"
-    required: true
-    default: ''
   skipLabels:
     description: | 
       "List of labels used to skip enforcing of the changelog during a pull request. Each label name is comma seperated and only one label needs to be 

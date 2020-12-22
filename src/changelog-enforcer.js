@@ -9,15 +9,10 @@ const IN_CHANGELOG_PATH = 'changeLogPath'
 const IN_EXPECTED_LATEST_VERSION = 'expectedLatestVersion'
 const IN_VERSION_PATTERN = 'versionPattern'
 const IN_UPDATE_CUSTOM_ERROR = 'missingUpdateErrorMessage'
-const IN_SKIP_LABEL = 'skipLabel'
 const IN_SKIP_LABELS = 'skipLabels'
 
 // Output keys
 const OUT_ERROR_MESSAGE = 'errorMessage'
-
-const LABELS_WARNING_MESSAGE =
-`The skipLabel input variable is deprecated and will be removed in a future release. \
-Please use the skipLabels input variable instead.`
 
 module.exports.enforce = async function() {
     try {
@@ -49,12 +44,7 @@ module.exports.enforce = async function() {
 };
 
 function getLabels() {
-    const skipLabel = core.getInput(IN_SKIP_LABEL)
     const skipLabels = core.getInput(IN_SKIP_LABELS)
-    if (skipLabel != '') {
-        core.warning(LABELS_WARNING_MESSAGE)
-        return [skipLabel]
-    } 
     return labelExtractor.getLabels(skipLabels)
 }
 
