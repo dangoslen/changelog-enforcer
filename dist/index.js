@@ -7017,22 +7017,27 @@ const exec = __webpack_require__(1514)
 const versionExtractor = __webpack_require__(5568)
 const labelExtractor = __webpack_require__(863)
 
-const LABELS_WARNING_MESSAGE =
-`The skipLabel input variable is deprecated and will be removed in a future release. \
-Please use the skipLabels input variable instead.`
+// Input keys
+const IN_CHANGELOG_PATH = 'changeLogPath'
+const IN_EXPECTED_LATEST_VERSION = 'expectedLatestVersion'
+const IN_VERSION_PATTERN = 'versionPattern'
+const IN_UPDATE_CUSTOM_ERROR = 'missingUpdateErrorMessage'
+const IN_SKIP_LABELS = 'skipLabels'
+
+// Output keys
+const OUT_ERROR_MESSAGE = 'errorMessage'
 
 module.exports.enforce = async function() {
     try {
-        const skipLabel = core.getInput('skipLabel')
-        const skipLabels = core.getInput('skipLabels')
-        const changeLogPath = core.getInput('changeLogPath')
-        const expectedLatestVersion = core.getInput('expectedLatestVersion')
-        const versionPattern = core.getInput('versionPattern')
-
-        const skipLabelList = getLabels(skipLabel, skipLabels)
+        const skipLabelList = getLabels()
+        const changeLogPath = core.getInput(IN_CHANGELOG_PATH)
+        const missingUpdateErrorMessage = getMissingUpdateErrorMessage(changeLogPath)
+        const expectedLatestVersion = core.getInput(IN_EXPECTED_LATEST_VERSION)
+        const versionPattern = core.getInput(IN_VERSION_PATTERN)
 
         core.info(`Skip Labels: ${skipLabelList}`)
         core.info(`Changelog Path: ${changeLogPath}`)
+        core.info(`Missing Update Error Message: ${missingUpdateErrorMessage}`)
         core.info(`Expected Latest Version: ${expectedLatestVersion}`)
         core.info(`Version Pattern: ${versionPattern}`)
 
@@ -7040,26 +7045,32 @@ module.exports.enforce = async function() {
         const labelNames = pullRequest.labels.map(l => l.name)
         const baseRef = pullRequest.base.ref
 
-        if (!shouldSkip(labelNames, skipLabelList)) {
+        if (shouldEnforceChangelog(labelNames, skipLabelList)) {
             await ensureBranchExists(baseRef)
-            await checkChangeLog(baseRef, changeLogPath)
+            await checkChangeLog(baseRef, changeLogPath, missingUpdateErrorMessage)
             await validateLatestVersion(expectedLatestVersion, versionPattern, changeLogPath)
         }
     } catch(error) {
-        core.setFailed(error.message);
+        core.setOutput(OUT_ERROR_MESSAGE, error.message)
+        core.setFailed(error.message)
     }
 };
 
-function getLabels(skipLabel, skipLabels) {
-    if (skipLabel != '') {
-        core.warning(LABELS_WARNING_MESSAGE)
-        return [skipLabel]
-    } 
+function getLabels() {
+    const skipLabels = core.getInput(IN_SKIP_LABELS)
     return labelExtractor.getLabels(skipLabels)
 }
 
-function shouldSkip(labelNames, skipLabelList) {
-    return labelNames.some(l => skipLabelList.includes(l))
+function getMissingUpdateErrorMessage(changeLogPath) {
+    const customMessage = core.getInput(IN_UPDATE_CUSTOM_ERROR)
+    if (customMessage != null && customMessage != '') {
+        return customMessage
+    }
+    return `No update to ${changeLogPath} found!`
+}
+
+function shouldEnforceChangelog(labelNames, skipLabelList) {
+    return !labelNames.some(l => skipLabelList.includes(l))
 }
 
 async function ensureBranchExists(baseRef) {
@@ -7085,7 +7096,7 @@ async function ensureBranchExists(baseRef) {
     }
 }
 
-async function checkChangeLog(baseRef, changeLogPath) {
+async function checkChangeLog(baseRef, changeLogPath, missingUpdateErrorMessage) {
     let output = ''
     const options = {}
     options.listeners = {
@@ -7103,8 +7114,9 @@ async function checkChangeLog(baseRef, changeLogPath) {
         fileNames.push(fileName)
     })
     
+
     if (!fileNames.includes(changeLogPath)) {
-        throw new Error(`No update to ${changeLogPath} found!`)
+        throw new Error(missingUpdateErrorMessage)
     }
 }
 
