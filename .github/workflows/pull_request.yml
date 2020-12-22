@@ -37,7 +37,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           check_for_duplicate_msg: true
-          msg: Hey ${{ github.event.pull_request.user.login }}, can you add a quick summary of your change to the [CHANGELOG](./CHANGELOG.md) file please? Thanks!
+          msg: |
+            Hey @${{ github.event.pull_request.user.login }}, the Changelog Enforcer failed. Can you take a look at the error below and correct it? Thanks!
+
+            ```
+            ${{ steps.changelog-enforcer.outputs.errorMessage }}
+            ```
 
   # test action works running from the graph  
   enforce-changelog-v2:
