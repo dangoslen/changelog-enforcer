@@ -34,7 +34,7 @@ inputs:
       is passed as a String, you will need to escape a backslash \ character via \\"
     required: true
     default: "^## \\[((v|V)?\\d*\\.\\d*\\.\\d*-?\\w*|unreleased|Unreleased|UNRELEASED)\\]"
-missingUpdateErrorMessage:
+  missingUpdateErrorMessage:
     description: "The error message logged and returned in the 'errorMessage' output when no update to the changelog has been found."
     required: false
 runs:
