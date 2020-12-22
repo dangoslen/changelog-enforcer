@@ -1,6 +1,9 @@
 name: 'Changelog Enforcer'
 author: '@dangoslen'
 description: 'Enforces a repository changelog to be kept up to date.'
+outputs:
+  errorMessage: 
+    description: "A message containing the reason why the Changelog Enfrocer failed."
 inputs:
   changeLogPath:
     description: 'Path to the changelog file relative to the repository'
@@ -38,6 +41,9 @@ inputs:
       is passed as a String, you will need to escape a backslash \ character via \\"
     required: true
     default: "^## \\[((v|V)?\\d*\\.\\d*\\.\\d*-?\\w*|unreleased|Unreleased|UNRELEASED)\\]"
+  missingUpdateErrorMessage:
+    description: "The error message logged and returned in the 'errorMessage' output when no update to the changelog has been found."
+    required: false
 runs:
   using: 'node12'
   main: 'dist/index.js'
