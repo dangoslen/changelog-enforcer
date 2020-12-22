@@ -10,6 +10,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ### Dependencies
 - Bumps `node-notifier` from `8.0.0` to `8.0.1`
+- Bumps `eslint` from `7.15.0` to `7.16.0`
 
 ## [v1.6.1]
 ### Fixed
