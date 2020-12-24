@@ -3,7 +3,7 @@ author: '@dangoslen'
 description: 'Enforces a repository changelog to be kept up to date.'
 outputs:
   errorMessage: 
-    description: "A message containing the reason why the Changelog Enfrocer failed."
+    description: "A message containing the reason why the Changelog Enforcer failed."
 inputs:
   changeLogPath:
     description: 'Path to the changelog file relative to the repository'
