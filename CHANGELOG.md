@@ -9,8 +9,9 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
   - Adds a new output `errorMessage` that states why the Changelog Enforcer failed. Added to allow users to use the error message within the rest of the action workflow.
 
 ### Dependencies
-- Bumps `node-notifier` from `8.0.0` to `8.0.1`
-- Bumps `eslint` from `7.15.0` to `7.16.0`
+- Bumps `@vercel/ncc` from `0.25.1` to `0.26.1` (#63)
+- Bumps `eslint` from `7.15.0` to `7.16.0` (#64)
+- Bumps `node-notifier` from `8.0.0` to `8.0.1` (#65)
 
 ## [v1.6.1]
 ### Fixed
