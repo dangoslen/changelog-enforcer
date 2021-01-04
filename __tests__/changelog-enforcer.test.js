@@ -10,6 +10,13 @@ const VERSION_PATTERN = "^## \\[((v|V)?\\d*\\.\\d*\\.\\d*-?\\w*|unreleased|Unrel
 // Inputs for mock @actions/core
 let inputs = {}
 
+// Mocks via Jest
+let infoSpy
+let failureSpy
+let warnSpy 
+let outputSpy
+let execSpy
+
 describe('the changelog-enforcer', () => {
 
   afterAll(() => {
@@ -20,7 +27,6 @@ describe('the changelog-enforcer', () => {
   beforeEach(() => {
     jest.clearAllMocks()
 
-    inputs['skipLabel'] = ''
     inputs['skipLabels'] = SKIP_LABELS
     inputs['changeLogPath'] = CHANGELOG
     inputs['expectedLatestVersion'] = '' 
@@ -29,37 +35,22 @@ describe('the changelog-enforcer', () => {
     jest.spyOn(core, 'getInput').mockImplementation((name) => {
       return inputs[name]
     })
+
+    infoSpy = jest.spyOn(core, 'info').mockImplementation(jest.fn())
+    warnSpy = jest.spyOn(core, 'warning').mockImplementation(jest.fn())
+    failureSpy = jest.spyOn(core, 'setFailed').mockImplementation(jest.fn())
+    outputSpy = jest.spyOn(core, 'setOutput').mockImplementation(jest.fn())
+
+    execSpy = jest.spyOn(exec, 'exec').mockImplementation((command, args, options) => { return 0 })
   })
 
   it('should skip enforcing when label is present', (done) => {
-    const infoSpy = jest.spyOn(core, 'info').mockImplementation(jest.fn())
-    const failureSpy = jest.spyOn(core, 'error').mockImplementation(jest.fn())
-    const execSpy = jest.spyOn(exec, 'exec').mockImplementation((command, args, options) => { return 0 })
-
     changelogEnforcer.enforce()
     .then(() => {
-      expect(infoSpy.mock.calls.length).toBe(4)
+      expect(infoSpy.mock.calls.length).toBe(5)
       expect(execSpy).not.toHaveBeenCalled()
       expect(failureSpy).not.toHaveBeenCalled()
-
-      done()
-    })
-  })
-
-  it('should skip enforcing when label is present from old input variable', (done) => {
-    inputs['skipLabel'] = 'Skip-Changelog'
-    
-    const infoSpy = jest.spyOn(core, 'info').mockImplementation(jest.fn())
-    const warnSpy = jest.spyOn(core, 'warning').mockImplementation(jest.fn())
-    const failureSpy = jest.spyOn(core, 'error').mockImplementation(jest.fn())
-    const execSpy = jest.spyOn(exec, 'exec').mockImplementation((command, args, options) => { return 0 })
-
-    changelogEnforcer.enforce()
-    .then(() => {
-      expect(infoSpy.mock.calls.length).toBe(4)
-      expect(warnSpy.mock.calls.length).toBe(1)
-      expect(execSpy).not.toHaveBeenCalled()
-      expect(failureSpy).not.toHaveBeenCalled()
+      expect(outputSpy).not.toHaveBeenCalled()
 
       done()
     })
@@ -68,10 +59,7 @@ describe('the changelog-enforcer', () => {
   it('should enforce when label is not present; changelog is changed; branch checked out; latest version does not match', (done) => {
     inputs['skipLabels'] = 'A different label' 
     inputs['expectedLatestVersion'] = 'v1.10'
-
-    const infoSpy = jest.spyOn(core, 'info').mockImplementation(jest.fn())
-    const failureSpy = jest.spyOn(core, 'setFailed').mockImplementation(jest.fn())
-    const execSpy = jest.spyOn(exec, 'exec').mockImplementation((command, args, options) => {
+    execSpy = jest.spyOn(exec, 'exec').mockImplementation((command, args, options) => {
       let stdout = ''
       if (args[0] == 'diff') {
         stdout = 
@@ -94,10 +82,11 @@ A       an_added_changed_file.js`
 
     changelogEnforcer.enforce()
     .then(() => {
-      expect(infoSpy.mock.calls.length).toBe(4)
+      expect(infoSpy.mock.calls.length).toBe(5)
       expect(execSpy.mock.calls.length).toBe(2)
       expect(versionSpy.mock.calls.length).toBe(1)
       expect(failureSpy).toHaveBeenCalled()
+      expect(outputSpy).toHaveBeenCalled()
 
       const command_branch = execSpy.mock.calls[0][0]
       const command_branch_args = execSpy.mock.calls[0][1].join(' ')
@@ -117,8 +106,6 @@ A       an_added_changed_file.js`
     inputs['skipLabels'] = 'A different label' 
     inputs['expectedLatestVersion'] = 'v1.10'
 
-    const infoSpy = jest.spyOn(core, 'info').mockImplementation(jest.fn())
-    const failureSpy = jest.spyOn(core, 'setFailed').mockImplementation(jest.fn())
     const execSpy = jest.spyOn(exec, 'exec').mockImplementation((command, args, options) => {
       let stdout = ''
       if (args[0] == 'diff') {
@@ -143,10 +130,11 @@ A       an_added_changed_file.js`
 
     changelogEnforcer.enforce()
     .then(() => {
-      expect(infoSpy.mock.calls.length).toBe(4)
+      expect(infoSpy.mock.calls.length).toBe(5)
       expect(execSpy.mock.calls.length).toBe(2)
       expect(versionSpy.mock.calls.length).toBe(1)
       expect(failureSpy).not.toHaveBeenCalled()
+      expect(outputSpy).not.toHaveBeenCalled()
 
       const command_branch = execSpy.mock.calls[0][0]
       const command_branch_args = execSpy.mock.calls[0][1].join(' ')
@@ -165,8 +153,6 @@ A       an_added_changed_file.js`
   it('should enforce when label is not present; changelog is not changed; branch checked out', (done) => {
     inputs['skipLabels'] = 'A different label' 
 
-    const infoSpy = jest.spyOn(core, 'info').mockImplementation(jest.fn())
-    const failureSpy = jest.spyOn(core, 'setFailed').mockImplementation(jest.fn())
     const execSpy = jest.spyOn(exec, 'exec').mockImplementation((command, args, options) => {
       let stdout = ''
       if (args[0] == 'diff') {
@@ -186,9 +172,53 @@ A       an_added_changed_file.js`
 
     changelogEnforcer.enforce()
     .then(() => {
-      expect(infoSpy.mock.calls.length).toBe(4)
+      expect(infoSpy.mock.calls.length).toBe(5)
       expect(execSpy.mock.calls.length).toBe(2)
       expect(failureSpy).toHaveBeenCalled()
+      expect(outputSpy).toHaveBeenCalled()
+
+      const command_branch = execSpy.mock.calls[0][0]
+      const command_branch_args = execSpy.mock.calls[0][1].join(' ')
+      expect(command_branch).toBe('git')
+      expect(command_branch_args).toBe('branch --verbose --all')
+
+      const command_diff = execSpy.mock.calls[1][0]
+      const command_diff_args = execSpy.mock.calls[1][1].join(' ')
+      expect(command_diff).toBe('git')
+      expect(command_diff_args).toBe('diff origin/master --name-status --diff-filter=AM')
+      
+      done()
+    })
+  })
+
+  it('should enforce when label is not present; changelog is not changed; branch checked out; custom error message', (done) => {
+    const customErrorMessage = 'Some Message for you @Author!'
+    inputs['skipLabels'] = 'A different label' 
+    inputs['missingUpdateErrorMessage'] = customErrorMessage
+
+    const execSpy = jest.spyOn(exec, 'exec').mockImplementation((command, args, options) => {
+      let stdout = ''
+      if (args[0] == 'diff') {
+        stdout = 
+`M       .env.js
+A       an_added_changed_file.js`
+      }
+      if (args[0] == 'branch') {
+        stdout =
+` * (HEAD detached at pull/27/merge) 6a67f6e Merge 
+    remotes/origin/master somecommithash
+    remotes/origin/changes someotherhash`
+      }
+      options.listeners.stdout(stdout)
+      return 0
+    })
+
+    changelogEnforcer.enforce()
+    .then(() => {
+      expect(infoSpy.mock.calls.length).toBe(5)
+      expect(execSpy.mock.calls.length).toBe(2)
+      expect(failureSpy).toHaveBeenCalled()
+      expect(outputSpy).toHaveBeenCalledWith('errorMessage', customErrorMessage)
 
       const command_branch = execSpy.mock.calls[0][0]
       const command_branch_args = execSpy.mock.calls[0][1].join(' ')
@@ -207,8 +237,6 @@ A       an_added_changed_file.js`
   it('should enforce when label is not present; changelog is changed; branch not checked out', (done) => {
     inputs['skipLabels'] = 'A different label' 
 
-    const infoSpy = jest.spyOn(core, 'info').mockImplementation(jest.fn())
-    const failureSpy = jest.spyOn(core, 'setFailed').mockImplementation(jest.fn())
     const execSpy = jest.spyOn(exec, 'exec').mockImplementation((command, args, options) => {
       if (args[2] == 'fetch') {
         return 0
@@ -231,9 +259,10 @@ M       CHANGELOG.md`
 
     changelogEnforcer.enforce()
     .then(() => {
-      expect(infoSpy.mock.calls.length).toBe(4)
+      expect(infoSpy.mock.calls.length).toBe(5)
       expect(execSpy.mock.calls.length).toBe(3)
       expect(failureSpy).not.toHaveBeenCalled()
+      expect(outputSpy).not.toHaveBeenCalled()
 
       const command_branch = execSpy.mock.calls[0][0]
       const command_branch_args = execSpy.mock.calls[0][1].join(' ')

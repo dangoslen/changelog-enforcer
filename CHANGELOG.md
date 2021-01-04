@@ -2,6 +2,17 @@
 
 Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v2.0.0]
+### Added
+- Feature request from #62
+  - Adds a new property `missingUpdateErrorMessage` for passing a custom error message when no update is found to the changelog. See the [Inputs / Properties](https://github.com/dangoslen/changelog-enforcer#inputs--properties) section in the `README.md` for more information.
+  - Adds a new output `errorMessage` that states why the Changelog Enforcer failed. Added to allow users to use the error message within the rest of the action workflow.
+
+### Dependencies
+- Bumps `@vercel/ncc` from `0.25.1` to `0.26.1` (#63)
+- Bumps `eslint` from `7.15.0` to `7.17.0` (#64, #70)
+- Bumps `node-notifier` from `8.0.0` to `8.0.1` (#65)
+
 ## [v1.6.1]
 ### Fixed
 - Fixes #58 by properly accounting for whitespace characters in label names.

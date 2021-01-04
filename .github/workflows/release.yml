@@ -2,7 +2,7 @@ name: "Release Workflow"
 on:
   push:
     branches:
-      - 'master'
+      - 'releases/v1.6'
 
 jobs:
   release:
@@ -10,10 +10,11 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
-      - name: Read version
+      - name: Read versions
         id: read_version
         run: |
           echo ::set-output name=version::$(cat VERSION)
+          echo ::set-output name=major_tag::$(cat VERSION | cut -d '.' -f 1)
         shell: bash
       - name: Get Changelog Entry
         id: changelog_reader
@@ -40,3 +41,9 @@ jobs:
           body: ${{ steps.changelog_reader.outputs.changes }} 
           draft: false
           prerelease: false
+      - name: Update Major Version Tag
+        uses: richardsimko/update-tag@v1
+        with:
+          tag_name: ${{ steps.read_version.outputs.major_tag }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
