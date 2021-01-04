@@ -1,18 +1,14 @@
 name: 'Changelog Enforcer'
 author: '@dangoslen'
 description: 'Enforces a repository changelog to be kept up to date.'
+outputs:
+  errorMessage: 
+    description: "A message containing the reason why the Changelog Enforcer failed."
 inputs:
   changeLogPath:
     description: 'Path to the changelog file relative to the repository'
     required: true
     default: 'CHANGELOG.md'
-  skipLabel:
-    description: |
-      "DEPCRECATED as of v1.6.0. Please use the `skipLabels` input var instead. 
-    
-      Name of the label used to skip enforcing a changelog changed"
-    required: true
-    default: ''
   skipLabels:
     description: | 
       "List of labels used to skip enforcing of the changelog during a pull request. Each label name is comma seperated and only one label needs to be 
@@ -38,6 +34,9 @@ inputs:
       is passed as a String, you will need to escape a backslash \ character via \\"
     required: true
     default: "^## \\[((v|V)?\\d*\\.\\d*\\.\\d*-?\\w*|unreleased|Unreleased|UNRELEASED)\\]"
+  missingUpdateErrorMessage:
+    description: "The error message logged and returned in the 'errorMessage' output when no update to the changelog has been found."
+    required: false
 runs:
   using: 'node12'
   main: 'dist/index.js'
