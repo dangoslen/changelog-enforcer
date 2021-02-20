@@ -20,7 +20,7 @@ jobs:
         id: changelog_reader
         uses: mindsers/changelog-reader-action@v2
         with:
-          version: v${{ steps.read_version.outputs.version }}
+          version: "v${{ steps.read_version.outputs.version }}"
           path: ./CHANGELOG.md
       - name: Check for Release
         id: check_release
@@ -36,7 +36,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v${{ steps.read_version.outputs.version }}
+          tag_name: "v${{ steps.read_version.outputs.version }}"
           release_name: Changelog Enforcer ${{ steps.read_version.outputs.version }}
           body: ${{ steps.changelog_reader.outputs.changes }} 
           draft: false
@@ -44,6 +44,6 @@ jobs:
       - name: Update Major Version Tag
         uses: richardsimko/update-tag@v1
         with:
-          tag_name: v${{ steps.read_version.outputs.major_tag }}
+          tag_name: "v${{ steps.read_version.outputs.major_tag }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

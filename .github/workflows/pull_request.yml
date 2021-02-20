@@ -65,7 +65,7 @@ jobs:
         id: changelog_reader
         uses: mindsers/changelog-reader-action@v2
         with:
-          version: v${{ steps.read_version.outputs.version }}
+          version: "v${{ steps.read_version.outputs.version }}"
           path: ./CHANGELOG.md
       - name: Check for Release
         id: check_release
