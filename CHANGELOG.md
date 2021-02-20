@@ -2,6 +2,11 @@
 
 Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [UNRELEASED]
+### Dependencies
+- Bump eslint from 7.17.0 to 7.20.0.
+- Bump @vercel/ncc from 0.26.1 to 0.27.0
+
 ## [v2.0.0]
 ### Added
 - Feature request from #62
