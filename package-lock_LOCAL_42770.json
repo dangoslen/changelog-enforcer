@@ -2718,9 +2718,9 @@
       }
     },
     "file-entry-cache": {
-      "version": "6.0.1",
-      "resolved": "https://registry.npmjs.org/file-entry-cache/-/file-entry-cache-6.0.1.tgz",
-      "integrity": "sha512-7Gps/XWymbLk2QLYK4NzpMOrYjMhdIxXuIvy2QBsLE6ljuodKvdkWs/cpyJJ3CVIVpH0Oi1Hvg1ovbMzLdFBBg==",
+      "version": "6.0.0",
+      "resolved": "https://registry.npmjs.org/file-entry-cache/-/file-entry-cache-6.0.0.tgz",
+      "integrity": "sha512-fqoO76jZ3ZnYrXLDRxBR1YvOvc0k844kcOg40bgsPrE25LAb/PDqTY+ho64Xh2c8ZXgIKldchCFHczG2UVRcWA==",
       "dev": true,
       "requires": {
         "flat-cache": "^3.0.4"
@@ -6272,15 +6272,9 @@
       },
       "dependencies": {
         "ajv": {
-<<<<<<< HEAD
           "version": "7.1.0",
           "resolved": "https://registry.npmjs.org/ajv/-/ajv-7.1.0.tgz",
           "integrity": "sha512-svS9uILze/cXbH0z2myCK2Brqprx/+JJYK5pHicT/GQiBfzzhUVAIT6MwqJg8y4xV/zoGsUeuPuwtoiKSGE15g==",
-=======
-          "version": "7.1.1",
-          "resolved": "https://registry.npmjs.org/ajv/-/ajv-7.1.1.tgz",
-          "integrity": "sha512-ga/aqDYnUy/o7vbsRTFhhTsNeXiYb5JWDIcRIeZfwRNCefwjNTVYCGdGSUrEmiu3yDK3vFvNbgJxvrQW4JXrYQ==",
->>>>>>> f40a60d9ace7227663ff3d0f071377da0868fdf8
           "dev": true,
           "requires": {
             "fast-deep-equal": "^3.1.1",
