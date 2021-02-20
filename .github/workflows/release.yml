@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - 'releases/v1.6'
+      - 'master'
 
 jobs:
   release:

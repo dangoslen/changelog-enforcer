@@ -5,10 +5,10 @@ module.exports.getLabels = function (labelsString) {
     const regex = new RegExp(/([\w\s-+\?;\[\]\(\)]+,?)/, 'g')
     let labels = []
     do {
-        groups = regex.exec(labelsString)
+        let groups = regex.exec(labelsString)
         if (groups) {
             // Removes the trailing comma and removes all whitespace
-            label = groups[0].replace(",", "").trim()
+            let label = groups[0].replace(",", "").trim()
             labels.push(label)
         }
     } while(groups)
