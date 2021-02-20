@@ -4,11 +4,12 @@ module.exports.getLabels = function (labelsString) {
     // Each match may are may not have a trailing comma (,?). If one exists, it is removed before appending it to the list
     const regex = new RegExp(/([\w\s-+\?;\[\]\(\)]+,?)/, 'g')
     let labels = []
+    let groups
     do {
         groups = regex.exec(labelsString)
         if (groups) {
             // Removes the trailing comma and removes all whitespace
-            label = groups[0].replace(",", "").trim()
+            let label = groups[0].replace(",", "").trim()
             labels.push(label)
         }
     } while(groups)
