@@ -30,7 +30,7 @@ jobs:
       - id: changelog-enforcer
         uses: ./
         with:
-          expectedLatestVersion: ${{ steps.read-version.outputs.version }}
+          expectedLatestVersion: "v${{ steps.read-version.outputs.version }}"
       - if: failure()
         uses: unsplash/comment-on-pr@master
         env:
