@@ -13,8 +13,8 @@ jobs:
       - name: Read versions
         id: read_version
         run: |
-          echo ::set-output name=version::$(jq ".version" package.json)
-          echo ::set-output name=major_tag::$(jq ".version" package.json | cut -d '.' -f 1)
+          echo ::set-output name=version::$(jq -r ".version" package.json)
+          echo ::set-output name=major_tag::$(jq -r ".version" package.json | cut -d '.' -f 1)
         shell: bash
       - name: Get Changelog Entry
         id: changelog_reader
