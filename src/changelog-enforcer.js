@@ -16,7 +16,7 @@ const OUT_ERROR_MESSAGE = 'errorMessage'
 
 module.exports.enforce = async function() {
     try {
-        const skipLabelList = getLabels()
+        const skipLabelList = getSkipLabels()
         const changeLogPath = core.getInput(IN_CHANGELOG_PATH)
         const missingUpdateErrorMessage = getMissingUpdateErrorMessage(changeLogPath)
         const expectedLatestVersion = core.getInput(IN_EXPECTED_LATEST_VERSION)
@@ -43,9 +43,9 @@ module.exports.enforce = async function() {
     }
 };
 
-function getLabels() {
+function getSkipLabels() {
     const skipLabels = core.getInput(IN_SKIP_LABELS)
-    return labelExtractor.getLabels(skipLabels)
+    return labelExtractor.extractLabels(skipLabels)
 }
 
 function getMissingUpdateErrorMessage(changeLogPath) {
