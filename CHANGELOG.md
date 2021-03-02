@@ -2,6 +2,11 @@
 
 Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v2.0.2]
+### Changed
+- Minor changes to workflows to use `package.json` version
+- Minor changes to tests and names
+
 ## [v2.0.1]
 ### Dependencies
 - Bump `eslint` from 7.17.0 to 7.20.0.
