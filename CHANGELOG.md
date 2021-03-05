@@ -9,6 +9,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## Dependencies
 - Bumps `uglify-js` from 3.12.1 to 3.13.0
+- Bumps `eslint` from 7.20.0 to 7.21.0
 
 ## [v2.0.1]
 ### Dependencies
