@@ -7,9 +7,12 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Minor changes to workflows to use `package.json` version
 - Minor changes to tests and names
 
+## Dependencies
+- Bumps `uglify-js` from 3.12.1 to 3.13.0
+
 ## [v2.0.1]
 ### Dependencies
-- Bump `eslint` from 7.17.0 to 7.20.0.
+- Bump `eslint` from 7.17.0 to 7.20.0
 - Bump `@vercel/ncc` from 0.26.1 to 0.27.0
 
 ### Changed
