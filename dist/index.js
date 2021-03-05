@@ -7029,7 +7029,7 @@ const OUT_ERROR_MESSAGE = 'errorMessage'
 
 module.exports.enforce = async function() {
     try {
-        const skipLabelList = getLabels()
+        const skipLabelList = getSkipLabels()
         const changeLogPath = core.getInput(IN_CHANGELOG_PATH)
         const missingUpdateErrorMessage = getMissingUpdateErrorMessage(changeLogPath)
         const expectedLatestVersion = core.getInput(IN_EXPECTED_LATEST_VERSION)
@@ -7056,9 +7056,9 @@ module.exports.enforce = async function() {
     }
 };
 
-function getLabels() {
+function getSkipLabels() {
     const skipLabels = core.getInput(IN_SKIP_LABELS)
-    return labelExtractor.getLabels(skipLabels)
+    return labelExtractor.extractLabels(skipLabels)
 }
 
 function getMissingUpdateErrorMessage(changeLogPath) {
@@ -7142,7 +7142,7 @@ async function validateLatestVersion(expectedLatestVersion, versionPattern, chan
 /***/ 863:
 /***/ ((module) => {
 
-module.exports.getLabels = function (labelsString) {
+module.exports.extractLabels = function (labelsString) {
     // Parses a list of labels. Each label can be of any length and will either end with a comma or be the end of the string.
     // Matches words (\w), whitespace characters (\s), dashes (-), plus signs (+), questions marks (\?), semi-colons (;), brackets (\[\]) and parenthesis (\(\))
     // Each match may are may not have a trailing comma (,?). If one exists, it is removed before appending it to the list

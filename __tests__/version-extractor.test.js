@@ -33,7 +33,7 @@ describe('the verstion-extractor', () => {
   })
 
   it('should return all versions via keep a changelog format', () => {
-    const readFileSync = jest.spyOn(fs, 'readFileSync').mockImplementation((path, encoding) => {
+    jest.spyOn(fs, 'readFileSync').mockImplementation((path, encoding) => {
       if (encoding == 'utf8' && path == CHANGELOG) {
         return KEEP_A_CHANGELOG
       }
@@ -45,7 +45,7 @@ describe('the verstion-extractor', () => {
   })
 
   it('should return all versions via custom format', () => {
-    const readFileSync = jest.spyOn(fs, 'readFileSync').mockImplementation((path, encoding) => {
+    jest.spyOn(fs, 'readFileSync').mockImplementation((path, encoding) => {
       if (encoding == 'utf8' && path == CHANGELOG) {
         return CUSTOM
       }
