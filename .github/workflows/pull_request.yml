@@ -27,6 +27,9 @@ jobs:
       - id: read-version
         run: |
           echo "::set-output name=version::$(jq -r ".version" package.json)"
+      - uses: dangoslen/dependabot-changelog-helper@v0.2.0
+        with:
+          activationLabel: dependabot  
       - id: changelog-enforcer
         uses: ./
         with:
