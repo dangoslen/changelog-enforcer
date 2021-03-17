@@ -24,12 +24,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+        with: 
+          token: ${{ secrets.ACTION_TOKEN }}
       - id: read-version
         run: |
           echo "::set-output name=version::$(jq -r ".version" package.json)"
       - uses: dangoslen/dependabot-changelog-helper@v0.2.0
         with:
-          activationLabel: dependabot  
+          activationLabel: 'dependabot'
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "Update changelog"
       - id: changelog-enforcer
         uses: ./
         with:
