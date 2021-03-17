@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [UNRELEASED]
+### Dependencies
+- Bumps `eslint` from 7.21.0 to 7.22.0
+
 Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [v2.0.2]
