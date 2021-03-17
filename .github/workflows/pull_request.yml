@@ -18,12 +18,12 @@ jobs:
         with:
           commit_message: "Auto commit packaged action"
 
-  # test action works running from the graph - back compat
+  # test action works running from the graph
   enforce-changelog:
     needs: unit-tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
         with: 
           token: ${{ secrets.ACTION_TOKEN }}
       - id: read-version
@@ -52,12 +52,12 @@ jobs:
             ${{ steps.changelog-enforcer.outputs.errorMessage }}
             ```
 
-  # test action works running from the graph  
-  enforce-changelog-v2:
+  # test action works running from the graph - back compat
+  enforce-changelog-v1:
     needs: unit-tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v1
       - uses: ./
 
   preview-release:
