@@ -26,19 +26,25 @@ jobs:
       - uses: actions/checkout@v2
         with: 
           token: ${{ secrets.ACTION_TOKEN }}
+
       - id: read-version
         run: |
           echo "::set-output name=version::$(jq -r ".version" package.json)"
+
       - uses: dangoslen/dependabot-changelog-helper@v0.2.0
         with:
           activationLabel: 'dependabot'
+          newVersionLineNumber: 4
+
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "Update changelog"
+
       - id: changelog-enforcer
         uses: ./
         with:
           expectedLatestVersion: "v${{ steps.read-version.outputs.version }}"
+          
       - if: failure()
         uses: unsplash/comment-on-pr@master
         env:
