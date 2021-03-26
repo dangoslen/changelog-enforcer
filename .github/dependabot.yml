@@ -20,4 +20,4 @@ updates:
     open-pull-requests-limit: 3
     schedule:
       interval: "daily"
-    target-branch: "releases/v2.1"
+    target-branch: "releases/v2.2"
