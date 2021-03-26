@@ -67,7 +67,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
   - When supplied, the Changelog Enforcer validates that this is the latest version in the changelog or the latest version after an "Unreleased" version if one exists.
 - New input parameter `versionPattern`.
   - Used in conjunction with `expectedLatestVersion`. This is a javascript string that is converted to a regular expression that is used to extract the versions in the changelog identified by the `changeLogPath` input. By default is uses a regular expression for the [KeepAChangelog.org format](https://keepachangelog.com/en/1.0.0/).
-
+ to 3.13.2
 ### Changed
 - Updates to `README` and `CHANGELOG` for new features
 
