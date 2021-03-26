@@ -44,7 +44,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
  to 3.13.2
 ### Changed
 - Deprecates the `skipLabel` input variable in favor of the `skipLabels` input variable
-
+ to 3.13.2
 ### Dependencies
 - `eslint` from `7.14.0` to `7.15.0`
 - `uglify-js` from `2.6.0` to `3.12.1`
