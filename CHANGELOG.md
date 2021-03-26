@@ -81,7 +81,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ## [v1.4.0]
 ### Summary
 Please upgrade to use with `actions/checkout@v2`!
-
+ to 3.13.2
 ### Fixes
 - Now works with both `actions/checkout@v1` and `actions/checkout@v2`
 
