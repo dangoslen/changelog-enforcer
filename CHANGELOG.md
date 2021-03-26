@@ -37,7 +37,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ## [v1.6.1]
 ### Fixed
 - Fixes #58 by properly accounting for whitespace characters in label names.
-
+ to 3.13.2
 ## [v1.6.0]
 ### Added
 - New `skipLabels` input variable to supply a list of labels to skip enforcement for. See the [Inputs / Properties](https://github.com/dangoslen/changelog-enforcer#inputs--properties) section in the `README.md` for more information.
