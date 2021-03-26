@@ -4,8 +4,8 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ## [UNRELEASED]
 ### Dependencies
 - Bumps `eslint` from 7.21.0 to 7.22.0
-- Bumps `uglify-js` from 3.13.0 to 3.13.1
- to 3.13.2
+- Bumps `uglify-js` from 3.13.0 to 3.13.2
+
 ## [v2.0.2]
 ### Changed
 - Minor changes to workflows to use `package.json` version
