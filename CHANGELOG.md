@@ -77,7 +77,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
  to 3.13.2
 ### Adds
 - Badge for workflows using this action
-
+ to 3.13.2
 ## [v1.4.0]
 ### Summary
 Please upgrade to use with `actions/checkout@v2`!
