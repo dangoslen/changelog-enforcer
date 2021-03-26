@@ -107,7 +107,7 @@ Please upgrade to use with `actions/checkout@v2`!
 ## [v1.1.1]
 ### Fixes
 - Referencing proper step id in workflow for creating releases
-
+ to 3.13.2
 ## [v1.1.0]
 ### Added
 - Using [Changelog Reader](https://github.com/marketplace/actions/changelog-reader) to automate creating GitHub Releases from this `CHANGELOG.md`
