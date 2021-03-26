@@ -70,7 +70,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
  to 3.13.2
 ### Changed
 - Updates to `README` and `CHANGELOG` for new features
-
+ to 3.13.2
 ## [v1.4.1]
 ### Security
 - `@actions/core@1.1.1` to `@actions/core@1.2.6`
