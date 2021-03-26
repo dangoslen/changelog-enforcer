@@ -119,7 +119,7 @@ Please upgrade to use with `actions/checkout@v2`!
 ## [v1.0.1]
 ### Fixed  
 - Fixes spelling of `skipLabel` property in `README.md`
-
+ to 3.13.2
 ## [v1.0.0]
 ### Added
 - Adds updates to the `README.md` and `action.yaml` to prepare to the GitHub marketplace
