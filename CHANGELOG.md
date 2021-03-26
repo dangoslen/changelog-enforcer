@@ -87,7 +87,7 @@ Please upgrade to use with `actions/checkout@v2`!
  to 3.13.2
 ### Adds
 - Code coverage checks via `jest` and coverage badge via `make-coverage-badge`
-
+ to 3.13.2
 ## [v1.3.0]
 ### Security
 - `node-fetch@2.6.0` to `node-fetch@2.6.1`
