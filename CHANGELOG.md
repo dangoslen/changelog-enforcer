@@ -84,7 +84,7 @@ Please upgrade to use with `actions/checkout@v2`!
  to 3.13.2
 ### Fixes
 - Now works with both `actions/checkout@v1` and `actions/checkout@v2`
-
+ to 3.13.2
 ### Adds
 - Code coverage checks via `jest` and coverage badge via `make-coverage-badge`
 
