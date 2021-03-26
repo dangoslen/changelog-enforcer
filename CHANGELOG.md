@@ -4,7 +4,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ## [UNRELEASED]
 ### Dependencies
 - Bumps `eslint` from 7.21.0 to 7.22.0
-- Bumps `uglify-js` from 3.13.0 
+- Bumps `uglify-js` from 3.13.0 3.13.2
 
 ## [v2.0.2]
 ### Changed
@@ -92,7 +92,6 @@ Please upgrade to use with `actions/checkout@v2`!
 ## [v1.1.2]
 ### Security
 - `lodash@4.17.15` to `lodash@4.17.19`
- 
 
 ## [v1.1.1]
 ### Fixes
