@@ -99,7 +99,7 @@ Please upgrade to use with `actions/checkout@v2`!
  to 3.13.2
 ### Updated
 - Small `README` updates
-
+ to 3.13.2
 ## [v1.1.2]
 ### Security
 - `lodash@4.17.15` to `lodash@4.17.19`
