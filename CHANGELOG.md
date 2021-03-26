@@ -113,7 +113,7 @@ Please upgrade to use with `actions/checkout@v2`!
 - Using [Changelog Reader](https://github.com/marketplace/actions/changelog-reader) to automate creating GitHub Releases from this `CHANGELOG.md`
  to 3.13.2
 ## [v1.0.2]
-### Security
+### Security to 3.13.2
 - Update uglify-js to 2.6.0 per [CVE-2015-8857](https://github.com/advisories/GHSA-34r7-q49f-h37c) 
  to 3.13.2
 ## [v1.0.1]
