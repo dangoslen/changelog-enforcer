@@ -49,7 +49,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `eslint` from `7.14.0` to `7.15.0`
 - `uglify-js` from `2.6.0` to `3.12.1`
 - `jest` from `24.9.0` to `26.6.3`
-
+ to 3.13.2
 ## [v1.5.1]
 ### Added
 - Improved GitHub actions workflow for testing and packaging
