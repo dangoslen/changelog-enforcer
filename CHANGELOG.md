@@ -60,7 +60,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `@actions/github` from `2.1.1` to `4.0.0`
 - `eslint` from `6.3.0` to `7.14.0`
 - `changelog-reader-action` from `v1` to `v2`
-
+ to 3.13.2
 ## [v1.5.0]
 ### Added
 - New input parameter `expectedLatestVersion`. 
