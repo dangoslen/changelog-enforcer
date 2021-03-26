@@ -96,7 +96,7 @@ Please upgrade to use with `actions/checkout@v2`!
 ## [v1.2.0]
 ### Added
 - Automatically builds the distribution on pull requests if all tests and enforcement pass
-
+ to 3.13.2
 ### Updated
 - Small `README` updates
 
