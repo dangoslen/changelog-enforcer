@@ -34,6 +34,9 @@ inputs:
       is passed as a String, you will need to escape a backslash \ character via \\"
     required: true
     default: "^## \\[((v|V)?\\d*\\.\\d*\\.\\d*-?\\w*|unreleased|Unreleased|UNRELEASED)\\]"
+    deprecatedMessage: |
+      "This input has been deprecated as of `v2.1.0`. In a future release - likely `v3.0.0`, the ChangeLog Enforcer will only support KeepAChangelog.com format 
+      for finding the latst expected version"
   missingUpdateErrorMessage:
     description: "The error message logged and returned in the 'errorMessage' output when no update to the changelog has been found."
     required: false
