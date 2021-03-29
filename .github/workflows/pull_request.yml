@@ -68,6 +68,7 @@ jobs:
 
   preview-release:
     runs-on: ubuntu-latest
+    needs: [enforce-changelog]
     steps:
       - uses: actions/checkout@v2
 
