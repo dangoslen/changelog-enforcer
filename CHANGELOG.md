@@ -1,7 +1,9 @@
 # CHANGELOG
 Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-## [UNRELEASED]
+## [v2.1.0]
+### Deprecated
+- The input `versionPattern` is now deprecated. Starting in `v3.0.0` the Changelog Enforcer will only work with [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) for verifying the latest expected version.
 ### Dependencies
 - Bumps `eslint` from 7.21.0 to 7.23.0
 - Bumps `uglify-js` from 3.13.0 3.13.2
