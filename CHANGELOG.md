@@ -20,7 +20,6 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Dependencies
 - Bump `eslint` from 7.17.0 to 7.20.0
 - Bump `@vercel/ncc` from 0.26.1 to 0.27.0
-
 ### Changed
 - Now reads the version from `package.json` instead of from `VERSION`
 
@@ -47,6 +46,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `eslint` from `7.14.0` to `7.15.0`
 - `uglify-js` from `2.6.0` to `3.12.1`
 - `jest` from `24.9.0` to `26.6.3`
+
 ## [v1.5.1]
 ### Added
 - Improved GitHub actions workflow for testing and packaging
@@ -56,6 +56,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `@actions/github` from `2.1.1` to `4.0.0`
 - `eslint` from `6.3.0` to `7.14.0`
 - `changelog-reader-action` from `v1` to `v2`
+
 ## [v1.5.0]
 ### Added
 - New input parameter `expectedLatestVersion`. 

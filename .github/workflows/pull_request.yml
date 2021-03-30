@@ -4,6 +4,7 @@ on:
     types: [opened, synchronize, reopened, ready_for_review, labeled, unlabeled]
 
 jobs:
+
   # unit tests
   unit-tests:
     runs-on: ubuntu-latest
@@ -33,6 +34,7 @@ jobs:
 
       - uses: dangoslen/dependabot-changelog-helper@v0.3.2
         with:
+          version: v${{ steps.read_version.outputs.version }}
           activationLabel: 'dependabot'
           newVersionLineNumber: 4
 

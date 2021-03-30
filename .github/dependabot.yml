@@ -10,7 +10,7 @@ updates:
     open-pull-requests-limit: 3
     schedule:
       interval: "daily"
-    target-branch: "releases/v2.2"
+    target-branch: "releases/v2.3"
   - package-ecosystem: "github-actions"
     directory: "/"
     labels:
@@ -20,4 +20,4 @@ updates:
     open-pull-requests-limit: 3
     schedule:
       interval: "daily"
-    target-branch: "releases/v2.2"
+    target-branch: "releases/v2.3"
