@@ -7113,9 +7113,12 @@ async function checkChangeLog(baseRef, changeLogPath, missingUpdateErrorMessage)
         const fileName = change.replace(/(^[A-Z])(\s*)(.*)(\n)?$/g, '$3')
         fileNames.push(fileName)
     })
-    
 
-    if (!fileNames.includes(changeLogPath)) {
+    let normalizedChangeLogPath = changeLogPath
+    if (normalizedChangeLogPath.startsWith('./')) {
+        normalizedChangeLogPath = normalizedChangeLogPath.substring(2)
+    }
+    if (!fileNames.includes(normalizedChangeLogPath)) {
         throw new Error(missingUpdateErrorMessage)
     }
 }
