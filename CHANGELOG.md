@@ -1,6 +1,10 @@
 # CHANGELOG
 Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v2.2.0]
+### Dependencies
+- Bumps `uglify-js` from 3.13.2 to 3.13.3
+
 ## [v2.1.0]
 ### Deprecated
 - The input `versionPattern` is now deprecated. Starting in `v3.0.0` the Changelog Enforcer will only work with [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) for verifying the latest expected version.
