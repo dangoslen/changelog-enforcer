@@ -4,6 +4,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ## [v2.2.0]
 ### Dependencies
 - Bumps `uglify-js` from 3.13.2 to 3.13.3
+- Bumps `y18n` to `4.0.1`
 
 ## [v2.1.0]
 ### Deprecated
