@@ -59,6 +59,7 @@ jobs:
 
             ```
             ${{ steps.changelog-enforcer.outputs.errorMessage }}
+            ```
 
       - id: changelog_reader
         uses: mindsers/changelog-reader-action@v2
@@ -68,7 +69,7 @@ jobs:
 
       - id: check_release
         run: |
-          TAG=$(git ls-remote --tags origin | grep ${{ steps.read_version.outputs.version }} || [[ $? == 1 ]] && echo '')
+          TAG=$(git ls-remote --tags origin | grep ${{ steps.read-version.outputs.tag }} || [[ $? == 1 ]] && echo '')
           MISSING=$([[ -z "$TAG" ]] && echo 'true' || echo 'false')
           echo ::set-output name=missing::$MISSING
 
@@ -85,7 +86,6 @@ jobs:
               ${{ steps.changelog_reader.outputs.changes }}
 
             </details>
-            ```
 
   # test action works running from the graph - back compat
   enforce-changelog-v1:
