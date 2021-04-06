@@ -59,6 +59,7 @@ jobs:
 
             ```
             ${{ steps.changelog-enforcer.outputs.errorMessage }}
+            ```
 
       - id: changelog_reader
         uses: mindsers/changelog-reader-action@v2
@@ -85,7 +86,6 @@ jobs:
               ${{ steps.changelog_reader.outputs.changes }}
 
             </details>
-            ```
 
   # test action works running from the graph - back compat
   enforce-changelog-v1:
