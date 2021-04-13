@@ -6,7 +6,7 @@ updates:
     labels:
       - dependabot
       - javascript
-      - Skip-Changelog
+      - safe
     open-pull-requests-limit: 3
     schedule:
       interval: "daily"
@@ -16,7 +16,7 @@ updates:
     labels:
       - dependabot
       - github-actions
-      - Skip-Changelog
+      - safe
     open-pull-requests-limit: 3
     schedule:
       interval: "daily"

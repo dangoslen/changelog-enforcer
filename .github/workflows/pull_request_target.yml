@@ -1,12 +1,13 @@
-name: "Pull Request Workflow"
+name: "Pull Request Target Workflow"
 on:
-  pull_request:
+  pull_request_target:
     types: [opened, synchronize, reopened, ready_for_review, labeled, unlabeled]
 
 jobs:
 
   # unit tests
   unit-tests:
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'safe') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -21,6 +22,8 @@ jobs:
 
   # test action works running from the graph
   enforce-changelog:
+    if: contains(github.event.pull_request.labels.*.name, 'safe')
+    needs: unit-tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -45,7 +48,6 @@ jobs:
       - id: changelog-enforcer
         uses: ./
         with:
-          skipLabels: "skip-changelog"
           expectedLatestVersion: ${{ steps.read-version.outputs.tag }}
           
       - if: failure()
@@ -86,13 +88,3 @@ jobs:
               ${{ steps.changelog_reader.outputs.changes }}
 
             </details>
-
-  # test action works running from the graph - back compat
-  enforce-changelog-v1:
-    needs: unit-tests
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: ./
-        with:
-          skipLabels: "skip-changelog"
