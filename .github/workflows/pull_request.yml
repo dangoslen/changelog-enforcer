@@ -1,12 +1,31 @@
 name: "Pull Request Workflow"
 on:
-  pull_request:
+  pull_request_target:
     types: [opened, synchronize, reopened, ready_for_review, labeled, unlabeled]
 
 jobs:
 
+  # validates that the pull request is trusted
+  verify: 
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          HEAD=${{ github.event.pull_request.head.repo.full_name }}
+          BASE=${{ github.event.pull_request.base.repo.full_name }}
+          VERIFIED_LABEL=${{ contains(github.event.pull_request.labels.*.name, 'verified') }}
+
+          echo $HEAD
+          echo $BASE
+          echo $VERIFIED_LABEL
+
+          if [[ ( $HEAD != $BASE ) && ( $VERIFIED_LABEL == 'false' ) ]]; then
+            echo "Pull request is not from a trusted source!"
+            exit 1
+          fi
+
   # unit tests
   unit-tests:
+    needs: [ verify ]
     if: ${{ contains(github.event.pull_request.labels.*.name, 'safe') }}
     runs-on: ubuntu-latest
     steps:
