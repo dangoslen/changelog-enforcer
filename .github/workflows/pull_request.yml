@@ -10,15 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          HEAD=${{ github.event.pull_request.head.repo.full_name }}
-          BASE=${{ github.event.pull_request.base.repo.full_name }}
           VERIFIED_LABEL=${{ contains(github.event.pull_request.labels.*.name, 'verified') }}
-
-          echo $HEAD
-          echo $BASE
-          echo $VERIFIED_LABEL
-
-          if [[ ( $HEAD != $BASE ) && ( $VERIFIED_LABEL == 'false' ) ]]; then
+          if [[ ( $VERIFIED_LABEL == 'false' ) ]]; then
             echo "Pull request is not from a trusted source!"
             exit 1
           fi
