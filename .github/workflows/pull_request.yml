@@ -19,7 +19,6 @@ jobs:
   # unit tests
   unit-tests:
     needs: [ verify ]
-    if: ${{ contains(github.event.pull_request.labels.*.name, 'safe') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -34,7 +33,6 @@ jobs:
 
   # test action works running from the graph
   enforce-changelog:
-    if: ${{ contains(github.event.pull_request.labels.*.name, 'safe') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -103,7 +101,6 @@ jobs:
 
   # test action works running from the graph - back compat
   enforce-changelog-v1:
-    if: ${{ contains(github.event.pull_request.labels.*.name, 'safe') }}
     needs: [ unit-tests ]
     runs-on: ubuntu-latest
     steps:
