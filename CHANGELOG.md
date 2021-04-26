@@ -2,9 +2,10 @@
 Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [v2.2.0]
-### Added
-- Adds a `pull_request_target` workflow to handle incoming pull requests from forked repos.
+### Changed
+- The `pull_request` workflow now executes as a `pull_request_target` workflow to handle incoming pull requests from forked repos.
   - This is needed because Dependabot now works as a [forked branch](https://github.blog/changelog/2021-02-19-github-actions-workflows-triggered-by-dependabot-prs-will-run-with-read-only-permissions/). The reasoning and ways to accomodate are listed in a [GitHub Security article](https://securitylab.github.com/research/github-actions-preventing-pwn-requests/)
+  - The `verified` label is needed to allow the workflow to execute
 ### Dependencies
 - Bumps `uglify-js` from 3.13.2 to 3.13.3
 - Bumps `y18n` from 4.0.1 to 5.0.8
