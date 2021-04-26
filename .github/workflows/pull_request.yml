@@ -1,11 +1,24 @@
 name: "Pull Request Workflow"
 on:
-  pull_request:
+  pull_request_target:
     types: [opened, synchronize, reopened, ready_for_review, labeled, unlabeled]
 
 jobs:
+
+  # validates that the pull request is trusted
+  verify: 
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          VERIFIED_LABEL=${{ contains(github.event.pull_request.labels.*.name, 'verified') }}
+          if [[ ( $VERIFIED_LABEL == 'false' ) ]]; then
+            echo "Pull request is not from a trusted source!"
+            exit 1
+          fi
+
   # unit tests
   unit-tests:
+    needs: [ verify ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -20,7 +33,6 @@ jobs:
 
   # test action works running from the graph
   enforce-changelog:
-    needs: unit-tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -30,9 +42,11 @@ jobs:
       - id: read-version
         run: |
           echo "::set-output name=version::$(jq -r ".version" package.json)"
+          echo "::set-output name=tag::v$(jq -r ".version" package.json)"
 
       - uses: dangoslen/dependabot-changelog-helper@v0.3.2
         with:
+          version: ${{ steps.read-version.outputs.tag }}
           activationLabel: 'dependabot'
           newVersionLineNumber: 4
 
@@ -43,7 +57,8 @@ jobs:
       - id: changelog-enforcer
         uses: ./
         with:
-          expectedLatestVersion: "v${{ steps.read-version.outputs.version }}"
+          skipLabels: "skip-changelog"
+          expectedLatestVersion: ${{ steps.read-version.outputs.tag }}
           
       - if: failure()
         uses: unsplash/comment-on-pr@master
@@ -58,42 +73,19 @@ jobs:
             ${{ steps.changelog-enforcer.outputs.errorMessage }}
             ```
 
-  # test action works running from the graph - back compat
-  enforce-changelog-v1:
-    needs: unit-tests
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: ./
-
-  preview-release:
-    runs-on: ubuntu-latest
-    needs: [enforce-changelog]
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: read version
-        id: read_version
-        run: |
-          echo ::set-output name=version::$(jq -r ".version" package.json)
-          echo ::set-output name=tag::v$(jq -r ".version" package.json)
-
-      - name: Get Changelog Entry
-        id: changelog_reader
+      - id: changelog_reader
         uses: mindsers/changelog-reader-action@v2
         with:
           version: "${{ steps.read_version.outputs.tag }}"
           path: ./CHANGELOG.md
 
-      - name: Check for Release
-        id: check_release
+      - id: check_release
         run: |
-          TAG=$(git ls-remote --tags origin | grep ${{ steps.read_version.outputs.version }} || [[ $? == 1 ]] && echo '')
+          TAG=$(git ls-remote --tags origin | grep ${{ steps.read-version.outputs.tag }} || [[ $? == 1 ]] && echo '')
           MISSING=$([[ -z "$TAG" ]] && echo 'true' || echo 'false')
           echo ::set-output name=missing::$MISSING
 
-      - name: Preview Changelog
-        if: ${{ steps.check_release.outputs.missing }}
+      - if: ${{ steps.check_release.outputs.missing }}
         uses: unsplash/comment-on-pr@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -106,3 +98,13 @@ jobs:
               ${{ steps.changelog_reader.outputs.changes }}
 
             </details>
+
+  # test action works running from the graph - back compat
+  enforce-changelog-v1:
+    needs: [ unit-tests ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: ./
+        with:
+          skipLabels: "skip-changelog"

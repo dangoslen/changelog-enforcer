@@ -1,6 +1,18 @@
 # CHANGELOG
 Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v2.2.0]
+### Changed
+- The `pull_request` workflow now executes as a `pull_request_target` workflow to handle incoming pull requests from forked repos.
+  - This is needed because Dependabot now works as a [forked branch](https://github.blog/changelog/2021-02-19-github-actions-workflows-triggered-by-dependabot-prs-will-run-with-read-only-permissions/). The reasoning and ways to accomodate are listed in a [GitHub Security article](https://securitylab.github.com/research/github-actions-preventing-pwn-requests/)
+  - The `verified` label is needed to allow the workflow to execute
+### Dependencies
+- Bumps `uglify-js` from 3.13.2 to 3.13.3
+- Bumps `y18n` from 4.0.1 to 5.0.8
+- Bumps `@vercel/ncc` from 0.27.0 to 0.28.2
+- Bumps `@actions/core` from 1.2.6 to 1.2.7
+- Bumps `eslint` from 7.23.0 to 7.25.0
+
 ## [v2.1.0]
 ### Deprecated
 - The input `versionPattern` is now deprecated. Starting in `v3.0.0` the Changelog Enforcer will only work with [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) for verifying the latest expected version.
@@ -20,7 +32,6 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Dependencies
 - Bump `eslint` from 7.17.0 to 7.20.0
 - Bump `@vercel/ncc` from 0.26.1 to 0.27.0
-
 ### Changed
 - Now reads the version from `package.json` instead of from `VERSION`
 
@@ -47,6 +58,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `eslint` from `7.14.0` to `7.15.0`
 - `uglify-js` from `2.6.0` to `3.12.1`
 - `jest` from `24.9.0` to `26.6.3`
+
 ## [v1.5.1]
 ### Added
 - Improved GitHub actions workflow for testing and packaging
@@ -56,6 +68,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `@actions/github` from `2.1.1` to `4.0.0`
 - `eslint` from `6.3.0` to `7.14.0`
 - `changelog-reader-action` from `v1` to `v2`
+
 ## [v1.5.0]
 ### Added
 - New input parameter `expectedLatestVersion`. 
