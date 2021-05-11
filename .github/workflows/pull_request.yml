@@ -24,12 +24,16 @@ jobs:
       - uses: actions/checkout@v2
         with: 
           token: ${{ secrets.ACTION_TOKEN }}
+          ref: ${{ github.event.pull_request.head.ref }}
+
       - run: npm install
       - run: npm run test:badges
       - run: npm run package
-      - uses: stefanzweifel/git-auto-commit-action@v4
+
+      - uses: stefanzweifel/git-auto-commit-action@v4.11.0
         with:
-          commit_message: "Auto commit packaged action"
+          commit_message: "Auto-package action"
+
 
   # test action works running from the graph
   enforce-changelog:
@@ -38,6 +42,7 @@ jobs:
       - uses: actions/checkout@v2
         with: 
           token: ${{ secrets.ACTION_TOKEN }}
+          ref: ${{ github.event.pull_request.head.ref }}
 
       - id: read-version
         run: |
@@ -50,7 +55,7 @@ jobs:
           activationLabel: 'dependabot'
           newVersionLineNumber: 4
 
-      - uses: stefanzweifel/git-auto-commit-action@v4
+      - uses: stefanzweifel/git-auto-commit-action@v4.11.0
         with:
           commit_message: "Update changelog"
 
