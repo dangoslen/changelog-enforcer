@@ -27,7 +27,7 @@ jobs:
       - run: npm install
       - run: npm run test:badges
       - run: npm run package
-      - uses: stefanzweifel/git-auto-commit-action@v4
+      - uses: stefanzweifel/git-auto-commit-action@v4.11.0
         with:
           commit_message: "Auto commit packaged action"
 
@@ -50,7 +50,7 @@ jobs:
           activationLabel: 'dependabot'
           newVersionLineNumber: 4
 
-      - uses: stefanzweifel/git-auto-commit-action@v4
+      - uses: stefanzweifel/git-auto-commit-action@v4.11.0
         with:
           commit_message: "Update changelog"
 
