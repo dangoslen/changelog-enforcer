@@ -1,6 +1,11 @@
 # CHANGELOG
 Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v2.3.0]
+### Dependencies
+- Bumps `lodash` from 4.17.19 to 4.17.21
+- Bumps `stefanzweifel/git-auto-commit-action` from 4 to 4.11.0
+
 ## [v2.2.0]
 ### Changed
 - The `pull_request` workflow now executes as a `pull_request_target` workflow to handle incoming pull requests from forked repos.
@@ -12,7 +17,6 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Bumps `@vercel/ncc` from 0.27.0 to 0.28.2
 - Bumps `@actions/core` from 1.2.6 to 1.2.7
 - Bumps `eslint` from 7.23.0 to 7.25.0
-- Bumps `stefanzweifel/git-auto-commit-action` from 4 to 4.11.0
 
 ## [v2.1.0]
 ### Deprecated
