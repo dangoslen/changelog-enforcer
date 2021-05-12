@@ -11,7 +11,7 @@ inputs:
     default: 'CHANGELOG.md'
   skipLabels:
     description: | 
-      "List of labels used to skip enforcing of the changelog during a pull request. Each label name is comma seperated and only one label needs to be 
+      "List of labels used to skip enforcing of the changelog during a pull request. Each label name is comma separated and only one label needs to be 
       present for enforcement to be skipped.
 
       For example, if `label-1,label-2` was supplied as the `skipLabels`, `label-1` _or_ `label-2` would skip the enforcer. 

@@ -42,7 +42,7 @@ Below are the properties allowed by the Changelog Enforcer. These properties are
 
 #### `skipLabels` 
 * Default: `'Skip-Changelog'` 
-* List of labels used to skip enforcing of the changelog during a pull request. Each label name is comma seperated and only one label needs to be present for enforcement to be skipped. 
+* List of labels used to skip enforcing of the changelog during a pull request. Each label name is comma separated and only one label needs to be present for enforcement to be skipped. 
 
   For example, if `label-1,label-2` was supplied as the `skipLabels`, `label-1` _or_ `label-2` would skip the enforcer. Each label is trimmed for leading and trailing spaces since GitHub labels do not allow for leading or trailing spaces. Thus, the following lists are equivalent:
   * `label-1,label-2`
