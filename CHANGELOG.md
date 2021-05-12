@@ -8,6 +8,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Bumps `actions/checkout` from 2 to 2.3.4
 - Bumps `actions/create-release` from 1 to 1.1.4
 - Bumps `eslint` from 7.25.0 to 7.26.0
+- Bumps `uglify-js` from 3.13.3 to 3.13.6
 
 ## [v2.2.0]
 ### Changed
