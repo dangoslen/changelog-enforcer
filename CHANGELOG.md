@@ -5,6 +5,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Dependencies
 - Bumps `lodash` from 4.17.19 to 4.17.21
 - Bumps `stefanzweifel/git-auto-commit-action` from 4 to 4.11.0
+- Bumps `richardsimko/update-tag` from 1 to 1.0.5
 
 ## [v2.2.0]
 ### Changed
