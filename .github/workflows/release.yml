@@ -46,7 +46,7 @@ jobs:
           prerelease: false
 
       - name: update major version tag
-        uses: richardsimko/update-tag@v1
+        uses: richardsimko/update-tag@v1.0.5
         with:
           tag_name: "${{ steps.read-version.outputs.major_tag }}"
         env:
