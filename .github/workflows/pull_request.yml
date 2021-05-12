@@ -103,13 +103,3 @@ jobs:
               ${{ steps.changelog_reader.outputs.changes }}
 
             </details>
-
-  # test action works running from the graph - back compat
-  enforce-changelog-v1:
-    needs: [ unit-tests ]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: ./
-        with:
-          skipLabels: "skip-changelog"
