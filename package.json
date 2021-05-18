@@ -32,7 +32,7 @@
   "dependencies": {
     "@actions/core": "^1.2.7",
     "@actions/exec": "^1.0.3",
-    "@actions/github": "^4.0.0",
+    "@actions/github": "^5.0.0",
     "dist": "^0.1.2",
     "make-coverage-badge": "^1.2.0",
     "uglify-js": "^3.13.6"

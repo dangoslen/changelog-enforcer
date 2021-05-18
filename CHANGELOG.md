@@ -10,6 +10,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Bumps `eslint` from 7.25.0 to 7.26.0
 - Bumps `uglify-js` from 3.13.3 to 3.13.6
 - Bumps `@vercel/ncc` from 0.28.2 to 0.28.5
+- Bumps `@actions/github` from 4.0.0 to 5.0.0
 
 ## [v2.2.0]
 ### Changed
