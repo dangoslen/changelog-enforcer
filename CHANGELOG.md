@@ -12,6 +12,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Bumps `@vercel/ncc` from 0.28.2 to 0.28.5
 - Bumps `@actions/github` from 4.0.0 to 5.0.0
 - Bumps `dangoslen/dependabot-changelog-helper` from 0.3.2 to 1
+- Bumps `@actions/core` from 1.2.7 to 1.3.0
 
 ## [v2.2.0]
 ### Changed
