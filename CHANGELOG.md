@@ -7,13 +7,13 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Bumps `stefanzweifel/git-auto-commit-action` from 4 to 4.11.0
 - Bumps `actions/checkout` from 2 to 2.3.4
 - Bumps `actions/create-release` from 1 to 1.1.4
-- Bumps `eslint` from 7.25.0 to 7.27.0
-- Bumps `uglify-js` from 3.13.3 to 3.13.8
+- Bumps `uglify-js` from 3.13.3 to 3.13.9
+- Bumps `eslint` from 7.25.0 to 7.28.0
 - Bumps `@vercel/ncc` from 0.28.2 to 0.28.6
 - Bumps `@actions/github` from 4.0.0 to 5.0.0
 - Bumps `dangoslen/dependabot-changelog-helper` from 0.3.2 to 1
 - Bumps `@actions/core` from 1.2.7 to 1.4.0
-- Bumps `jest` from 26.6.3 to 27.0.3
+- Bumps `jest` from 26.6.3 to 27.0.4
 
 ## [v2.2.0]
 ### Changed
