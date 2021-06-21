@@ -12,6 +12,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Bumps `@vercel/ncc` from 0.27.0 to 0.28.2
 - Bumps `@actions/core` from 1.2.6 to 1.2.7
 - Bumps `eslint` from 7.23.0 to 7.25.0
+- Bumps `ws` from 7.4.0 to 7.4.6
 
 ## [v2.1.0]
 ### Deprecated
