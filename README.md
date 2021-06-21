@@ -68,9 +68,3 @@ Below are the properties allowed by the Changelog Enforcer. These properties are
 
 ### Creating Releases Automatically
 Using this Action and the [Changelog Reader](https://github.com/mindsers/changelog-reader-action), plus a few standard GitHub created Actions, we can keep the changelog of a project up to date and create a GitHub release automatically with contents from the changelog. See this project's [release.yml](./.github/workflows/release.yml) for how to set up a simple workflow to create a new release based on a `VERSION` file and a changelog.
-
-### Support
-
-If you enjoy this GitHub action, show some support by staring this repo! Other ways include:
-
-[<img src='https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png'/>](https://www.buymeacoffee.com/dangoslen)
