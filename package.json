@@ -31,7 +31,7 @@
   "homepage": "https://github.com/dangoslen/changelog-enforcer#readme",
   "dependencies": {
     "@actions/core": "^1.4.0",
-    "@actions/exec": "^1.0.3",
+    "@actions/exec": "^1.1.0",
     "@actions/github": "^5.0.0",
     "dist": "^0.1.2",
     "make-coverage-badge": "^1.2.0",
@@ -40,7 +40,7 @@
   "devDependencies": {
     "@vercel/ncc": "^0.28.6",
     "eslint": "^7.28.0",
-    "jest": "^27.0.4",
+    "jest": "^27.0.6",
     "y18n": "^5.0.8"
   }
 }
