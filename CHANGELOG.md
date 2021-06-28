@@ -1,6 +1,21 @@
 # CHANGELOG
 Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v2.3.0]
+### Dependencies
+- Bumps `lodash` from 4.17.19 to 4.17.21
+- Bumps `stefanzweifel/git-auto-commit-action` from 4 to 4.11.0
+- Bumps `actions/checkout` from 2 to 2.3.4
+- Bumps `actions/create-release` from 1 to 1.1.4
+- Bumps `uglify-js` from 3.13.3 to 3.13.9
+- Bumps `eslint` from 7.25.0 to 7.28.0
+- Bumps `@vercel/ncc` from 0.28.2 to 0.28.6
+- Bumps `@actions/github` from 4.0.0 to 5.0.0
+- Bumps `dangoslen/dependabot-changelog-helper` from 0.3.2 to 1
+- Bumps `@actions/exec` from 1.0.4 to 1.1.0
+- Bumps `@actions/core` from 1.2.7 to 1.4.0
+- Bumps `jest` from 26.6.3 to 27.0.5
+
 ## [v2.2.0]
 ### Changed
 - The `pull_request` workflow now executes as a `pull_request_target` workflow to handle incoming pull requests from forked repos.
@@ -12,6 +27,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Bumps `@vercel/ncc` from 0.27.0 to 0.28.2
 - Bumps `@actions/core` from 1.2.6 to 1.2.7
 - Bumps `eslint` from 7.23.0 to 7.25.0
+- Bumps `hosted-git-info` from 2.8.8 to 2.8.9
 
 ## [v2.1.0]
 ### Deprecated

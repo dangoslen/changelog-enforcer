@@ -21,36 +21,41 @@ jobs:
     needs: [ verify ]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2.3.4
         with: 
           token: ${{ secrets.ACTION_TOKEN }}
+          ref: ${{ github.event.pull_request.head.ref }}
+
       - run: npm install
       - run: npm run test:badges
       - run: npm run package
-      - uses: stefanzweifel/git-auto-commit-action@v4
+
+      - uses: stefanzweifel/git-auto-commit-action@v4.11.0
         with:
-          commit_message: "Auto commit packaged action"
+          commit_message: "Auto-package action"
+
 
   # test action works running from the graph
   enforce-changelog:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2.3.4
         with: 
           token: ${{ secrets.ACTION_TOKEN }}
+          ref: ${{ github.event.pull_request.head.ref }}
 
       - id: read-version
         run: |
           echo "::set-output name=version::$(jq -r ".version" package.json)"
           echo "::set-output name=tag::v$(jq -r ".version" package.json)"
 
-      - uses: dangoslen/dependabot-changelog-helper@v0.3.2
+      - uses: dangoslen/dependabot-changelog-helper@v1
         with:
           version: ${{ steps.read-version.outputs.tag }}
           activationLabel: 'dependabot'
           newVersionLineNumber: 4
 
-      - uses: stefanzweifel/git-auto-commit-action@v4
+      - uses: stefanzweifel/git-auto-commit-action@v4.11.0
         with:
           commit_message: "Update changelog"
 
@@ -98,13 +103,3 @@ jobs:
               ${{ steps.changelog_reader.outputs.changes }}
 
             </details>
-
-  # test action works running from the graph - back compat
-  enforce-changelog-v1:
-    needs: [ unit-tests ]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: ./
-        with:
-          skipLabels: "skip-changelog"
