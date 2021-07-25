@@ -9,7 +9,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Bumps `actions/create-release` from 1 to 1.1.4
 - Bumps `uglify-js` from 3.13.3 to 3.13.9
 - Bumps `eslint` from 7.25.0 to 7.28.0
-- Bumps `@vercel/ncc` from 0.28.2 to 0.28.6
+- Bumps `@vercel/ncc` from 0.28.2 to 0.29.0
 - Bumps `@actions/github` from 4.0.0 to 5.0.0
 - Bumps `dangoslen/dependabot-changelog-helper` from 0.3.2 to 1
 - Bumps `@actions/exec` from 1.0.4 to 1.1.0
