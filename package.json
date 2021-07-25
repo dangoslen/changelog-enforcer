@@ -38,7 +38,7 @@
     "uglify-js": "^3.13.9"
   },
   "devDependencies": {
-    "@vercel/ncc": "^0.28.6",
+    "@vercel/ncc": "^0.29.0",
     "eslint": "^7.28.0",
     "jest": "^27.0.5",
     "y18n": "^5.0.8"
