@@ -15,6 +15,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Bumps `@actions/exec` from 1.0.4 to 1.1.0
 - Bumps `@actions/core` from 1.2.7 to 1.4.0
 - Bumps `jest` from 26.6.3 to 27.0.5
+- Bumps `ws` from 7.4.0 to 7.5.3
 
 ## [v2.2.0]
 ### Changed
