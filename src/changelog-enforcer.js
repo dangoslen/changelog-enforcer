@@ -30,15 +30,17 @@ module.exports.enforce = async function() {
         core.info(`Version Pattern: ${versionPattern}`)
 
         const pullRequest = contextExtractor.getPullRequestContext(github.context)
-        if (pullRequest) {
-            const labelNames = pullRequest.labels.map(l => l.name)
-            const baseRef = pullRequest.base.ref
+        if (!pullRequest) {
+            return
+        }
 
-            if (shouldEnforceChangelog(labelNames, skipLabelList)) {
-                await ensureBranchExists(baseRef)
-                await checkChangeLog(baseRef, changeLogPath, missingUpdateErrorMessage)
-                await validateLatestVersion(expectedLatestVersion, versionPattern, changeLogPath)
-            }
+        const labelNames = pullRequest.labels.map(l => l.name)
+        const baseRef = pullRequest.base.ref
+
+        if (shouldEnforceChangelog(labelNames, skipLabelList)) {
+            await ensureBranchExists(baseRef)
+            await checkChangeLog(baseRef, changeLogPath, missingUpdateErrorMessage)
+            await validateLatestVersion(expectedLatestVersion, versionPattern, changeLogPath)
         }
     } catch(error) {
         core.setOutput(OUT_ERROR_MESSAGE, error.message)
