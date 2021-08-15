@@ -48,12 +48,6 @@ jobs:
           echo "::set-output name=version::$(jq -r ".version" package.json)"
           echo "::set-output name=tag::v$(jq -r ".version" package.json)"
 
-      - uses: dangoslen/dependabot-changelog-helper@v1
-        with:
-          version: ${{ steps.read-version.outputs.tag }}
-          activationLabel: 'dependabot'
-          newVersionLineNumber: 4
-
       - uses: stefanzweifel/git-auto-commit-action@v4.11.0
         with:
           commit_message: "Update changelog"
