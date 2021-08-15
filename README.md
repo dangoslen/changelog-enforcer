@@ -10,9 +10,7 @@ The purpose of this action is to enforce a change to a ongoing changelog file. I
 ### Usage
 To use, follow the typical GitHub Action `uses` syntax. 
 
-_The Changelog Enforcer is designed to be used with the `pull_request` or `pull_request_target` event types. Using this action on any other event type will result in a warning logged and the action succeeding (as to not block the rest of a workflow)._
-
-**Requires the common [Checkout Action](https://github.com/marketplace/actions/checkout) as shown below! The enforcement of change is done all using local `git` commands and requires the repository be checked out!**
+Requires the common [Checkout Action](https://github.com/marketplace/actions/checkout) as shown below. The enforcement of change is done all using local `git` commands and requires the repository be checked out.
 
 ```yaml
 name: "Pull Request Workflow"
@@ -31,6 +29,8 @@ jobs:
         changeLogPath: 'CHANGELOG.md'
         skipLabels: 'Skip-Changelog'
 ```
+
+_ :warning: The Changelog Enforcer is designed to be used with the `pull_request` or `pull_request_target` event types. Using this action on any other event type will result in a warning logged and the action succeeding (as to not block the rest of a workflow)._
 
 ### Inputs / Properties
 Below are the properties allowed by the Changelog Enforcer. These properties are shipped with sane defaults for typical use, especially for changelogs inline with the [KeepAChangelog](Keepachangelog.org) format.
