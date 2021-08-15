@@ -15,12 +15,10 @@ let infoSpy
 let failureSpy
 let execSpy
 let outputSpy
-let warnSpy
 
 describe('the changelog-enforcer', () => {
 
   afterAll(() => {
-    // Restore
     jest.restoreAllMocks()
   })
 
@@ -37,7 +35,6 @@ describe('the changelog-enforcer', () => {
     })
 
     infoSpy = jest.spyOn(core, 'info').mockImplementation(jest.fn())
-    warnSpy = jest.spyOn(core, 'warning').mockImplementation(jest.fn())
     failureSpy = jest.spyOn(core, 'setFailed').mockImplementation(jest.fn())
     outputSpy = jest.spyOn(core, 'setOutput').mockImplementation(jest.fn())
     execSpy = jest.spyOn(exec, 'exec').mockImplementation((command, args, options) => { return 0 })
