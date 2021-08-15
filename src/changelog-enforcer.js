@@ -19,7 +19,7 @@ module.exports.enforce = async function() {
     try {
         const skipLabelList = getSkipLabels()
         const changeLogPath = core.getInput(IN_CHANGELOG_PATH)
-        const missingUpdateErrorMessage = getMissingUpdateErrorMessage(changeLogPath)
+        const missingUpdateErrorMessage = getMissingUpdateErrorMessage(IN_UPDATE_CUSTOM_ERROR)
         const expectedLatestVersion = core.getInput(IN_EXPECTED_LATEST_VERSION)
         const versionPattern = core.getInput(IN_VERSION_PATTERN)
 
@@ -30,17 +30,15 @@ module.exports.enforce = async function() {
         core.info(`Version Pattern: ${versionPattern}`)
 
         const pullRequest = contextExtractor.getPullRequestContext(github.context)
-        if (pullRequest == undefined) {
-            return
-        }
+        if (pullRequest) {
+            const labelNames = pullRequest.labels.map(l => l.name)
+            const baseRef = pullRequest.base.ref
 
-        const labelNames = pullRequest.labels.map(l => l.name)
-        const baseRef = pullRequest.base.ref
-
-        if (shouldEnforceChangelog(labelNames, skipLabelList)) {
-            await ensureBranchExists(baseRef)
-            await checkChangeLog(baseRef, changeLogPath, missingUpdateErrorMessage)
-            await validateLatestVersion(expectedLatestVersion, versionPattern, changeLogPath)
+            if (shouldEnforceChangelog(labelNames, skipLabelList)) {
+                await ensureBranchExists(baseRef)
+                await checkChangeLog(baseRef, changeLogPath, missingUpdateErrorMessage)
+                await validateLatestVersion(expectedLatestVersion, versionPattern, changeLogPath)
+            }
         }
     } catch(error) {
         core.setOutput(OUT_ERROR_MESSAGE, error.message)
