@@ -7334,7 +7334,7 @@ module.exports.enforce = async function() {
         core.info(`Version Pattern: ${versionPattern}`)
 
         const pullRequest = contextExtractor.getPullRequestContext(github.context)
-        if (pullRequest == null) {
+        if (pullRequest == undefined) {
             return
         }
 
