@@ -30,7 +30,7 @@ jobs:
         skipLabels: 'Skip-Changelog'
 ```
 
-_ :warning: The Changelog Enforcer is designed to be used with the `pull_request` or `pull_request_target` event types. Using this action on any other event type will result in a warning logged and the action succeeding (as to not block the rest of a workflow)._
+_:warning: The Changelog Enforcer is designed to be used with the `pull_request` or `pull_request_target` event types. Using this action on any other event type will result in a warning logged and the action succeeding (as to not block the rest of a workflow)._
 
 ### Inputs / Properties
 Below are the properties allowed by the Changelog Enforcer. These properties are shipped with sane defaults for typical use, especially for changelogs inline with the [KeepAChangelog](Keepachangelog.org) format.
