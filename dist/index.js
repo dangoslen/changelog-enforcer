@@ -7307,6 +7307,7 @@ const github = __nccwpck_require__(5438)
 const exec = __nccwpck_require__(1514)
 const versionExtractor = __nccwpck_require__(5568)
 const labelExtractor = __nccwpck_require__(863)
+const contextExtractor = __nccwpck_require__(6155)
 
 // Input keys
 const IN_CHANGELOG_PATH = 'changeLogPath'
@@ -7332,7 +7333,11 @@ module.exports.enforce = async function() {
         core.info(`Expected Latest Version: ${expectedLatestVersion}`)
         core.info(`Version Pattern: ${versionPattern}`)
 
-        const pullRequest = github.context.payload.pull_request
+        const pullRequest = contextExtractor.getPullRequestContext(github.context)
+        if (!pullRequest) {
+            return
+        }
+
         const labelNames = pullRequest.labels.map(l => l.name)
         const baseRef = pullRequest.base.ref
 
@@ -7430,6 +7435,22 @@ async function validateLatestVersion(expectedLatestVersion, versionPattern, chan
 }
 
 
+
+/***/ }),
+
+/***/ 6155:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+const core = __nccwpck_require__(2186)
+
+module.exports.getPullRequestContext = function (context) {
+    const pull_request = context.payload.pull_request
+    if (pull_request == undefined) {
+        core.warning(`ChangeLog enforcer only runs for pull_request and pull_request_target event types`)
+        return undefined
+    }
+    return context.payload.pull_request;
+}
 
 /***/ }),
 

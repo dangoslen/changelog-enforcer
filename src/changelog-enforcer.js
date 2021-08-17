@@ -3,6 +3,7 @@ const github = require('@actions/github')
 const exec = require('@actions/exec')
 const versionExtractor = require('./version-extractor')
 const labelExtractor = require('./label-extractor')
+const contextExtractor = require('./context-extractor')
 
 // Input keys
 const IN_CHANGELOG_PATH = 'changeLogPath'
@@ -28,7 +29,11 @@ module.exports.enforce = async function() {
         core.info(`Expected Latest Version: ${expectedLatestVersion}`)
         core.info(`Version Pattern: ${versionPattern}`)
 
-        const pullRequest = github.context.payload.pull_request
+        const pullRequest = contextExtractor.getPullRequestContext(github.context)
+        if (!pullRequest) {
+            return
+        }
+
         const labelNames = pullRequest.labels.map(l => l.name)
         const baseRef = pullRequest.base.ref
 
