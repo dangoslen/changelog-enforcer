@@ -19,7 +19,7 @@ module.exports.enforce = async function() {
     try {
         const skipLabelList = getSkipLabels()
         const changeLogPath = core.getInput(IN_CHANGELOG_PATH)
-        const missingUpdateErrorMessage = getMissingUpdateErrorMessage(IN_UPDATE_CUSTOM_ERROR)
+        const missingUpdateErrorMessage = getMissingUpdateErrorMessage(changeLogPath)
         const expectedLatestVersion = core.getInput(IN_EXPECTED_LATEST_VERSION)
         const versionPattern = core.getInput(IN_VERSION_PATTERN)
 
