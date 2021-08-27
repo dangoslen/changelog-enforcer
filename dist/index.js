@@ -7401,7 +7401,13 @@ async function checkChangeLog(baseRef, changeLogPath, missingUpdateErrorMessage)
         }
     }
     
-    await exec.exec('git', ['diff', `origin/${baseRef}`, '--name-status', '--diff-filter=AM'], options)
+    // Use `...` to show changes from commits ONLY on the current branch
+    //   git diff [<options>] <commit>...<commit> [--] [<path>...]
+    //     This form is to view the changes on the branch containing and up to the second <commit>, starting at a common ancestor of both <commit>.  
+    //     git diff A...B is equivalent to git diff $(git merge-base A B) B. You can omit any one of
+    //     <commit>, which has the same effect as using HEAD instead.
+    // For more, see https://stackoverflow.com/a/463027
+    await exec.exec('git', ['diff', `origin/${baseRef}...`, '--name-status', '--diff-filter=AM'], options)
 
     const changes = output.split(/\r?\n/)
     let fileNames = []

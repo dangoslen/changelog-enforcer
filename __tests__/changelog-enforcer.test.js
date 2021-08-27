@@ -92,7 +92,7 @@ A       an_added_changed_file.js`
       const command_diff = execSpy.mock.calls[1][0]
       const command_diff_args = execSpy.mock.calls[1][1].join(' ')
       expect(command_diff).toBe('git')
-      expect(command_diff_args).toBe('diff origin/master --name-status --diff-filter=AM')
+      expect(command_diff_args).toBe('diff origin/master... --name-status --diff-filter=AM')
       
       done()
     })
@@ -140,7 +140,7 @@ A       an_added_changed_file.js`
       const command_diff = execSpy.mock.calls[1][0]
       const command_diff_args = execSpy.mock.calls[1][1].join(' ')
       expect(command_diff).toBe('git')
-      expect(command_diff_args).toBe('diff origin/master --name-status --diff-filter=AM')
+      expect(command_diff_args).toBe('diff origin/master... --name-status --diff-filter=AM')
       
       done()
     })
@@ -181,7 +181,7 @@ A       an_added_changed_file.js`
       const command_diff = execSpy.mock.calls[1][0]
       const command_diff_args = execSpy.mock.calls[1][1].join(' ')
       expect(command_diff).toBe('git')
-      expect(command_diff_args).toBe('diff origin/master --name-status --diff-filter=AM')
+      expect(command_diff_args).toBe('diff origin/master... --name-status --diff-filter=AM')
       
       done()
     })
@@ -224,7 +224,7 @@ A       an_added_changed_file.js`
       const command_diff = execSpy.mock.calls[1][0]
       const command_diff_args = execSpy.mock.calls[1][1].join(' ')
       expect(command_diff).toBe('git')
-      expect(command_diff_args).toBe('diff origin/master --name-status --diff-filter=AM')
+      expect(command_diff_args).toBe('diff origin/master... --name-status --diff-filter=AM')
       
       done()
     })
@@ -273,7 +273,7 @@ M       CHANGELOG.md`
       const command_diff = execSpy.mock.calls[2][0]
       const command_diff_args = execSpy.mock.calls[2][1].join(' ')
       expect(command_diff).toBe('git')
-      expect(command_diff_args).toBe('diff origin/master --name-status --diff-filter=AM')
+      expect(command_diff_args).toBe('diff origin/master... --name-status --diff-filter=AM')
 
       done()
     })
@@ -323,7 +323,7 @@ M       path/to/CHANGELOG.md`
       const command_diff = execSpy.mock.calls[2][0]
       const command_diff_args = execSpy.mock.calls[2][1].join(' ')
       expect(command_diff).toBe('git')
-      expect(command_diff_args).toBe('diff origin/master --name-status --diff-filter=AM')
+      expect(command_diff_args).toBe('diff origin/master... --name-status --diff-filter=AM')
 
       done()
     })
