@@ -84,7 +84,6 @@ async function ensureBranchExists(baseRef) {
     })
 
     if (!branchNames.includes(`remotes/origin/${baseRef}`)) {
-        // Depth=0 needed to do `...` compare
         await exec.exec('git', ['-c', 'protocol.version=2', 'fetch', 'origin', `${baseRef}`], {})
     }
 }
@@ -104,7 +103,7 @@ async function checkChangeLog(baseRef, changeLogPath, missingUpdateErrorMessage)
     //     git diff A...B is equivalent to git diff $(git merge-base A B) B. You can omit any one of
     //     <commit>, which has the same effect as using HEAD instead.
     // For more, see https://stackoverflow.com/a/463027
-    await exec.exec('git', ['diff', `origin/${baseRef}...`, '--name-status', '--diff-filter=AM'], options)
+    await exec.exec('git', ['diff', `origin/${baseRef}...HEAD`, '--name-status', '--diff-filter=AM'], options)
 
     const changes = output.split(/\r?\n/)
     let fileNames = []
