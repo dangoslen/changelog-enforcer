@@ -1,6 +1,10 @@
 # CHANGELOG
 Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v3.0.0]
+### Changed
+- Clarified documentation on `versionPattern`. While no breaking changes were made, the documentation initially indicated it would be removed, but after #145, it seems it is worth keeping. 
+
 ## [v2.3.1]
 ### Changed
 - Only runs on `pull_request` and `pull_request_target` events. This is to address issue #140
