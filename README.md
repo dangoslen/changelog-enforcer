@@ -58,11 +58,11 @@ Below are the properties allowed by the Changelog Enforcer. These properties are
 
 #### `versionPattern`
 * Default: `'## \\[((v|V)?\\d*\\.\\d*\\.\\d*-?\\w*|unreleased|Unreleased|UNRELEASED)\\]'`
-* A regex pattern used to extract the versions from the changelog. Changelog Enforcer assumes the use of the [KeepAChangelog.com](https:// keepachangelog.com/en/1.0.0/) convention, and as such looks for a line starting with '## [version] - date. Versions are only extracted from the changelog when enforcing that the expected latest version (via the `expectedLatestVersion` property). 
-      
-  If you supply your own regex to match a different format, your regex must match the version as a capture group. The first capture group will be used if your regex includes mutliple. The regex pattern is used with global and multiline flags to find all of the versions in the changelog. 
-      
-  Because the regex is passed as a String, you will need to escape a backslash `\` character via `\\`
+* A regex pattern used to extract the version section headings from the changelog. Changelog Enforcer assumes the use of the [KeepAChangelog.com](https://keepachangelog.com/en/1.0.0/) convention for section headings, and as such looks for a line starting with `## [version] - date`. Versions are only extracted from the changelog when enforcing the expected latest version (via the `expectedLatestVersion` property).
+
+  If you supply your own regex to match a different format, your regex must match the version string as a capture group (in the default format, that's the part inside square brackets). The first capture group will be used if your regex includes multiple groups. The regex pattern is used with global and multiline flags to find all of the versions in the changelog. 
+
+  Because the regex is passed as a `String` object, you will need to escape backslash characters (`\`) character via `\\`.
 
 ### Outputs
 
