@@ -41,7 +41,7 @@ Below are the properties allowed by the Changelog Enforcer. These properties are
 
 #### `skipLabels` 
 * Default: `'Skip-Changelog'` 
-* List of labels used to skip enforcing of the changelog during a pull request. Each label name is comma separated and only one label needs to be present for enforcement to be skipped. 
+* List of labels used to skip enforcing of the changelog during a pull request. Each label name is comma separated and only one label needs to be present for enforcement to be skipped.
 
   For example, if `label-1,label-2` was supplied as the `skipLabels`, `label-1` _or_ `label-2` would skip the enforcer. Each label is trimmed for leading and trailing spaces since GitHub labels do not allow for leading or trailing spaces. Thus, the following lists are equivalent:
   * `label-1,label-2`
@@ -58,15 +58,11 @@ Below are the properties allowed by the Changelog Enforcer. These properties are
 
 #### `versionPattern`
 * Default: `'## \\[((v|V)?\\d*\\.\\d*\\.\\d*-?\\w*|unreleased|Unreleased|UNRELEASED)\\]'`
-<<<<<<< HEAD
-* A regex pattern used to extract the versions from the changelog. Changelog Enforcer assumes the use of the KeepAChangelog.com convention, and as such looks for a line starting with `## [version] - date`. Your regex should match the version as the 2nd match group. The regex pattern is used with global and multiline flags. Also note that since this is passed as a String, you will need to escape a backslash `\` character via `\\`
-=======
 * A regex pattern used to extract the version section headings from the changelog. Changelog Enforcer assumes the use of the [KeepAChangelog.com](https://keepachangelog.com/en/1.0.0/) convention for section headings, and as such looks for a line starting with `## [version] - date`. Versions are only extracted from the changelog when enforcing the expected latest version (via the `expectedLatestVersion` property).
 
   If you supply your own regex to match a different format, your regex must match the version string as a capture group (in the default format, that's the part inside square brackets). The first capture group will be used if your regex includes multiple groups. The regex pattern is used with global and multiline flags to find all of the versions in the changelog. 
 
   Because the regex is passed as a `String` object, you will need to escape backslash characters (`\`) character via `\\`.
->>>>>>> ee5f04c (Update README.md)
 
 ### Outputs
 
