@@ -19,5 +19,7 @@ jobs:
         uses: ./
         with:
           skipLabels: "skip-changelog"
+          # Anything within the brackets that starts with *
+          versionPattern: " ^\\* \\[(.*)\\]"
           expectedLatestVersion: ${{ steps.read-version.outputs.tag }}
 ```

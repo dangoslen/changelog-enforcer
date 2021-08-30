@@ -10,7 +10,7 @@ The purpose of this action is to enforce a change to a ongoing changelog file. I
 ### Usage
 To use, follow the typical GitHub Action `uses` syntax. 
 
-Requires the common [Checkout Action](https://github.com/marketplace/actions/checkout) as shown below. The enforcement of change is done all using local `git` commands and requires the repository be checked out.
+Requires the common [Checkout Action](https://github.com/marketplace/actions/checkout) as shown below. The enforcement of change is done all using local `git` commands and requires the repository be checked out. You can also view [other workflow examples](./example-workflows/) that uses various properties of this action.
 
 ```yaml
 name: "Pull Request Workflow"
