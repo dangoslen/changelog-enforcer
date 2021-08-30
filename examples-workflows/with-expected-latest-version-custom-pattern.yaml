@@ -1,5 +1,5 @@
 ```yaml
-name: "Pull Request Workflow"
+name: "Checking for Expected Latest Version and Custom Version Pattern"
 on:
   pull_request:
       types: [opened, synchronize, reopened, ready_for_review, labeled, unlabeled]
