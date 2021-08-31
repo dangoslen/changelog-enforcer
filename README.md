@@ -8,14 +8,13 @@
 The purpose of this action is to enforce a change to a ongoing changelog file. Inspired by [Keep A Changelog](https://keepachangelog.com/en/1.0.0/), this action helps development teams to keep a change file up to date as new features or fixes are implemented. 
 
 ### Usage
-To use, follow the typical GitHub Action `uses` syntax. An example is shown below:
+To use, follow the typical GitHub Action `uses` syntax. An example workflow using the default parameters of this action is shown below:
 
 ```yaml
 name: "Pull Request Workflow"
 on:
   pull_request:
-    # The specific activity types are listed here to include "labeled" and "unlabeled" since the enforcer allows for skipping 
-    # enforcement of the changelog being edited via the "skipLabels" property
+    # The specific activity types are listed here to include "labeled" and "unlabeled" since the enforcer allows for skipping enforcement of the changelog being edited via the "skipLabels" property
     types: [opened, synchronize, reopened, ready_for_review, labeled, unlabeled]
 
 jobs:
