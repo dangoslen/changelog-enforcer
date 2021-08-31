@@ -32,7 +32,7 @@ inputs:
 
       If you supply your own regex to match a different format, your regex must match the version string as a capture group (in the default format, that's the part inside square brackets). The first capture group will be used if your regex includes multiple groups. The regex pattern is used with global and multiline flags to find all of the versions in the changelog.
 
-      Because the regex is passed as a `String` object, you will need to escape backslash characters (`\`) character via `\\`."
+      Because the regex is passed as a `String` object, you will need to escape backslash characters (`\`) via `\\`."
     required: true
     default: "^## \\[((v|V)?\\d*\\.\\d*\\.\\d*-?\\w*|unreleased|Unreleased|UNRELEASED)\\]"
   missingUpdateErrorMessage:
