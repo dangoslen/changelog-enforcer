@@ -1,0 +1,23 @@
+```yaml
+name: "Checking for Expected Latest Version"
+on:
+  pull_request:
+      types: [opened, synchronize, reopened, ready_for_review, labeled, unlabeled]
+
+jobs:
+  # Enforces the update of a changelog file on every pull request 
+  changelog:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.3.4
+
+      - id: read-version
+        run: |
+          echo "::set-output name=version::$(jq -r ".version" package.json)"
+
+      - id: changelog-enforcer
+        uses: ./
+        with:
+          skipLabels: "skip-changelog"
+          expectedLatestVersion: ${{ steps.read-version.outputs.tag }}
+```
