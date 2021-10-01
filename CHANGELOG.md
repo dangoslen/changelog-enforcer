@@ -4,6 +4,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ## [v2.3.1]
 ### Changed
 - Only runs on `pull_request` and `pull_request_target` events. This is to address issue #140
+- Bumps `@vercel/ncc` from 0.28.6 to 0.31.1
 
 ## [v2.3.0]
 ### Dependencies
