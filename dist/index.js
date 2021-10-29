@@ -7315,17 +7315,19 @@ const IN_EXPECTED_LATEST_VERSION = 'expectedLatestVersion'
 const IN_VERSION_PATTERN = 'versionPattern'
 const IN_UPDATE_CUSTOM_ERROR = 'missingUpdateErrorMessage'
 const IN_SKIP_LABELS = 'skipLabels'
+const ENV_TOKEN = "GITHUB_TOKEN"
 
 // Output keys
 const OUT_ERROR_MESSAGE = 'errorMessage'
 
-module.exports.enforce = async function() {
+module.exports.enforce = async function () {
     try {
         const skipLabelList = getSkipLabels()
         const changeLogPath = core.getInput(IN_CHANGELOG_PATH)
         const missingUpdateErrorMessage = getMissingUpdateErrorMessage(changeLogPath)
         const expectedLatestVersion = core.getInput(IN_EXPECTED_LATEST_VERSION)
         const versionPattern = core.getInput(IN_VERSION_PATTERN)
+        const token = core.getInput(ENV_TOKEN)
 
         core.info(`Skip Labels: ${skipLabelList}`)
         core.info(`Changelog Path: ${changeLogPath}`)
@@ -7333,20 +7335,21 @@ module.exports.enforce = async function() {
         core.info(`Expected Latest Version: ${expectedLatestVersion}`)
         core.info(`Version Pattern: ${versionPattern}`)
 
-        const pullRequest = contextExtractor.getPullRequestContext(github.context)
+        const octokit = github.getOctokit(token)
+        const context = github.context
+        const pullRequest = contextExtractor.getPullRequestContext(context)
         if (!pullRequest) {
             return
         }
 
         const labelNames = pullRequest.labels.map(l => l.name)
-        const baseRef = pullRequest.base.ref
-
-        if (shouldEnforceChangelog(labelNames, skipLabelList)) {
-            await ensureBranchExists(baseRef)
-            await checkChangeLog(baseRef, changeLogPath, missingUpdateErrorMessage)
-            await validateLatestVersion(expectedLatestVersion, versionPattern, changeLogPath)
+        if (!shouldEnforceChangelog(labelNames, skipLabelList)) {
+            return
         }
-    } catch(error) {
+
+        await checkChangeLog(octokit, pullRequest, changeLogPath, missingUpdateErrorMessage)
+        //await validateLatestVersion(expectedLatestVersion, versionPattern, changeLogPath)
+    } catch (error) {
         core.setOutput(OUT_ERROR_MESSAGE, error.message)
         core.setFailed(error.message)
     }
@@ -7369,57 +7372,51 @@ function shouldEnforceChangelog(labelNames, skipLabelList) {
     return !labelNames.some(l => skipLabelList.includes(l))
 }
 
-async function ensureBranchExists(baseRef) {
-    let output = ''
-    const options = {}
-    options.listeners = {
-        stdout: (data) => {
-            output += data.toString();
-        }
-    }
+// async function ensureBranchExists(baseRef) {
+//     let output = ''
+//     const options = {}
+//     options.listeners = {
+//         stdout: (data) => {
+//             output += data.toString();
+//         }
+//     }
 
-    await exec.exec('git', ['branch', '--verbose', '--all'], options)
+//     await exec.exec('git', ['branch', '--verbose', '--all'], options)
 
-    const branches = output.split(/\r?\n/)
-    let branchNames = []
-    branches.map(change => {
-        const branchName = change.replace(/(^\s*[\.\w+/-]*)(\s*)([\w+].*)\n?$/g, '$1').trim()
-        branchNames.push(branchName)
-    })
+//     const branches = output.split(/\r?\n/)
+//     let branchNames = []
+//     branches.map(change => {
+//         const branchName = change.replace(/(^\s*[\.\w+/-]*)(\s*)([\w+].*)\n?$/g, '$1').trim()
+//         branchNames.push(branchName)
+//     })
 
-    if (!branchNames.includes(`remotes/origin/${baseRef}`)) {
-        await exec.exec('git', ['-c', 'protocol.version=2', 'fetch', '--depth=1', 'origin', `${baseRef}`], {})
-    }
-}
+//     if (!branchNames.includes(`remotes/origin/${baseRef}`)) {
+//         await exec.exec('git', ['-c', 'protocol.version=2', 'fetch', '--depth=1', 'origin', `${baseRef}`], {})
+//     }
+// }
 
-async function checkChangeLog(baseRef, changeLogPath, missingUpdateErrorMessage) {
-    let output = ''
-    const options = {}
-    options.listeners = {
-        stdout: (data) => {
-            output += data.toString();
-        }
-    }
-    
-    await exec.exec('git', ['diff', `origin/${baseRef}`, '--name-status', '--diff-filter=AM'], options)
-
-    const changes = output.split(/\r?\n/)
-    let fileNames = []
-    changes.map(change => {
-        const fileName = change.replace(/(^[A-Z])(\s*)(.*)(\n)?$/g, '$3')
-        fileNames.push(fileName)
+async function checkChangeLog(octokit, pull_request, changeLogPath, missingUpdateErrorMessage) {
+    const response = await octokit.request('GET /repos/{repo}/pulls/{pull_number}/files', {
+        repo: pull_request.repo,
+        pull_number: pull_request.number
     })
 
     let normalizedChangeLogPath = changeLogPath
     if (normalizedChangeLogPath.startsWith('./')) {
         normalizedChangeLogPath = normalizedChangeLogPath.substring(2)
     }
-    if (!fileNames.includes(normalizedChangeLogPath)) {
+
+    const changelogFile = response.files
+        .filter(f => f.status != 'deleted')
+        .filter(f => f.filename == normalizedChangeLogPath)
+        .map(f => { f.filename, f.raw_url })
+
+    if (!changelogFile) {
         throw new Error(missingUpdateErrorMessage)
     }
 }
 
-async function validateLatestVersion(expectedLatestVersion, versionPattern, changeLogPath) {
+async function validateLatestVersion(expectedLatestVersion, versionPattern, changelogFile) {
     if (expectedLatestVersion == null || expectedLatestVersion.length == 0) {
         return
     }
