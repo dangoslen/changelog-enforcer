@@ -1,6 +1,5 @@
 const core = require('@actions/core')
 const github = require('@actions/github')
-const exec = require('@actions/exec')
 const versionExtractor = require('./version-extractor')
 const labelExtractor = require('./label-extractor')
 const contextExtractor = require('./context-extractor')
@@ -30,6 +29,7 @@ module.exports.enforce = async function () {
         core.info(`Missing Update Error Message: ${missingUpdateErrorMessage}`)
         core.info(`Expected Latest Version: ${expectedLatestVersion}`)
         core.info(`Version Pattern: ${versionPattern}`)
+        core.info(`GitHub Token: ${token}`)
 
         const octokit = github.getOctokit(token)
         const context = github.context
