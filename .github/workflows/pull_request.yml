@@ -33,7 +33,6 @@ jobs:
         with:
           commit_message: "Auto-package action"
 
-
   # test action works running from the graph
   enforce-changelog:
     runs-on: ubuntu-latest
