@@ -1,6 +1,5 @@
 const core = require('@actions/core')
 const github = require('@actions/github')
-const versionExtractor = require('../src/version-extractor')
 const changelogEnforcer = require('../src/changelog-enforcer')
 
 const SKIP_LABELS = "SomeLabel,Skip-Changelog,Skip-Release"
@@ -11,8 +10,6 @@ const VERSION_PATTERN = "^## \\[((v|V)?\\d*\\.\\d*\\.\\d*-?\\w*|unreleased|Unrel
 let inputs = {}
 
 // Mocks via Jest
-let githubSpy
-let octokitSpy
 let infoSpy
 let failureSpy
 let outputSpy
@@ -30,7 +27,7 @@ describe('the changelog-enforcer', () => {
     inputs['changeLogPath'] = CHANGELOG
     inputs['expectedLatestVersion'] = ''
     inputs['versionPattern'] = VERSION_PATTERN
-    inputs['GITHUB_OTKEN'] = 'token'
+    inputs['token'] = 'token'
 
     jest.spyOn(core, 'getInput').mockImplementation((name) => {
       return inputs[name]

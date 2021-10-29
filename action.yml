@@ -38,6 +38,9 @@ inputs:
   missingUpdateErrorMessage:
     description: "The error message logged and returned in the 'errorMessage' output when no update to the changelog has been found."
     required: false
+  token:
+    description: "The secret value from your GITHUB_TOKEN or another token to access the GitHub API"
+    required: true
 runs:
   using: 'node12'
   main: 'dist/index.js'

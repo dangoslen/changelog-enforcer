@@ -10,45 +10,44 @@ const IN_EXPECTED_LATEST_VERSION = 'expectedLatestVersion'
 const IN_VERSION_PATTERN = 'versionPattern'
 const IN_UPDATE_CUSTOM_ERROR = 'missingUpdateErrorMessage'
 const IN_SKIP_LABELS = 'skipLabels'
-const ENV_TOKEN = "GITHUB_TOKEN"
+const IN_TOKEN = "token"
 
 // Output keys
 const OUT_ERROR_MESSAGE = 'errorMessage'
 
 module.exports.enforce = async function () {
-    try {
-        const skipLabelList = getSkipLabels()
-        const changeLogPath = core.getInput(IN_CHANGELOG_PATH)
-        const missingUpdateErrorMessage = getMissingUpdateErrorMessage(changeLogPath)
-        const expectedLatestVersion = core.getInput(IN_EXPECTED_LATEST_VERSION)
-        const versionPattern = core.getInput(IN_VERSION_PATTERN)
-        const token = core.getInput(ENV_TOKEN)
+    const skipLabelList = getSkipLabels()
+    const changeLogPath = core.getInput(IN_CHANGELOG_PATH)
+    const missingUpdateErrorMessage = getMissingUpdateErrorMessage(changeLogPath)
+    const expectedLatestVersion = core.getInput(IN_EXPECTED_LATEST_VERSION)
+    const versionPattern = core.getInput(IN_VERSION_PATTERN)
+    const token = core.getInput(IN_TOKEN)
 
-        core.info(`Skip Labels: ${skipLabelList}`)
-        core.info(`Changelog Path: ${changeLogPath}`)
-        core.info(`Missing Update Error Message: ${missingUpdateErrorMessage}`)
-        core.info(`Expected Latest Version: ${expectedLatestVersion}`)
-        core.info(`Version Pattern: ${versionPattern}`)
-        core.info(`GitHub Token: ${token}`)
-
-        const octokit = github.getOctokit(token)
-        const context = github.context
-        const pullRequest = contextExtractor.getPullRequestContext(context)
-        if (!pullRequest) {
-            return
-        }
-
-        const labelNames = pullRequest.labels.map(l => l.name)
-        if (!shouldEnforceChangelog(labelNames, skipLabelList)) {
-            return
-        }
-
-        await checkChangeLog(octokit, pullRequest, changeLogPath, missingUpdateErrorMessage)
-        // await validateLatestVersion(expectedLatestVersion, versionPattern, changeLogPath)
-    } catch (error) {
-        core.setOutput(OUT_ERROR_MESSAGE, error.message)
-        core.setFailed(error.message)
+    if (!token) {
+        core.error("no token in env")
     }
+
+    core.info(`Skip Labels: ${skipLabelList}`)
+    core.info(`Changelog Path: ${changeLogPath}`)
+    core.info(`Missing Update Error Message: ${missingUpdateErrorMessage}`)
+    core.info(`Expected Latest Version: ${expectedLatestVersion}`)
+    core.info(`Version Pattern: ${versionPattern}`)
+
+    const octokit = github.getOctokit(token)
+    const context = github.context
+    const pullRequest = contextExtractor.getPullRequestContext(context)
+    if (!pullRequest) {
+        return
+    }
+
+    const labelNames = pullRequest.labels.map(l => l.name)
+    if (!shouldEnforceChangelog(labelNames, skipLabelList)) {
+        return
+    }
+
+    checkChangeLog(octokit, pullRequest, changeLogPath, missingUpdateErrorMessage)
+        .catch((err) => { throw err })
+    // await validateLatestVersion(expectedLatestVersion, versionPattern, changeLogPath)
 };
 
 function getSkipLabels() {
