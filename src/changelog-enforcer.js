@@ -44,7 +44,7 @@ module.exports.enforce = async function () {
         }
 
         await checkChangeLog(octokit, pullRequest, changeLogPath, missingUpdateErrorMessage)
-        //await validateLatestVersion(expectedLatestVersion, versionPattern, changeLogPath)
+        // await validateLatestVersion(expectedLatestVersion, versionPattern, changeLogPath)
     } catch (error) {
         core.setOutput(OUT_ERROR_MESSAGE, error.message)
         core.setFailed(error.message)
@@ -68,40 +68,20 @@ function shouldEnforceChangelog(labelNames, skipLabelList) {
     return !labelNames.some(l => skipLabelList.includes(l))
 }
 
-// async function ensureBranchExists(baseRef) {
-//     let output = ''
-//     const options = {}
-//     options.listeners = {
-//         stdout: (data) => {
-//             output += data.toString();
-//         }
-//     }
-
-//     await exec.exec('git', ['branch', '--verbose', '--all'], options)
-
-//     const branches = output.split(/\r?\n/)
-//     let branchNames = []
-//     branches.map(change => {
-//         const branchName = change.replace(/(^\s*[\.\w+/-]*)(\s*)([\w+].*)\n?$/g, '$1').trim()
-//         branchNames.push(branchName)
-//     })
-
-//     if (!branchNames.includes(`remotes/origin/${baseRef}`)) {
-//         await exec.exec('git', ['-c', 'protocol.version=2', 'fetch', '--depth=1', 'origin', `${baseRef}`], {})
-//     }
-// }
-
 async function checkChangeLog(octokit, pull_request, changeLogPath, missingUpdateErrorMessage) {
+    core.debug("Downloading pull request files")
     const response = await octokit.request('GET /repos/{repo}/pulls/{pull_number}/files', {
         repo: pull_request.repo,
         pull_number: pull_request.number
     })
+    core.debug("Downloaded pull request files")
 
     let normalizedChangeLogPath = changeLogPath
     if (normalizedChangeLogPath.startsWith('./')) {
         normalizedChangeLogPath = normalizedChangeLogPath.substring(2)
     }
 
+    core.debug("Filtering for changelog")
     const changelogFile = response.files
         .filter(f => f.status != 'deleted')
         .filter(f => f.filename == normalizedChangeLogPath)
