@@ -1,8 +1,7 @@
 const fs = require('fs')
 
-module.exports.getVersions = function (pattern, changeLogPath) {
+module.exports.getVersions = function (pattern, changelog) {
     const regex = new RegExp(`${pattern}`, 'gm')
-    const changelog = fs.readFileSync(changeLogPath, 'utf8')
     let groups = false
     let versions = []
     do {
@@ -11,6 +10,6 @@ module.exports.getVersions = function (pattern, changeLogPath) {
             // The actual group we want to match is the version
             versions.push(groups[1])
         }
-    } while(groups)
+    } while (groups)
     return versions
 }

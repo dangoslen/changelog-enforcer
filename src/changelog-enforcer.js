@@ -1,3 +1,5 @@
+const https = require('https');
+
 const core = require('@actions/core')
 const github = require('@actions/github')
 const versionExtractor = require('./version-extractor')
@@ -16,38 +18,41 @@ const IN_TOKEN = "token"
 const OUT_ERROR_MESSAGE = 'errorMessage'
 
 module.exports.enforce = async function () {
-    const skipLabelList = getSkipLabels()
-    const changeLogPath = core.getInput(IN_CHANGELOG_PATH)
-    const missingUpdateErrorMessage = getMissingUpdateErrorMessage(changeLogPath)
-    const expectedLatestVersion = core.getInput(IN_EXPECTED_LATEST_VERSION)
-    const versionPattern = core.getInput(IN_VERSION_PATTERN)
-    const token = core.getInput(IN_TOKEN)
+    try {
+        const skipLabelList = getSkipLabels()
+        const changeLogPath = core.getInput(IN_CHANGELOG_PATH)
+        const missingUpdateErrorMessage = getMissingUpdateErrorMessage(changeLogPath)
+        const expectedLatestVersion = core.getInput(IN_EXPECTED_LATEST_VERSION)
+        const versionPattern = core.getInput(IN_VERSION_PATTERN)
+        const token = core.getInput(IN_TOKEN)
 
-    if (!token) {
-        core.error("no token in env")
+        core.info(`Skip Labels: ${skipLabelList}`)
+        core.info(`Changelog Path: ${changeLogPath}`)
+        core.info(`Missing Update Error Message: ${missingUpdateErrorMessage}`)
+        core.info(`Expected Latest Version: ${expectedLatestVersion}`)
+        core.info(`Version Pattern: ${versionPattern}`)
+
+        const octokit = github.getOctokit(token)
+        const context = github.context
+        const pullRequest = contextExtractor.getPullRequestContext(context)
+        if (!pullRequest) {
+            return
+        }
+
+        const labelNames = pullRequest.labels.map(l => l.name)
+        if (!shouldEnforceChangelog(labelNames, skipLabelList)) {
+            return
+        }
+        const changelog = await checkChangeLog(octokit, pullRequest, changeLogPath, missingUpdateErrorMessage)
+
+        if (shouldEnforceVersion(expectedLatestVersion)) {
+            return
+        }
+        await validateLatestVersion(octokit, expectedLatestVersion, versionPattern, changelog.raw_url)
+    } catch (err) {
+        core.setOutput(OUT_ERROR_MESSAGE, err.message)
+        core.setFailed(err.message)
     }
-
-    core.info(`Skip Labels: ${skipLabelList}`)
-    core.info(`Changelog Path: ${changeLogPath}`)
-    core.info(`Missing Update Error Message: ${missingUpdateErrorMessage}`)
-    core.info(`Expected Latest Version: ${expectedLatestVersion}`)
-    core.info(`Version Pattern: ${versionPattern}`)
-
-    const octokit = github.getOctokit(token)
-    const context = github.context
-    const pullRequest = contextExtractor.getPullRequestContext(context)
-    if (!pullRequest) {
-        return
-    }
-
-    const labelNames = pullRequest.labels.map(l => l.name)
-    if (!shouldEnforceChangelog(labelNames, skipLabelList)) {
-        return
-    }
-
-    checkChangeLog(octokit, pullRequest, changeLogPath, missingUpdateErrorMessage)
-        .catch((err) => { throw err })
-    // await validateLatestVersion(expectedLatestVersion, versionPattern, changeLogPath)
 };
 
 function getSkipLabels() {
@@ -67,9 +72,13 @@ function shouldEnforceChangelog(labelNames, skipLabelList) {
     return !labelNames.some(l => skipLabelList.includes(l))
 }
 
+function shouldEnforceVersion(expectedLatestVersion) {
+    return expectedLatestVersion === ''
+}
+
 async function checkChangeLog(octokit, pull_request, changeLogPath, missingUpdateErrorMessage) {
     core.debug("Downloading pull request files")
-    const response = await octokit.request('GET /repos/{repo}/pulls/{pull_number}/files', {
+    const response = await octokit.paginate('GET /repos/{repo}/pulls/{pull_number}/files', {
         repo: pull_request.repo,
         pull_number: pull_request.number
     })
@@ -81,22 +90,23 @@ async function checkChangeLog(octokit, pull_request, changeLogPath, missingUpdat
     }
 
     core.debug("Filtering for changelog")
-    const changelogFile = response.files
-        .filter(f => f.status != 'deleted')
-        .filter(f => f.filename == normalizedChangeLogPath)
-        .map(f => { f.filename, f.raw_url })
+    const filtered = response.files
+        .filter(f => f.status !== 'deleted')
+        .filter(f => f.file_name === normalizedChangeLogPath)
 
-    if (!changelogFile) {
+    if (filtered.length == 0) {
         throw new Error(missingUpdateErrorMessage)
     }
+    return filtered[0]
 }
 
-async function validateLatestVersion(expectedLatestVersion, versionPattern, changelogFile) {
-    if (expectedLatestVersion == null || expectedLatestVersion.length == 0) {
-        return
-    }
+async function validateLatestVersion(octokit, expectedLatestVersion, versionPattern, changelogUrl) {
+    core.debug("Downloading changelog")
+    const response = await octokit.request(`GET ${changelogUrl}`, {
+        changelogUrl: changelogUrl
+    })
 
-    const versions = versionExtractor.getVersions(versionPattern, changeLogPath)
+    const versions = versionExtractor.getVersions(versionPattern, response.data)
     let latest = versions[0]
     if (latest.toUpperCase() == "UNRELEASED") {
         latest = versions[1]
