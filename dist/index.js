@@ -6067,8 +6067,7 @@ module.exports.enforce = async function () {
         core.info(`Expected Latest Version: ${expectedLatestVersion}`)
         core.info(`Version Pattern: ${versionPattern}`)
 
-        const octokit = github.getOctokit(token)
-        const { data } = await octokit.request("/user");
+        const octokit = github.getOctokit(token, { log: { debug: core.debug, info: core.info }})
         const context = github.context
         const pullRequest = contextExtractor.getPullRequestContext(context)
         if (!pullRequest) {
