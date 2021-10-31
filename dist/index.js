@@ -6117,7 +6117,7 @@ function shouldEnforceVersion(expectedLatestVersion) {
 
 async function checkChangeLog(octokit, repository, pullRequestNumber,  changeLogPath, missingUpdateErrorMessage) {
     core.debug(`Downloading pull request files from  /repos/${repository}/pulls/${pullRequestNumber}/files`)
-    const response = await octokit.paginate('GET /repos/{repo}/pulls/{number}/files', {
+    const response = await octokit.paginate("GET /repos/{repo}/pulls/{number}/files", {
         repo: repository,
         number: pullRequestNumber
     })
@@ -6129,7 +6129,7 @@ async function checkChangeLog(octokit, repository, pullRequestNumber,  changeLog
     }
 
     core.debug("Filtering for changelog")
-    const filtered = response.files
+    const filtered = response.data
         .filter(f => f.status !== 'deleted')
         .filter(f => f.file_name === normalizedChangeLogPath)
 

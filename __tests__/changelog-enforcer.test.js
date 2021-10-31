@@ -61,7 +61,7 @@ describe('the changelog-enforcer', () => {
     inputs['skipLabels'] = 'A different label'
 
     const response = {
-      "files": [
+      "data": [
         {
           "file_name": "CHANGELOG.md",
           "status": "modified",
@@ -89,7 +89,7 @@ describe('the changelog-enforcer', () => {
     inputs['skipLabels'] = 'A different label'
 
     const response = {
-      "files": [
+      "data": [
         {
           "file_name": "AnotherFile.md",
           "status": "modified",
@@ -121,7 +121,7 @@ describe('the changelog-enforcer', () => {
 
 
     const response = {
-      "files": [
+      "data": [
         {
           "file_name": "AnotherFile.md",
           "status": "modified",
