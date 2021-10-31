@@ -63,7 +63,7 @@ describe('the changelog-enforcer', () => {
     const response = {
       "data": [
         {
-          "file_name": "CHANGELOG.md",
+          "filename": "CHANGELOG.md",
           "status": "modified",
           "raw_url": "./path/to/CHANGELOG.md"
         }
@@ -91,7 +91,7 @@ describe('the changelog-enforcer', () => {
     const response = {
       "data": [
         {
-          "file_name": "AnotherFile.md",
+          "filename": "AnotherFile.md",
           "status": "modified",
           "raw_url": "/path/to/AnotherFile.md"
         }
@@ -119,11 +119,10 @@ describe('the changelog-enforcer', () => {
     inputs['skipLabels'] = 'A different label'
     inputs['missingUpdateErrorMessage'] = customErrorMessage
 
-
     const response = {
       "data": [
         {
-          "file_name": "AnotherFile.md",
+          "filename": "AnotherFile.md",
           "status": "modified",
           "raw_url": "/path/to/AnotherFile.md"
         }
