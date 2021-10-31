@@ -101,10 +101,11 @@ async function checkChangeLog(octokit, pull_request, changeLogPath, missingUpdat
 }
 
 async function validateLatestVersion(octokit, expectedLatestVersion, versionPattern, changelogUrl) {
-    core.debug("Downloading changelog")
+    core.debug(`Downloading changelog from ${changelogUrl}`)
     const response = await octokit.request(`GET ${changelogUrl}`, {
         changelogUrl: changelogUrl
     })
+    core.debug(`Downloaded changelog from ${changelogUrl}`)
 
     const versions = versionExtractor.getVersions(versionPattern, response.data)
     let latest = versions[0]
