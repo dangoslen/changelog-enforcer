@@ -1,5 +1,8 @@
+jest.mock('node-fetch');
+
 const core = require('@actions/core')
-const github = require('@actions/github')
+const fetch = require('node-fetch')
+const { Response } = jest.requireActual('node-fetch');
 const changelogEnforcer = require('../src/changelog-enforcer')
 
 const SKIP_LABELS = "SomeLabel,Skip-Changelog,Skip-Release"
@@ -38,18 +41,16 @@ describe('the changelog-enforcer', () => {
     infoSpy = jest.spyOn(core, 'info').mockImplementation(jest.fn())
     failureSpy = jest.spyOn(core, 'setFailed').mockImplementation(jest.fn())
     outputSpy = jest.spyOn(core, 'setOutput').mockImplementation(jest.fn())
-    githubSpy = jest.spyOn(github, 'getOctokit').mockImplementation((token) => { return octokit })
   })
 
-  preparePaginate = (requestLine, options, response) => {
-    expect(requestLine).toBe('GET /repos/{repo}/pulls/{number}/files')
-    return Promise.resolve(response)
+  prepareResponse = (body) => {
+    return Promise.resolve(new Response(body, { Headers: { 'Content-Type': 'application/json' } }))
   }
 
   it('should skip enforcing when label is present', (done) => {
     changelogEnforcer.enforce()
       .then(() => {
-        expect(infoSpy.mock.calls.length).toBe(5)
+        expect(infoSpy).toHaveBeenCalledTimes(5)
         expect(failureSpy).not.toHaveBeenCalled()
         expect(outputSpy).not.toHaveBeenCalled()
 
@@ -60,26 +61,25 @@ describe('the changelog-enforcer', () => {
   it('should enforce when label is not present; changelog is changed', (done) => {
     inputs['skipLabels'] = 'A different label'
 
-    const response = {
-      "data": [
-        {
-          "filename": "CHANGELOG.md",
-          "status": "modified",
-          "raw_url": "./path/to/CHANGELOG.md"
-        }
-      ]
-    }
+    const files = [
+      {
+        "filename": "CHANGELOG.md",
+        "status": "modified",
+        "raw_url": "./path/to/CHANGELOG.md"
+      }
+    ]
 
-    octokit.paginate = jest.fn(async (requestLine, options) => {
-      return preparePaginate(requestLine, options, response)
+    fetch.mockImplementation((url, options) => {
+      return prepareResponse(JSON.stringify(files))
     })
 
     changelogEnforcer.enforce()
       .then(() => {
-        expect(infoSpy.mock.calls.length).toBe(5)
-        expect(octokit.paginate).toHaveBeenCalled()
+        expect(infoSpy).toHaveBeenCalledTimes(5)
         expect(failureSpy).not.toHaveBeenCalled()
         expect(outputSpy).not.toHaveBeenCalled()
+
+        expect(fetch).toHaveBeenCalledTimes(1)
 
         done()
       })
@@ -88,61 +88,60 @@ describe('the changelog-enforcer', () => {
   it('should enforce when label is not present; changelog is not changed', (done) => {
     inputs['skipLabels'] = 'A different label'
 
-    const response = {
-      "data": [
-        {
-          "filename": "AnotherFile.md",
-          "status": "modified",
-          "raw_url": "/path/to/AnotherFile.md"
-        }
-      ]
-    }
+    const files = [
+      {
+        "filename": "AnotherFile.md",
+        "status": "modified",
+        "raw_url": "/path/to/AnotherFile.md"
+      }
+    ]
+  
 
-    octokit.paginate = jest.fn(async (requestLine, options) => {
-      return preparePaginate(requestLine, options, response)
-
+    fetch.mockImplementation((url, options) => {
+      return prepareResponse(JSON.stringify(files))
     })
 
     changelogEnforcer.enforce()
       .then(() => {
-        expect(infoSpy.mock.calls.length).toBe(5)
-        expect(octokit.paginate).toHaveBeenCalled()
+        expect(infoSpy).toHaveBeenCalledTimes(5)
         expect(failureSpy).toHaveBeenCalled()
         expect(outputSpy).toHaveBeenCalled()
 
-        done()
-      })
-  })
-
-  it('should enforce when label is not present; changelog is not changed; custom error message', (done) => {
-    const customErrorMessage = 'Some Message for you @Author!'
-    inputs['skipLabels'] = 'A different label'
-    inputs['missingUpdateErrorMessage'] = customErrorMessage
-
-    const response = {
-      "data": [
-        {
-          "filename": "AnotherFile.md",
-          "status": "modified",
-          "raw_url": "/path/to/AnotherFile.md"
-        }
-      ]
-    }
-
-    octokit.paginate = jest.fn(async (requestLine, options) => {
-      return preparePaginate(requestLine, options, response)
-    })
-
-    changelogEnforcer.enforce()
-      .then(() => {
-        expect(infoSpy.mock.calls.length).toBe(5)
-        expect(octokit.paginate).toHaveBeenCalled()
-        expect(failureSpy).toHaveBeenCalled()
-        expect(outputSpy).toHaveBeenCalledWith('errorMessage', customErrorMessage)
+        expect(fetch).toHaveBeenCalledTimes(1)
 
         done()
       })
   })
+
+  // it('should enforce when label is not present; changelog is not changed; custom error message', (done) => {
+  //   const customErrorMessage = 'Some Message for you @Author!'
+  //   inputs['skipLabels'] = 'A different label'
+  //   inputs['missingUpdateErrorMessage'] = customErrorMessage
+
+  //   const response = {
+  //     "data": [
+  //       {
+  //         "filename": "AnotherFile.md",
+  //         "status": "modified",
+  //         "raw_url": "/path/to/AnotherFile.md"
+  //       }
+  //     ]
+  //   }
+
+  //   octokit.paginate = jest.fn(async (requestLine, options) => {
+  //     return preparePaginate(requestLine, options, response)
+  //   })
+
+  //   changelogEnforcer.enforce()
+  //     .then(() => {
+  //       expect(infoSpy.mock.calls.length).toBe(5)
+  //       expect(octokit.paginate).toHaveBeenCalled()
+  //       expect(failureSpy).toHaveBeenCalled()
+  //       expect(outputSpy).toHaveBeenCalledWith('errorMessage', customErrorMessage)
+
+  //       done()
+  //     })
+  // })
 
   //   it('should enforce when label is not present; changelog is changed; branch not checked out', (done) => {
   //     inputs['skipLabels'] = 'A different label' 

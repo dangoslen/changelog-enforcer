@@ -1,9 +1,9 @@
 const core = require('@actions/core')
 const github = require('@actions/github')
-const fetch = require('node-fetch')
 const versionExtractor = require('./version-extractor')
 const labelExtractor = require('./label-extractor')
 const contextExtractor = require('./context-extractor')
+const { findChangelog } = require('./client')
 
 // Input keys
 const IN_CHANGELOG_PATH = 'changeLogPath'
@@ -74,29 +74,20 @@ function shouldEnforceVersion(expectedLatestVersion) {
     return expectedLatestVersion === ''
 }
 
-async function checkChangeLog(token, repository, pullRequestNumber, changeLogPath, missingUpdateErrorMessage) {
-    core.debug(`Downloading pull request files from  /repos/${repository}/pulls/${pullRequestNumber}/files`)
-    const response = await fetch(`https://api.github.com/repos/${repository}/pulls/${pullRequestNumber}/files?per_page=100`, {
-        headers: {
-            "Authorization": `Bearer ${token}`
-        }
-    })
-    core.debug("Downloaded pull request files")
-
-    let normalizedChangeLogPath = changeLogPath
-    if (normalizedChangeLogPath.startsWith('./')) {
-        normalizedChangeLogPath = normalizedChangeLogPath.substring(2)
+function normalizeChangelogPath(changeLogPath) {
+    if (changeLogPath.startsWith('./')) {
+        return changeLogPath.substring(2)
     }
+    return changeLogPath
+}
 
-    core.debug("Filtering for changelog")
-    const filtered = response.data
-        .filter(f => f.status !== 'deleted')
-        .filter(f => f.filename === normalizedChangeLogPath)
-
-    if (filtered.length == 0) {
+async function checkChangeLog(token, repository, pullRequestNumber, changeLogPath, missingUpdateErrorMessage) {
+    const normalizedChangeLogPath = normalizeChangelogPath(changeLogPath)
+    const changelog = await findChangelog(token, repository, pullRequestNumber, 100, normalizedChangeLogPath)
+    if (!changelog) {
         throw new Error(missingUpdateErrorMessage)
     }
-    return filtered[0]
+    return changelog
 }
 
 // async function validateLatestVersion(token, expectedLatestVersion, versionPattern, changelogUrl) {
