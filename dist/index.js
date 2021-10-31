@@ -6035,8 +6035,6 @@ function wrappy (fn, cb) {
 /***/ 679:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
-const https = __nccwpck_require__(211);
-
 const core = __nccwpck_require__(186)
 const github = __nccwpck_require__(438)
 const versionExtractor = __nccwpck_require__(568)
@@ -6068,7 +6066,6 @@ module.exports.enforce = async function () {
         core.info(`Missing Update Error Message: ${missingUpdateErrorMessage}`)
         core.info(`Expected Latest Version: ${expectedLatestVersion}`)
         core.info(`Version Pattern: ${versionPattern}`)
-        core.debug(`Token: ${token}`)
 
         const octokit = github.getOctokit(token)
         const context = github.context
