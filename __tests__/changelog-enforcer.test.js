@@ -41,6 +41,13 @@ describe('the changelog-enforcer', () => {
     githubSpy = jest.spyOn(github, 'getOctokit').mockImplementation((token) => { return octokit })
   })
 
+  preparePaginate = (requestLine, options, response) => {
+    expect(requestLine).toBe('GET /repos/{repo}/pulls/{number}/files')
+    expect(options.repo).toBe('Codertocat/Hello-World')
+    expect(options.number).toBe(2)
+    return Promise.resolve(response)
+  }
+
   it('should skip enforcing when label is present', (done) => {
     changelogEnforcer.enforce()
       .then(() => {
@@ -66,7 +73,7 @@ describe('the changelog-enforcer', () => {
     }
 
     octokit.paginate = jest.fn(async (requestLine, options) => {
-      return Promise.resolve(response)
+      return preparePaginate(requestLine, options, response)
     })
 
     changelogEnforcer.enforce()
@@ -94,7 +101,8 @@ describe('the changelog-enforcer', () => {
     }
 
     octokit.paginate = jest.fn(async (requestLine, options) => {
-      return Promise.resolve(response)
+      return preparePaginate(requestLine, options, response)
+
     })
 
     changelogEnforcer.enforce()
@@ -125,7 +133,7 @@ describe('the changelog-enforcer', () => {
     }
 
     octokit.paginate = jest.fn(async (requestLine, options) => {
-      return Promise.resolve(response)
+      return preparePaginate(requestLine, options, response)
     })
 
     changelogEnforcer.enforce()

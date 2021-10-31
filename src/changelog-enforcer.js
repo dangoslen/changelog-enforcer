@@ -39,11 +39,13 @@ module.exports.enforce = async function () {
             return
         }
 
+        const repository = `${context.repo.owner}/${context.repo.repo}`
+        const pullRequestNumber = pullRequest.number
         const labelNames = pullRequest.labels.map(l => l.name)
         if (!shouldEnforceChangelog(labelNames, skipLabelList)) {
             return
         }
-        const changelog = await checkChangeLog(octokit, pullRequest, changeLogPath, missingUpdateErrorMessage)
+        const changelog = await checkChangeLog(octokit, repository, pullRequestNumber, changeLogPath, missingUpdateErrorMessage)
 
         if (shouldEnforceVersion(expectedLatestVersion)) {
             return
@@ -76,11 +78,11 @@ function shouldEnforceVersion(expectedLatestVersion) {
     return expectedLatestVersion === ''
 }
 
-async function checkChangeLog(octokit, pull_request, changeLogPath, missingUpdateErrorMessage) {
+async function checkChangeLog(octokit, repository, pullRequestNumber,  changeLogPath, missingUpdateErrorMessage) {
     core.debug("Downloading pull request files")
-    const response = await octokit.paginate('GET /repos/{repo}/pulls/{pull_number}/files', {
-        repo: pull_request.repo.full_name,
-        pull_number: pull_request.number
+    const response = await octokit.paginate('GET /repos/{repo}/pulls/{number}/files', {
+        repo: repository,
+        number: pullRequestNumber
     })
     core.debug("Downloaded pull request files")
 
