@@ -6068,6 +6068,7 @@ module.exports.enforce = async function () {
         core.info(`Missing Update Error Message: ${missingUpdateErrorMessage}`)
         core.info(`Expected Latest Version: ${expectedLatestVersion}`)
         core.info(`Version Pattern: ${versionPattern}`)
+        core.debug(`Token: ${token}`)
 
         const octokit = github.getOctokit(token)
         const context = github.context
