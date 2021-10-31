@@ -3,7 +3,7 @@ const github = require('@actions/github')
 const versionExtractor = require('./version-extractor')
 const labelExtractor = require('./label-extractor')
 const contextExtractor = require('./context-extractor')
-const { findChangelog } = require('./client')
+const { findChangelog, downloadChangelog } = require('./client')
 
 // Input keys
 const IN_CHANGELOG_PATH = 'changeLogPath'
@@ -46,7 +46,7 @@ module.exports.enforce = async function () {
         if (shouldEnforceVersion(expectedLatestVersion)) {
             return
         }
-        // await validateLatestVersion(expectedLatestVersion, versionPattern, changelog.raw_url)
+        await validateLatestVersion(token, expectedLatestVersion, versionPattern, changelog.raw_url)
     } catch (err) {
         core.setOutput(OUT_ERROR_MESSAGE, err.message)
         core.setFailed(err.message)
@@ -90,20 +90,15 @@ async function checkChangeLog(token, repository, pullRequestNumber, changeLogPat
     return changelog
 }
 
-// async function validateLatestVersion(token, expectedLatestVersion, versionPattern, changelogUrl) {
-//     core.debug(`Downloading changelog from ${changelogUrl}`)
-//     const response = await octokit.request(`GET ${changelogUrl}`, {
-//         changelogUrl: changelogUrl
-//     })
-//     core.debug(`Downloaded changelog from ${changelogUrl}`)
-
-//     const versions = versionExtractor.getVersions(versionPattern, response.data)
-//     let latest = versions[0]
-//     if (latest.toUpperCase() == "UNRELEASED") {
-//         latest = versions[1]
-//     }
-//     if (latest != expectedLatestVersion) {
-//         throw new Error(`The latest version in the changelog does not match the expected latest version of ${expectedLatestVersion}!`)
-//     }
-// }
+async function validateLatestVersion(token, expectedLatestVersion, versionPattern, changelogUrl) {
+    const changelog = downloadChangelog(token, changelogUrl)
+    const versions = versionExtractor.getVersions(versionPattern, changelog)
+    let latest = versions[0]
+    if (latest.toUpperCase() == "UNRELEASED") {
+        latest = versions[1]
+    }
+    if (latest !== expectedLatestVersion) {
+        throw new Error(`The latest version in the changelog does not match the expected latest version of ${expectedLatestVersion}!`)
+    }
+}
 

@@ -9,7 +9,7 @@ module.exports.findChangelog = async function(token, repository, pullRequestNumb
         const options = addAuth(token, {})
         const response = await fetch(`https://api.github.com/repos/${repository}/pulls/${pullRequestNumber}/files?per_page=${pageSize}&page=${page}`, options)
         const files = await response.json()
-        core.debug("Downloaded page ${page} of pull request files")
+        core.debug(`Downloaded page ${page} of pull request files`)
 
         core.debug("Filtering for changelog")
         const filtered = files
@@ -25,6 +25,15 @@ module.exports.findChangelog = async function(token, repository, pullRequestNumb
         }
     }
     return undefined
+}
+
+module.exports.downloadChangelog = async function(token, changelogUrl) {
+    core.debug(`Downloading changelog from ${changelogUrl}`)
+    const options = addAuth(token, {})
+    const response = await fetch(`${changelogUrl}`, options)
+    const changelog = await response.text()
+    core.debug("Downloaded changelog")
+    return changelog
 }
 
 function addAuth(token, options) {
