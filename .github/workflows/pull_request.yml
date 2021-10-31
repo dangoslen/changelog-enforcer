@@ -61,7 +61,7 @@ jobs:
         with:
           skipLabels: "skip-changelog"
           expectedLatestVersion: ${{ steps.read-version.outputs.tag }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.ACTION_TOKEN }}
           
       - if: failure()
         uses: unsplash/comment-on-pr@master
