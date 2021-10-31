@@ -6116,7 +6116,7 @@ function shouldEnforceVersion(expectedLatestVersion) {
 }
 
 async function checkChangeLog(octokit, repository, pullRequestNumber,  changeLogPath, missingUpdateErrorMessage) {
-    core.debug("Downloading pull request files")
+    core.debug(`Downloading pull request files from  /repos/${repository}/pulls/${pullRequestNumber}/files`)
     const response = await octokit.paginate('GET /repos/{repo}/pulls/{number}/files', {
         repo: repository,
         number: pullRequestNumber

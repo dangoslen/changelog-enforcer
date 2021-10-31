@@ -43,8 +43,6 @@ describe('the changelog-enforcer', () => {
 
   preparePaginate = (requestLine, options, response) => {
     expect(requestLine).toBe('GET /repos/{repo}/pulls/{number}/files')
-    expect(options.repo).toBe('Codertocat/Hello-World')
-    expect(options.number).toBe(2)
     return Promise.resolve(response)
   }
 
