@@ -6113,7 +6113,7 @@ function shouldEnforceVersion(expectedLatestVersion) {
 
 async function checkChangeLog(token, repository, pullRequestNumber, changeLogPath, missingUpdateErrorMessage) {
     core.debug(`Downloading pull request files from  /repos/${repository}/pulls/${pullRequestNumber}/files`)
-    const response = await fetch(`/repos/${repository}/pulls/${pullRequestNumber}/files?per_page=100`, {
+    const response = await fetch(`https://api.github.com/repos/${repository}/pulls/${pullRequestNumber}/files?per_page=100`, {
         headers: {
             "Authorization": `Bearer ${token}`
         }
