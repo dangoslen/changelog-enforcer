@@ -6037,6 +6037,7 @@ function wrappy (fn, cb) {
 
 const core = __nccwpck_require__(186)
 const github = __nccwpck_require__(438)
+const fetch = __nccwpck_require__(467)
 const versionExtractor = __nccwpck_require__(568)
 const labelExtractor = __nccwpck_require__(863)
 const contextExtractor = __nccwpck_require__(155)
@@ -6067,7 +6068,6 @@ module.exports.enforce = async function () {
         core.info(`Expected Latest Version: ${expectedLatestVersion}`)
         core.info(`Version Pattern: ${versionPattern}`)
 
-        const octokit = github.getOctokit(token, { log: { debug: core.debug, info: core.info }})
         const context = github.context
         const pullRequest = contextExtractor.getPullRequestContext(context)
         if (!pullRequest) {
@@ -6079,12 +6079,11 @@ module.exports.enforce = async function () {
         if (!shouldEnforceChangelog(labelNames, skipLabelList)) {
             return
         }
-        const changelog = await checkChangeLog(octokit, repository, pullRequest.number, changeLogPath, missingUpdateErrorMessage)
-
+        const changelog = await checkChangeLog(token, repository, pullRequest.number, changeLogPath, missingUpdateErrorMessage)
         if (shouldEnforceVersion(expectedLatestVersion)) {
             return
         }
-        await validateLatestVersion(octokit, expectedLatestVersion, versionPattern, changelog.raw_url)
+        // await validateLatestVersion(expectedLatestVersion, versionPattern, changelog.raw_url)
     } catch (err) {
         core.setOutput(OUT_ERROR_MESSAGE, err.message)
         core.setFailed(err.message)
@@ -6112,12 +6111,12 @@ function shouldEnforceVersion(expectedLatestVersion) {
     return expectedLatestVersion === ''
 }
 
-async function checkChangeLog(octokit, repository, pullRequestNumber, changeLogPath, missingUpdateErrorMessage) {
+async function checkChangeLog(token, repository, pullRequestNumber, changeLogPath, missingUpdateErrorMessage) {
     core.debug(`Downloading pull request files from  /repos/${repository}/pulls/${pullRequestNumber}/files`)
-    const response = await octokit.paginate("GET /repos/{repo}/pulls/{number}/files", {
-        repo: repository,
-        number: pullRequestNumber,
-        per_page: 100
+    const response = await fetch(`/repos/${repository}/pulls/${pullRequestNumber}/files?per_page=100`, {
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
     })
     core.debug("Downloaded pull request files")
 
@@ -6137,22 +6136,22 @@ async function checkChangeLog(octokit, repository, pullRequestNumber, changeLogP
     return filtered[0]
 }
 
-async function validateLatestVersion(octokit, expectedLatestVersion, versionPattern, changelogUrl) {
-    core.debug(`Downloading changelog from ${changelogUrl}`)
-    const response = await octokit.request(`GET ${changelogUrl}`, {
-        changelogUrl: changelogUrl
-    })
-    core.debug(`Downloaded changelog from ${changelogUrl}`)
+// async function validateLatestVersion(token, expectedLatestVersion, versionPattern, changelogUrl) {
+//     core.debug(`Downloading changelog from ${changelogUrl}`)
+//     const response = await octokit.request(`GET ${changelogUrl}`, {
+//         changelogUrl: changelogUrl
+//     })
+//     core.debug(`Downloaded changelog from ${changelogUrl}`)
 
-    const versions = versionExtractor.getVersions(versionPattern, response.data)
-    let latest = versions[0]
-    if (latest.toUpperCase() == "UNRELEASED") {
-        latest = versions[1]
-    }
-    if (latest != expectedLatestVersion) {
-        throw new Error(`The latest version in the changelog does not match the expected latest version of ${expectedLatestVersion}!`)
-    }
-}
+//     const versions = versionExtractor.getVersions(versionPattern, response.data)
+//     let latest = versions[0]
+//     if (latest.toUpperCase() == "UNRELEASED") {
+//         latest = versions[1]
+//     }
+//     if (latest != expectedLatestVersion) {
+//         throw new Error(`The latest version in the changelog does not match the expected latest version of ${expectedLatestVersion}!`)
+//     }
+// }
 
 
 
