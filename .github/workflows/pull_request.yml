@@ -33,7 +33,6 @@ jobs:
         with:
           commit_message: "Auto-package action"
 
-
   # test action works running from the graph
   enforce-changelog:
     runs-on: ubuntu-latest
@@ -62,6 +61,7 @@ jobs:
         with:
           skipLabels: "skip-changelog"
           expectedLatestVersion: ${{ steps.read-version.outputs.tag }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           
       - if: failure()
         uses: unsplash/comment-on-pr@master
