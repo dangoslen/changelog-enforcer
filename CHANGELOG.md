@@ -8,6 +8,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Dependencies
 - Bumps `@vercel/ncc` from 0.28.6 to 0.31.1
 - Bumps `@actions/core` from 1.4.0 to 1.6.0
+- Bumps `jest` from 27.0.5 to 27.3.1
 
 ## [v2.3.1]
 ### Changed
