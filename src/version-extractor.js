@@ -1,16 +1,17 @@
 const fs = require('fs')
+const core = require('@actions/core')
 
-module.exports.getVersions = function (pattern, changeLogPath) {
+module.exports.getVersions = function (pattern, changelog) {
     const regex = new RegExp(`${pattern}`, 'gm')
-    const changelog = fs.readFileSync(changeLogPath, 'utf8')
     let groups = false
     let versions = []
     do {
         groups = regex.exec(changelog)
         if (groups) {
             // The actual group we want to match is the version
+            core.debug(`Found version ${groups[1]}`)
             versions.push(groups[1])
         }
-    } while(groups)
+    } while (groups)
     return versions
 }
