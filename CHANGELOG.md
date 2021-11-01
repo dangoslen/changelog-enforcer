@@ -2,6 +2,9 @@
 Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [v3.0.0]
+:rocket: The 3.0.0 release of the Changelog Enforcer introduces is here! This release relies soley on the GitHub API instead of local git commands from a cloned repository. This means, for example, that `actions/checkout` does **not** need to be run before running the enforcer.
+### Fixes
+- Fixes issue #142
 ### Dependencies
 - Bumps `@vercel/ncc` from 0.28.6 to 0.31.1
 

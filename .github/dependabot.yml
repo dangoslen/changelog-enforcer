@@ -9,7 +9,7 @@ updates:
       - verified
     open-pull-requests-limit: 3
     schedule:
-      interval: "daily"
+      interval: "weekly"
     target-branch: "releases/v3.0"
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -19,5 +19,5 @@ updates:
       - verified
     open-pull-requests-limit: 3
     schedule:
-      interval: "daily"
+      interval: "weekly"
     target-branch: "releases/v3.0"
