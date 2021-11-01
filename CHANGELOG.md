@@ -7,6 +7,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Fixes issue #142
 ### Dependencies
 - Bumps `@vercel/ncc` from 0.28.6 to 0.31.1
+- Bumps `node-fetch` from 2.6.1 to 3.0.0
 
 ## [v2.3.1]
 ### Changed
