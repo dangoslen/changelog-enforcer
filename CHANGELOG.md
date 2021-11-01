@@ -2,6 +2,8 @@
 Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [v3.0.0]
+### Dependencies
+- Bumps `eslint` from 7.28.0 to 8.1.0
 
 :rocket: The 3.0.0 release of the Changelog Enforcer introduces is here! This release relies soley on the GitHub API instead of local git commands from a cloned repository. This means, for example, that `actions/checkout` does **not** need to be run before running the enforcer.
 
