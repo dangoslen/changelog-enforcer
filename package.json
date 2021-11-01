@@ -35,10 +35,11 @@
     "@actions/github": "^5.0.0",
     "dist": "^0.1.2",
     "make-coverage-badge": "^1.2.0",
+    "node-fetch": "^2.6.1",
     "uglify-js": "^3.13.9"
   },
   "devDependencies": {
-    "@vercel/ncc": "^0.28.6",
+    "@vercel/ncc": "^0.31.1",
     "eslint": "^7.28.0",
     "jest": "^27.0.5",
     "y18n": "^5.0.8"
