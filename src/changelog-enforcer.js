@@ -91,7 +91,7 @@ async function checkChangeLog(token, repository, pullRequestNumber, changeLogPat
 }
 
 async function validateLatestVersion(token, expectedLatestVersion, versionPattern, changelogUrl) {
-    const changelog = downloadChangelog(token, changelogUrl)
+    const changelog = await downloadChangelog(token, changelogUrl)
     const versions = versionExtractor.getVersions(versionPattern, changelog)
     let latest = versions[0]
     core.debug(`Latest version is ${latest}`)
