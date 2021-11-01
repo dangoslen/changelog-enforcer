@@ -6131,6 +6131,7 @@ async function validateLatestVersion(token, expectedLatestVersion, versionPatter
     const changelog = downloadChangelog(token, changelogUrl)
     const versions = versionExtractor.getVersions(versionPattern, changelog)
     let latest = versions[0]
+    core.debug(`Latest version is ${latest}`)
     if (latest.toUpperCase() == "UNRELEASED") {
         latest = versions[1]
     }
@@ -6138,8 +6139,6 @@ async function validateLatestVersion(token, expectedLatestVersion, versionPatter
         throw new Error(`The latest version in the changelog does not match the expected latest version of ${expectedLatestVersion}!`)
     }
 }
-
-
 
 /***/ }),
 
@@ -6238,6 +6237,7 @@ module.exports.extractLabels = function (labelsString) {
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
 const fs = __nccwpck_require__(5747)
+const core = __nccwpck_require__(2186)
 
 module.exports.getVersions = function (pattern, changelog) {
     const regex = new RegExp(`${pattern}`, 'gm')
@@ -6247,6 +6247,7 @@ module.exports.getVersions = function (pattern, changelog) {
         groups = regex.exec(changelog)
         if (groups) {
             // The actual group we want to match is the version
+            core.debug(`Found version ${groups[1]}`)
             versions.push(groups[1])
         }
     } while (groups)

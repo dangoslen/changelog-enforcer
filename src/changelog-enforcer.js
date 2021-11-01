@@ -94,6 +94,7 @@ async function validateLatestVersion(token, expectedLatestVersion, versionPatter
     const changelog = downloadChangelog(token, changelogUrl)
     const versions = versionExtractor.getVersions(versionPattern, changelog)
     let latest = versions[0]
+    core.debug(`Latest version is ${latest}`)
     if (latest.toUpperCase() == "UNRELEASED") {
         latest = versions[1]
     }
@@ -101,4 +102,3 @@ async function validateLatestVersion(token, expectedLatestVersion, versionPatter
         throw new Error(`The latest version in the changelog does not match the expected latest version of ${expectedLatestVersion}!`)
     }
 }
-
