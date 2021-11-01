@@ -18,7 +18,6 @@ on:
     # (which are not included by default for the "pull_request" trigger).
     # This is needed to allow skipping enforcement of the changelog in PRs with specific labels,
     # as defined in the (optional) "skipLabels" property.
-    # The specific activity types are listed here to include "labeled" and "unlabeled" since the
     types: [opened, synchronize, reopened, ready_for_review, labeled, unlabeled]
 
 jobs:
