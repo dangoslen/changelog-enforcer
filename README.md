@@ -5,16 +5,19 @@
  </p>
 
 ## Changelog Enforcer
-The purpose of this action is to enforce a change to a ongoing changelog file. Inspired by [Keep A Changelog](https://keepachangelog.com/en/1.0.0/), this action helps development teams to keep a change file up to date as new features or fixes are implemented. 
+The purpose of this action is to enforce that every pull request in a repository includes a change to an ongoing changelog file. Inspired by [Keep A Changelog](https://keepachangelog.com/en/1.0.0/), this action helps development teams to keep a change file up to date as new features or fixes are implemented. 
 
 ### Usage
-To use, follow the typical GitHub Action `uses` syntax. An example workflow using the default parameters of this action is shown below:
+To use this action, follow the typical GitHub Action `uses` syntax. An example workflow using the default parameters of this action is shown below:
 
 ```yaml
 name: "Pull Request Workflow"
 on:
   pull_request:
-    # The specific activity types are listed here to include "labeled" and "unlabeled" since the enforcer allows for skipping enforcement of the changelog being edited via the "skipLabels" property
+    # The specific activity types are listed here to include "labeled" and "unlabeled"
+    # (which are not included by default for the "pull_request" trigger).
+    # This is needed to allow skipping enforcement of the changelog in PRs with specific labels,
+    # as defined in the (optional) "skipLabels" property.
     types: [opened, synchronize, reopened, ready_for_review, labeled, unlabeled]
 
 jobs:
@@ -22,7 +25,7 @@ jobs:
   changelog:
     runs-on: ubuntu-latest
     steps:
-    # The checkout step is required since this action uses local git commands to enforce the changelog
+    # The checkout step is needed since the enforcer relies on local git commands
     - uses: actions/checkout@v2
     - uses: dangoslen/changelog-enforcer@v2
 ```
