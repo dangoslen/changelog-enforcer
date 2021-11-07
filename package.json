@@ -30,18 +30,18 @@
   },
   "homepage": "https://github.com/dangoslen/changelog-enforcer#readme",
   "dependencies": {
-    "@actions/core": "^1.4.0",
+    "@actions/core": "^1.6.0",
     "@actions/exec": "^1.1.0",
     "@actions/github": "^5.0.0",
     "dist": "^0.1.2",
     "make-coverage-badge": "^1.2.0",
-    "node-fetch": "^2.6.1",
-    "uglify-js": "^3.13.9"
+    "uglify-js": "^3.14.2",
+    "node-fetch": "^2.6.1"
   },
   "devDependencies": {
     "@vercel/ncc": "^0.31.1",
     "eslint": "^8.1.0",
-    "jest": "^27.0.5",
+    "jest": "^27.3.1",
     "y18n": "^5.0.8"
   }
 }
