@@ -41,6 +41,7 @@ jobs:
         with: 
           token: ${{ secrets.ACTION_TOKEN }}
           ref: ${{ github.event.pull_request.head.ref }}
+
       - id: read-version
         run: |
           echo "::set-output name=version::$(jq -r ".version" package.json)"
