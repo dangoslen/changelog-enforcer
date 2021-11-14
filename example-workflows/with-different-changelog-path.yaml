@@ -13,4 +13,5 @@ jobs:
     - uses: dangoslen/changelog-enforcer@v2
       with:
         changeLogPath: 'different/changelog.md'
+        token: ${{ secrets.GITHUB_TOKEN }}
 ```

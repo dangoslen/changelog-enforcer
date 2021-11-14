@@ -25,9 +25,10 @@ jobs:
   changelog:
     runs-on: ubuntu-latest
     steps:
-    # The checkout step is needed since the enforcer relies on local git commands
-    - uses: actions/checkout@v2
-    - uses: dangoslen/changelog-enforcer@v2
+    # The Changelog Enforcer uses the GitHub API to find 
+    - uses: dangoslen/changelog-enforcer@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 Other examples can be seen in the [example-workflows](./example-workflows) directory in this repository.
