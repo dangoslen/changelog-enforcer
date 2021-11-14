@@ -41,6 +41,7 @@ jobs:
         with: 
           token: ${{ secrets.ACTION_TOKEN }}
           ref: ${{ github.event.pull_request.head.ref }}
+
       - id: read-version
         run: |
           echo "::set-output name=version::$(jq -r ".version" package.json)"
@@ -61,6 +62,7 @@ jobs:
         with:
           skipLabels: "skip-changelog"
           expectedLatestVersion: ${{ steps.read-version.outputs.tag }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           
       - if: failure()
         uses: unsplash/comment-on-pr@master
