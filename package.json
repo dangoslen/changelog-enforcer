@@ -36,7 +36,7 @@
     "dist": "^0.1.2",
     "make-coverage-badge": "^1.2.0",
     "uglify-js": "^3.14.3",
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^3.1.0"
   },
   "devDependencies": {
     "@vercel/ncc": "^0.31.1",
