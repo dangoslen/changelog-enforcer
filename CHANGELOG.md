@@ -12,6 +12,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Bumps `actions/checkout` from 2.3.4 to 2.4.0
 - Bumps `uglify-js` from 3.13.9 to 3.14.3
 - Bumps `eslint` from 7.28.0 to 8.2.0
+- Bumps `node-fetch` from 2.6.1 to 3.1.0
 
 ## [v2.3.1]
 ### Changed
