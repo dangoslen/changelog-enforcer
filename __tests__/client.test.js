@@ -1,6 +1,5 @@
 jest.mock('node-fetch');
 
-const core = require('@actions/core')
 const fetch = require('node-fetch')
 const { Response } = jest.requireActual('node-fetch');
 const client = require('../src/client')
@@ -57,5 +56,16 @@ describe('the client', () => {
     const changelogFile = await client.findChangelog('token', 'repo', 1, 1, 'CHANGELOG.md')
     expect(fetch).toHaveBeenCalledTimes(2)
     expect(changelogFile).toBeUndefined()
+  })
+
+  it('should get an error with bad response code', async () => {
+    fetch
+      .mockReturnValueOnce(Promise.resolve(new Response("", { status: 401 })))
+
+    try {
+      await client.findChangelog('token', 'repo', 1, 1, 'CHANGELOG.md')
+    } catch (err) {
+      expect(fetch).toHaveBeenCalled()
+    }
   })
 })

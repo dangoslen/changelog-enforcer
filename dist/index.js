@@ -6248,7 +6248,7 @@ module.exports.enforce = async function () {
         const missingUpdateErrorMessage = getMissingUpdateErrorMessage(changeLogPath)
         const expectedLatestVersion = core.getInput(IN_EXPECTED_LATEST_VERSION)
         const versionPattern = core.getInput(IN_VERSION_PATTERN)
-        const token = core.getInput(IN_TOKEN)
+        const token = getToken()
 
         core.info(`Skip Labels: ${skipLabelList}`)
         core.info(`Changelog Path: ${changeLogPath}`)
@@ -6289,6 +6289,14 @@ function getMissingUpdateErrorMessage(changeLogPath) {
         return customMessage
     }
     return `No update to ${changeLogPath} found!`
+}
+
+function getToken() {
+    const token = core.getInput(IN_TOKEN)
+    if (!token) {
+        throw new Error("Did not find token for using the GitHub API")
+    }
+    return token
 }
 
 function shouldEnforceChangelog(labelNames, skipLabelList) {
@@ -6343,6 +6351,9 @@ module.exports.findChangelog = async function (token, repository, pullRequestNum
         core.debug(`Downloading page ${page} of pull request files from  /repos/${repository}/pulls/${pullRequestNumber}/files`)
         const options = addAuth(token, {})
         const response = await fetch(`https://api.github.com/repos/${repository}/pulls/${pullRequestNumber}/files?per_page=${pageSize}&page=${page}`, options)
+        if (!response.ok) {
+            throw new Error(`Got a ${response.status} response from GitHub API`)
+        }
         const files = await response.json()
         core.debug(`Downloaded page ${page} of pull request files`)
 
@@ -6366,6 +6377,9 @@ module.exports.downloadChangelog = async function (token, changelogUrl) {
     core.debug(`Downloading changelog from ${changelogUrl}`)
     const options = addAuth(token, {})
     const response = await fetch(`${changelogUrl}`, options)
+    if (!response.ok) {
+        throw new Error(`Got a ${response.status} response from GitHub API`)
+    }
     const changelog = await response.text()
     core.debug("Downloaded changelog")
     return changelog
