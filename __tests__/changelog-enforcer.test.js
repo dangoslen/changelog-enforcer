@@ -58,6 +58,19 @@ describe('the changelog-enforcer', () => {
       })
   })
 
+  it('should throw an error when token is missing', (done) => {
+    inputs['token'] = ''
+
+    changelogEnforcer.enforce()
+      .then(() => {
+        expect(infoSpy).not.toHaveBeenCalled()
+        expect(failureSpy).toHaveBeenCalled()
+        expect(outputSpy).toHaveBeenCalled()
+
+        done()
+      })
+  })
+
   it('should enforce when label is not present; changelog is changed', (done) => {
     inputs['skipLabels'] = 'A different label'
 
@@ -95,7 +108,7 @@ describe('the changelog-enforcer', () => {
         "raw_url": "/path/to/AnotherFile.md"
       }
     ]
-  
+
 
     fetch.mockImplementation((url, options) => {
       return prepareResponse(JSON.stringify(files))
@@ -155,8 +168,8 @@ describe('the changelog-enforcer', () => {
       }
     ]
 
-    const changelog = 
-`## [v2.1.0]
+    const changelog =
+      `## [v2.1.0]
     - Changelog   
 `
 
