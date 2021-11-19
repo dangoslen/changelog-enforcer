@@ -39,8 +39,9 @@ inputs:
     description: "The error message logged and returned in the 'errorMessage' output when no update to the changelog has been found."
     required: false
   token:
-    description: "The secret value from your GITHUB_TOKEN or another token to access the GitHub API"
+    description: "The secret value from your GITHUB_TOKEN or another token to access the GitHub API. Defaults to the token at `github.token`"
     required: true
+    default: ${{ github.token }}
 runs:
   using: 'node12'
   main: 'dist/index.js'
