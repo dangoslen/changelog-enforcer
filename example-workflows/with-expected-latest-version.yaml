@@ -20,5 +20,4 @@ jobs:
         with:
           skipLabels: "skip-changelog"
           expectedLatestVersion: ${{ steps.read-version.outputs.tag }}
-          token: ${{ secrets.GITHUB_TOKEN }}
 ```
