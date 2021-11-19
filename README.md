@@ -25,10 +25,7 @@ jobs:
   changelog:
     runs-on: ubuntu-latest
     steps:
-    # The Changelog Enforcer uses the GitHub API to find 
     - uses: dangoslen/changelog-enforcer@v3
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 Other examples can be seen in the [example-workflows](./example-workflows) directory in this repository.
@@ -66,6 +63,10 @@ Below are the properties allowed by the Changelog Enforcer. These properties are
   If you supply your own regex to match a different format, your regex must match the version string as a capture group (in the default format, that's the part inside square brackets). The first capture group will be used if your regex includes multiple groups. The regex pattern is used with global and multiline flags to find all of the versions in the changelog.
 
   Because the regex is passed as a `String` object, you will need to escape backslash characters (`\`) via `\\`.
+
+#### `token`
+* Default: `${{ github.token }}`
+* The token used to authenticate to the GitHub API. Uses the default token from the `github.token` context. Can be any access token you have  configured for your repository.
 
 ### Outputs
 

@@ -22,5 +22,4 @@ jobs:
           # Anything within brackets that starts with `*`
           versionPattern: " ^\\* \\[(.*)\\]"
           expectedLatestVersion: ${{ steps.read-version.outputs.tag }}
-          token: ${{ secrets.GITHUB_TOKEN }}
 ```
