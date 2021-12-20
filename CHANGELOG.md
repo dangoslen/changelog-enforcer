@@ -10,7 +10,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Bumps `@actions/core` from 1.4.0 to 1.6.0
 - Bumps `jest` from 27.0.5 to 27.3.1
 - Bumps `actions/checkout` from 2.3.4 to 2.4.0
-- Bumps `uglify-js` from 3.13.9 to 3.14.3
+- Bumps `uglify-js` from 3.13.9 to 3.14.5
 - Bumps `eslint` from 7.28.0 to 8.2.0
 
 ## [v2.3.1]
