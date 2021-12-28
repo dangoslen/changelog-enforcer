@@ -1,9 +1,9 @@
 const core = require('@actions/core')
 const github = require('@actions/github')
-const exec = require('@actions/exec')
 const versionExtractor = require('./version-extractor')
 const labelExtractor = require('./label-extractor')
 const contextExtractor = require('./context-extractor')
+const { findChangelog, downloadChangelog } = require('./client')
 
 // Input keys
 const IN_CHANGELOG_PATH = 'changeLogPath'
@@ -11,17 +11,19 @@ const IN_EXPECTED_LATEST_VERSION = 'expectedLatestVersion'
 const IN_VERSION_PATTERN = 'versionPattern'
 const IN_UPDATE_CUSTOM_ERROR = 'missingUpdateErrorMessage'
 const IN_SKIP_LABELS = 'skipLabels'
+const IN_TOKEN = "token"
 
 // Output keys
 const OUT_ERROR_MESSAGE = 'errorMessage'
 
-module.exports.enforce = async function() {
+module.exports.enforce = async function () {
     try {
         const skipLabelList = getSkipLabels()
         const changeLogPath = core.getInput(IN_CHANGELOG_PATH)
         const missingUpdateErrorMessage = getMissingUpdateErrorMessage(changeLogPath)
         const expectedLatestVersion = core.getInput(IN_EXPECTED_LATEST_VERSION)
         const versionPattern = core.getInput(IN_VERSION_PATTERN)
+        const token = getToken()
 
         core.info(`Skip Labels: ${skipLabelList}`)
         core.info(`Changelog Path: ${changeLogPath}`)
@@ -29,22 +31,25 @@ module.exports.enforce = async function() {
         core.info(`Expected Latest Version: ${expectedLatestVersion}`)
         core.info(`Version Pattern: ${versionPattern}`)
 
-        const pullRequest = contextExtractor.getPullRequestContext(github.context)
+        const context = github.context
+        const pullRequest = contextExtractor.getPullRequestContext(context)
         if (!pullRequest) {
             return
         }
 
+        const repository = `${context.repo.owner}/${context.repo.repo}`
         const labelNames = pullRequest.labels.map(l => l.name)
-        const baseRef = pullRequest.base.ref
-
-        if (shouldEnforceChangelog(labelNames, skipLabelList)) {
-            await ensureBranchExists(baseRef)
-            await checkChangeLog(baseRef, changeLogPath, missingUpdateErrorMessage)
-            await validateLatestVersion(expectedLatestVersion, versionPattern, changeLogPath)
+        if (!shouldEnforceChangelog(labelNames, skipLabelList)) {
+            return
         }
-    } catch(error) {
-        core.setOutput(OUT_ERROR_MESSAGE, error.message)
-        core.setFailed(error.message)
+        const changelog = await checkChangeLog(token, repository, pullRequest.number, changeLogPath, missingUpdateErrorMessage)
+        if (shouldEnforceVersion(expectedLatestVersion)) {
+            return
+        }
+        await validateLatestVersion(token, expectedLatestVersion, versionPattern, changelog.raw_url)
+    } catch (err) {
+        core.setOutput(OUT_ERROR_MESSAGE, err.message)
+        core.setFailed(err.message)
     }
 };
 
@@ -61,72 +66,47 @@ function getMissingUpdateErrorMessage(changeLogPath) {
     return `No update to ${changeLogPath} found!`
 }
 
+function getToken() {
+    const token = core.getInput(IN_TOKEN)
+    if (!token) {
+        throw new Error("Did not find token for using the GitHub API")
+    }
+    return token
+}
+
 function shouldEnforceChangelog(labelNames, skipLabelList) {
     return !labelNames.some(l => skipLabelList.includes(l))
 }
 
-async function ensureBranchExists(baseRef) {
-    let output = ''
-    const options = {}
-    options.listeners = {
-        stdout: (data) => {
-            output += data.toString();
-        }
-    }
-
-    await exec.exec('git', ['branch', '--verbose', '--all'], options)
-
-    const branches = output.split(/\r?\n/)
-    let branchNames = []
-    branches.map(change => {
-        const branchName = change.replace(/(^\s*[\.\w+/-]*)(\s*)([\w+].*)\n?$/g, '$1').trim()
-        branchNames.push(branchName)
-    })
-
-    if (!branchNames.includes(`remotes/origin/${baseRef}`)) {
-        await exec.exec('git', ['-c', 'protocol.version=2', 'fetch', '--depth=1', 'origin', `${baseRef}`], {})
-    }
+function shouldEnforceVersion(expectedLatestVersion) {
+    return expectedLatestVersion === ''
 }
 
-async function checkChangeLog(baseRef, changeLogPath, missingUpdateErrorMessage) {
-    let output = ''
-    const options = {}
-    options.listeners = {
-        stdout: (data) => {
-            output += data.toString();
-        }
+function normalizeChangelogPath(changeLogPath) {
+    if (changeLogPath.startsWith('./')) {
+        return changeLogPath.substring(2)
     }
-    
-    await exec.exec('git', ['diff', `origin/${baseRef}`, '--name-status', '--diff-filter=AM'], options)
+    return changeLogPath
+}
 
-    const changes = output.split(/\r?\n/)
-    let fileNames = []
-    changes.map(change => {
-        const fileName = change.replace(/(^[A-Z])(\s*)(.*)(\n)?$/g, '$3')
-        fileNames.push(fileName)
-    })
-
-    let normalizedChangeLogPath = changeLogPath
-    if (normalizedChangeLogPath.startsWith('./')) {
-        normalizedChangeLogPath = normalizedChangeLogPath.substring(2)
-    }
-    if (!fileNames.includes(normalizedChangeLogPath)) {
+async function checkChangeLog(token, repository, pullRequestNumber, changeLogPath, missingUpdateErrorMessage) {
+    const normalizedChangeLogPath = normalizeChangelogPath(changeLogPath)
+    const changelog = await findChangelog(token, repository, pullRequestNumber, 100, normalizedChangeLogPath)
+    if (!changelog) {
         throw new Error(missingUpdateErrorMessage)
     }
+    return changelog
 }
 
-async function validateLatestVersion(expectedLatestVersion, versionPattern, changeLogPath) {
-    if (expectedLatestVersion == null || expectedLatestVersion.length == 0) {
-        return
-    }
-
-    const versions = versionExtractor.getVersions(versionPattern, changeLogPath)
+async function validateLatestVersion(token, expectedLatestVersion, versionPattern, changelogUrl) {
+    const changelog = await downloadChangelog(token, changelogUrl)
+    const versions = versionExtractor.getVersions(versionPattern, changelog)
     let latest = versions[0]
+    core.debug(`Latest version is ${latest}`)
     if (latest.toUpperCase() == "UNRELEASED") {
         latest = versions[1]
     }
-    if (latest != expectedLatestVersion) {
+    if (latest !== expectedLatestVersion) {
         throw new Error(`The latest version in the changelog does not match the expected latest version of ${expectedLatestVersion}!`)
     }
 }
-
