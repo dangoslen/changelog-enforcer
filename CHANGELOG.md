@@ -1,6 +1,11 @@
 # CHANGELOG
 Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v3.1.0]
+### Fixes
+- Fixes issue #184
+  - Get changelog from the `contents_url` instead of the `raw_url`
+
 ## [v3.0.1]
 ### Dependencies
 - Bumps `stefanzweifel/git-auto-commit-action` from 4.11.0 to 4.13.1
