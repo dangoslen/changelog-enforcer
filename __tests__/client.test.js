@@ -23,7 +23,7 @@ describe('the client', () => {
       {
         "filename": "CHANGELOG.md",
         "status": "modified",
-        "raw_url": "./path/to/CHANGELOG.md"
+        "contents_url": "./path/to/CHANGELOG.md"
       }
     ]
 
@@ -34,7 +34,7 @@ describe('the client', () => {
     expect(changelogFile).toStrictEqual({
       "filename": "CHANGELOG.md",
       "status": "modified",
-      "raw_url": "./path/to/CHANGELOG.md"
+      "contents_url": "./path/to/CHANGELOG.md"
     })
   })
 
@@ -43,7 +43,7 @@ describe('the client', () => {
       {
         "filename": "random.md",
         "status": "modified",
-        "raw_url": "./path/to/random.md"
+        "contents_url": "./path/to/random.md"
       }
     ]
 
