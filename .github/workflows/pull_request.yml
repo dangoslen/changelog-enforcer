@@ -24,7 +24,7 @@ jobs:
       - uses: actions/checkout@v2.4.0
         with: 
           token: ${{ secrets.ACTION_TOKEN }}
-          ref: ${{ github.event.pull_request.head.sha }}
+          ref: ${{ github.event.pull_request.head.ref }}
       - run: npm install
       - run: npm run test:badges
       - run: npm run package
