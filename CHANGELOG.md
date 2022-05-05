@@ -8,6 +8,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Dependencies
 - Bumps `actions/checkout` from 2.4.0 to 3.0.2
 - Bumps `stefanzweifel/git-auto-commit-action` from 4.13.1 to 4.14.0
+- Removed `@actions/exec`
 
 ## [v3.0.1]
 ### Dependencies
