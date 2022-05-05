@@ -9,6 +9,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ## [v3.0.1]
 ### Dependencies
 - Bumps `stefanzweifel/git-auto-commit-action` from 4.11.0 to 4.13.1
+- Bumps `actions/checkout` from 2.4.0 to 3.0.2
 
 ## [v3.0.0]
 :rocket: The 3.0.0 release of the Changelog Enforcer is here! This release relies soley on the GitHub API instead of local git commands from a cloned repository. This means, for example, that `actions/checkout` does **not** need to be run before running the enforcer.
