@@ -78,7 +78,7 @@ describe('the changelog-enforcer', () => {
       {
         "filename": "CHANGELOG.md",
         "status": "modified",
-        "raw_url": "./path/to/CHANGELOG.md"
+        "contents_url": "./path/to/CHANGELOG.md"
       }
     ]
 
@@ -105,7 +105,7 @@ describe('the changelog-enforcer', () => {
       {
         "filename": "AnotherFile.md",
         "status": "modified",
-        "raw_url": "/path/to/AnotherFile.md"
+        "contents_url": "/path/to/AnotherFile.md"
       }
     ]
 
@@ -135,7 +135,7 @@ describe('the changelog-enforcer', () => {
       {
         "filename": "AnotherFile.md",
         "status": "modified",
-        "raw_url": "/path/to/AnotherFile.md"
+        "contents_url": "/path/to/AnotherFile.md"
       }
     ]
 
@@ -156,7 +156,7 @@ describe('the changelog-enforcer', () => {
   })
 
   it('should enforce when label is not present; changelog is changed; versions do not match', (done) => {
-    const rawUrl = 'some-url'
+    const contentsUrl = 'some-url'
     inputs['skipLabels'] = 'A different label'
     inputs['expectedLatestVersion'] = 'v2.0.0'
 
@@ -164,7 +164,7 @@ describe('the changelog-enforcer', () => {
       {
         "filename": "CHANGELOG.md",
         "status": "modified",
-        "raw_url": rawUrl
+        "contents_url": contentsUrl
       }
     ]
 
@@ -174,7 +174,7 @@ describe('the changelog-enforcer', () => {
 `
 
     fetch.mockImplementation((url, options) => {
-      if (url === rawUrl) {
+      if (url === contentsUrl) {
         return Promise.resolve(new Response(changelog))
       }
       return prepareResponse(JSON.stringify(files))

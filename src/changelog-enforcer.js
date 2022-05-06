@@ -46,7 +46,7 @@ module.exports.enforce = async function () {
         if (shouldEnforceVersion(expectedLatestVersion)) {
             return
         }
-        await validateLatestVersion(token, expectedLatestVersion, versionPattern, changelog.raw_url)
+        await validateLatestVersion(token, expectedLatestVersion, versionPattern, changelog.contents_url)
     } catch (err) {
         core.setOutput(OUT_ERROR_MESSAGE, err.message)
         core.setFailed(err.message)

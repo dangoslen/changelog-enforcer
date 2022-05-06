@@ -32,7 +32,13 @@ module.exports.findChangelog = async function (token, repository, pullRequestNum
 
 module.exports.downloadChangelog = async function (token, changelogUrl) {
     core.debug(`Downloading changelog from ${changelogUrl}`)
-    const options = addAuth(token, {})
+    const apiVersion = 'v3'
+    const mediaTypeHeader = {
+        'headers': {
+            'Accept': `application/vnd.github.${apiVersion}.raw`
+        }
+    }
+    const options = addAuth(token, mediaTypeHeader)
     const response = await fetch(`${changelogUrl}`, options)
     if (!response.ok) {
         throw new Error(`Got a ${response.status} response from GitHub API`)
