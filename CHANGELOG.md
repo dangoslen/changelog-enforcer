@@ -10,6 +10,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Bumps `stefanzweifel/git-auto-commit-action` from 4.13.1 to 4.14.0
 - Removed `@actions/exec`
 - Bumps `@vercel/ncc` from 0.31.1 to 0.33.4
+- Bumps `@actions/github` from 5.0.0 to 5.0.1
 
 ## [v3.0.1]
 ### Dependencies
