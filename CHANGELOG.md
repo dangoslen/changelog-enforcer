@@ -10,6 +10,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Bumps `stefanzweifel/git-auto-commit-action` from 4.13.1 to 4.14.0
 - Removed `@actions/exec`
 - Bumps `@vercel/ncc` from 0.31.1 to 0.33.4
+- Bumps `uglify-js` from 3.14.3 to 3.15.4
 
 ## [v3.0.1]
 ### Dependencies
