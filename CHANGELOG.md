@@ -4,7 +4,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ## [v3.1.0]
 ### Fixes
 - Fixes issue #184
-  - Get changelog from the `contents_url` instead of the `raw_url`\
+  - Get changelog from the `contents_url` instead of the `raw_url`
 ### Dependencies
 - Bumps `actions/checkout` from 2.4.0 to 3.0.2
 - Bumps `stefanzweifel/git-auto-commit-action` from 4.13.1 to 4.14.0
