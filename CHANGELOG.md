@@ -6,6 +6,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Now runs on node 16 runner
 ### Dependencies
 - Bumps `uglify-js` from 3.14.3 to 3.15.5
+- Bumps `@actions/github` from 5.0.0 to 5.0.2
 
 ## [v3.1.0]
 ### Fixes
