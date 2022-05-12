@@ -4,6 +4,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ## [v3.2.0]
 ### Changed
 - Now runs on node 16 runner
+- Bumps `jest` from 27.3.1 to 28.1.0
 
 ## [v3.1.0]
 ### Fixes
