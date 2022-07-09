@@ -3,7 +3,9 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [v3.2.0]
 ### Changed
-- Now runs on node 16 runner
+- Now runs on Node 16
+  - Adds `.nvmrc` to set the version
+  - Updates node version in `action.yml`
 
 ## [v3.1.0]
 ### Fixes
