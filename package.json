@@ -25,9 +25,6 @@
   "bugs": {
     "url": "https://github.com/dangoslen/changelog-enforcer/issues"
   },
-  "jest": {
-    "testEnvironment": "node"
-  },
   "homepage": "https://github.com/dangoslen/changelog-enforcer#readme",
   "dependencies": {
     "@actions/core": "^1.6.0",
