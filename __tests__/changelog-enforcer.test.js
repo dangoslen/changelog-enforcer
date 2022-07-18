@@ -191,4 +191,41 @@ describe('the changelog-enforcer', () => {
         done()
       })
   })
+
+  it('should enforce when label is not present; changelog is changed; only one unreleased version exists', (done) => {
+    const contentsUrl = 'some-url'
+    inputs['skipLabels'] = 'A different label'
+    inputs['expectedLatestVersion'] = 'v2.0.0'
+
+    const files = [
+      {
+        "filename": "CHANGELOG.md",
+        "status": "modified",
+        "contents_url": contentsUrl
+      }
+    ]
+
+    const changelog =
+      `## [Unreleased]
+    - Changelog   
+`
+
+    fetch.mockImplementation((url, options) => {
+      if (url === contentsUrl) {
+        return Promise.resolve(new Response(changelog))
+      }
+      return prepareResponse(JSON.stringify(files))
+    })
+
+    changelogEnforcer.enforce()
+      .then(() => {
+        expect(infoSpy).toHaveBeenCalledTimes(5)
+        expect(failureSpy).not.toHaveBeenCalled()
+        expect(outputSpy).not.toHaveBeenCalled()
+
+        expect(fetch).toHaveBeenCalledTimes(2)
+
+        done()
+      })
+  })
 })
