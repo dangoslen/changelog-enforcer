@@ -54,7 +54,7 @@ Below are the properties allowed by the Changelog Enforcer. These properties are
 
 #### `expectedLatestVersion`
 * Default: `''`
-* The latest version of the software expected in the changelog. Should be in the form of `v1.1.0`, `v3.5.6` etc.
+* The latest version of the software expected in the changelog. Should be in the form of `v1.1.0`, `v3.5.6` etc. Allows for the first version in the changelog to be an unreleased      version (either `unreleased|Unreleased|UNRELEASED`) before checking versions. If the only version in the changelog is an unreleased version, no validation occurs. This is to support a repository adding a changelog after other versions have been released and don't want to backport previous versions (though doing so is recommended).
 
 #### `versionPattern`
 * Default: `'## \\[((v|V)?\\d*\\.\\d*\\.\\d*-?\\w*|unreleased|Unreleased|UNRELEASED)\\]'`
