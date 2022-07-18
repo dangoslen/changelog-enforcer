@@ -9088,6 +9088,10 @@ async function validateLatestVersion(token, expectedLatestVersion, versionPatter
     let latest = versions[0]
     core.debug(`Latest version is ${latest}`)
     if (latest.toUpperCase() == "UNRELEASED") {
+        if (versions.length == 1) {
+            core.debug('There is only on unreleased version found in the changelog. Not validating expected version.')
+            return
+        }
         latest = versions[1]
     }
     if (latest !== expectedLatestVersion) {
