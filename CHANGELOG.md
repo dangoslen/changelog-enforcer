@@ -7,7 +7,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
   - Adds `.nvmrc` to set the version
   - Updates node version in `action.yml`
 ### Dependencies
-- Bumps `uglify-js` from 3.14.3 to 3.15.5
+- Bumps `uglify-js` from 3.14.3 to 3.16.2
 - Bumps `@actions/github` from 5.0.0 to 5.0.2
 - Bumps `stefanzweifel/git-auto-commit-action` from 4.14.0 to 4.14.1
 
