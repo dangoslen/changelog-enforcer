@@ -1,6 +1,10 @@
 # CHANGELOG
 Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v3.3.0]
+### Dependencies
+- Bumps `stefanzweifel/git-auto-commit-action` from 4.14.1 to 4.15.0
+
 ## [v3.2.1]
 ### Changed
 - `expectedLatestVersion` no longer enforces validation if the only version in the changelog is an unreleased version. 
