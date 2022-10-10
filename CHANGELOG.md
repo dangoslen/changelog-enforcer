@@ -1,6 +1,10 @@
 # CHANGELOG
 Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v3.3.0]
+### Dependencies
+- Bumps `actions/checkout` from 3.0.2 to 3.1.0
+
 ## [v3.2.1]
 ### Changed
 - `expectedLatestVersion` no longer enforces validation if the only version in the changelog is an unreleased version. 
