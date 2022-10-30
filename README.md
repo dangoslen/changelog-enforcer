@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/dangoslen/changelog-enforcer/workflows/units-test/badge.svg?branch=master" alt="unit tests badge" />
+  <img src="https://github.com/dangoslen/changelog-enforcer/actions/workflows/pull_request.yml/badge.svg" alt="unit tests badge" />
   <img src="https://img.shields.io/github/v/release/dangoslen/changelog-enforcer?color=orange&label=Latest" alt="latest version" />
   <img src="./coverage/badge.svg" alt="coverage badge" />
  </p>
