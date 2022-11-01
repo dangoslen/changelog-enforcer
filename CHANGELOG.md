@@ -19,6 +19,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Bumps `uglify-js` from 3.14.3 to 3.15.5
 - Bumps `@actions/github` from 5.0.0 to 5.0.2
 - Bumps `stefanzweifel/git-auto-commit-action` from 4.14.0 to 4.14.1
+- Bumps `@actions/core` from 1.6.0 to 1.9.0
 
 ## [v3.1.0]
 ### Fixes
