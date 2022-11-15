@@ -8969,9 +8969,19 @@ module.exports.getPullRequestContext = function (context) {
 /***/ ((module) => {
 
 module.exports.extractLabels = function (labelsString) {
-    // Parses a list of labels. Each label can be of any length and will either end with a comma or be the end of the string.
-    // Matches words (\w), whitespace characters (\s), dashes (-), plus signs (+), questions marks (\?), semi-colons (;), brackets (\[\]) and parenthesis (\(\))
-    // Each match may are may not have a trailing comma (,?). If one exists, it is removed before appending it to the list
+    // Parses a list of labels. 
+    //
+    // A label can be of any length of string with the following characters
+    // * Matches words (\w), 
+    // * Whitespace characters (\s), 
+    // * Dashes (-), 
+    // * Plus signs (+), 
+    // * Questions marks (\?), 
+    // * Semi-colons (;), 
+    // * Brackets (\[\]) 
+    // * Parenthesis (\(\))
+    // Each match may are may not have a trailing comma (,?). 
+    // If a comman exists, it is removed before appending it to the list
     const regex = new RegExp(/([\w\s-+\?;\[\]\(\)]+,?)/, 'g')
     let labels = []
     let groups
