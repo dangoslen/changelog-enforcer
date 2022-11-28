@@ -1,6 +1,14 @@
 # CHANGELOG
 Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v3.3.0]
+### Dependencies
+- Bumps `stefanzweifel/git-auto-commit-action` from 4.14.1 to 4.15.4
+- Bumps `actions/checkout` from 3.0.2 to 3.1.0
+- Bumps `@actions/core` from 1.6.0 to 1.9.0
+- Bumps `uglify-js` from 3.15.5 to 3.17.4
+- Bumps `jest` from 27.3.1 to 29.2.2
+
 ## [v3.2.1]
 ### Changed
 - `expectedLatestVersion` no longer enforces validation if the only version in the changelog is an unreleased version. 
