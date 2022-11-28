@@ -14,9 +14,9 @@ jobs:
       - name: read versions
         id: read-version
         run: |
-          echo ::set-output name=version::$(jq -r ".version" package.json)
-          echo ::set-output name=tag::v$(jq -r ".version" package.json)
-          echo ::set-output name=major_tag::v$(jq -r ".version" package.json | cut -d '.' -f 1)
+          echo "version=$(jq -r ".version" package.json)" >> $GITHUB_OUTPUT
+          echo "tag=v$(jq -r ".version" package.json)"  >> $GITHUB_OUTPUT
+          echo "major_tag=v$(jq -r ".version" package.json | cut -d '.' -f 1)" >> $GITHUB_OUTPUT
         
       - name: read changelog entry for version
         id: changelog_reader
@@ -28,9 +28,9 @@ jobs:
       - name: check for existing release
         id: check_release
         run: |
-          TAG=$(git ls-remote --tags origin | grep ${{ steps.read-version.outputs.tag }} || [[ $? == 1 ]] && echo '')
+          TAG=$(git ls-remote --tags origin | grep ${{ steps.read-version.outputs.tag }} | cat)
           MISSING=$([[ -z "$TAG" ]] && echo 'true' || echo 'false')
-          echo ::set-output name=missing::$MISSING
+          echo "missing=$MISSING" >> $GITHUB_OUTPUT
         
       - name: create release
         if: ${{ steps.check_release.outputs.missing == 'true' }}
