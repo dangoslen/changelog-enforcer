@@ -46,6 +46,7 @@ jobs:
           prerelease: false
 
       - name: update major version tag
+        if: ${{ steps.check_release.outputs.missing == 'true' }}
         uses: richardsimko/update-tag@v1
         with:
           tag_name: "${{ steps.read-version.outputs.major_tag }}"
