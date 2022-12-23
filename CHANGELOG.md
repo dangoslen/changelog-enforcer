@@ -5,6 +5,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ## [UNRELEASED]
 ### Dependencies
 - Bumps `@vercel/ncc` from 0.33.4 to 0.34.0
+- Bumps `jest` from 29.2.2 to 29.3.1
 
 ## [v3.3.0]
 ### Dependencies
