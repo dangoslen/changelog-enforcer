@@ -42,7 +42,7 @@ jobs:
           token: ${{ secrets.ACTION_TOKEN }}
           ref: ${{ github.event.pull_request.head.ref }}
 
-      - id: read-version
+      - id: read_version
         run: |
           echo "version=$(jq -r ".version" package.json)" >> $GITHUB_OUTPUT
           echo "tag=v$(jq -r ".version" package.json)" >> $GITHUB_OUTPUT
@@ -59,7 +59,7 @@ jobs:
         uses: ./
         with:
           skipLabels: "skip-changelog"
-          expectedLatestVersion: ${{ steps.read-version.outputs.tag }}
+          expectedLatestVersion: ${{ steps.read_version.outputs.tag }}
           
       - if: failure()
         uses: unsplash/comment-on-pr@master
@@ -82,7 +82,7 @@ jobs:
 
       - id: check_release
         run: |
-          TAG=$(git ls-remote --tags origin | grep ${{ steps.read-version.outputs.tag }} | cat )
+          TAG=$(git ls-remote --tags origin | grep ${{ steps.read_version.outputs.tag }} | cat )
           MISSING=$([[ -z "$TAG" ]] && echo 'true' || echo 'false')
           echo "missing=$MISSING" >> $GITHUB_OUTPUT
 
