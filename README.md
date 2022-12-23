@@ -5,9 +5,11 @@
  </p>
 
 ## Changelog Enforcer
-The purpose of this action is to enforce that every pull request in a repository includes a change to an ongoing changelog file. Inspired by [Keep A Changelog](https://keepachangelog.com/en/1.0.0/), this action helps development teams to keep a change file up to date as new features or fixes are implemented. 
+
+The purpose of this action is to enforce that every pull request in a repository includes a change to an ongoing changelog file. Inspired by [KeepAChangelog](https://keepachangelog.com/en/1.0.0/), this action helps development teams to keep a change file up to date as new features or fixes are implemented. 
 
 ### Usage
+
 To use this action, follow the typical GitHub Action `uses` syntax. An example workflow using the default parameters of this action is shown below:
 
 ```yaml
@@ -33,6 +35,7 @@ Other examples can be seen in the [example-workflows](./example-workflows) direc
 _:warning: The Changelog Enforcer is designed to be used with the `pull_request` or `pull_request_target` event types. Using this action on any other event type will result in a warning logged and the action succeeding (as to not block the rest of a workflow)._
 
 ### Inputs / Properties
+
 Below are the properties allowed by the Changelog Enforcer. These properties are shipped with sane defaults for typical use, especially for changelogs inline with the [KeepAChangelog](Keepachangelog.org) format.
 
 #### `changeLogPath`
@@ -74,4 +77,5 @@ Below are the properties allowed by the Changelog Enforcer. These properties are
 * The reason for why the Changelog Enforcer failed. Uses the `missingUpdateErrorMessage` property value if set when no update to the changelog is found.
 
 ### Creating Releases Automatically
+
 Using this Action and the [Changelog Reader](https://github.com/mindsers/changelog-reader-action), plus a few standard GitHub created Actions, we can keep the changelog of a project up to date and create a GitHub release automatically with contents from the changelog. See this project's [release.yml](./.github/workflows/release.yml) for how to set up a simple workflow to create a new release based on a `VERSION` file and a changelog.
