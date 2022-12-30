@@ -25,6 +25,7 @@ jobs:
         with: 
           token: ${{ secrets.ACTION_TOKEN }}
           ref: ${{ github.event.pull_request.head.ref }}
+          
       - run: npm install
       - run: npm run test:badges
       - run: npm run package
