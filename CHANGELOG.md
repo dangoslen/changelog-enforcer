@@ -10,6 +10,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Bumps `actions/checkout` from 3.1.0 to 3.2.0
 - Bumps `@actions/github` from 5.0.2 to 5.1.1
 - Bumps `eslint` from 8.2.0 to 8.31.0
+- Bumps `dangoslen/dependabot-changelog-helper` from 2 to 3
 
 ## [v3.3.0]
 ### Dependencies
