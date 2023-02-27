@@ -47,7 +47,7 @@ jobs:
           echo "version=$(jq -r ".version" package.json)" >> $GITHUB_OUTPUT
           echo "tag=v$(jq -r ".version" package.json)" >> $GITHUB_OUTPUT
 
-      - uses: dangoslen/dependabot-changelog-helper@v2
+      - uses: dangoslen/dependabot-changelog-helper@v3
         with:
           activationLabel: 'dependabot'
 
