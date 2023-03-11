@@ -3,6 +3,12 @@
 Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [UNRELEASED]
+
+## [v3.3.1]
+
+### Fixed
+- Removes the deprecated `set-output` command by bumping `@actions/core`. This fixes [issue #222](https://github.com/dangoslen/changelog-enforcer/issues/222)
+
 ### Dependencies
 - Bumps `@vercel/ncc` from 0.33.4 to 0.34.0
 - Bumps `stefanzweifel/git-auto-commit-action` from 4.15.4 to 4.16.0
