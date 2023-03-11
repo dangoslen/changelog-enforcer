@@ -29,10 +29,6 @@ jobs:
       - run: npm install
       - run: npm run all
 
-      - uses: stefanzweifel/git-auto-commit-action@v4.16.0
-        with:
-          commit_message: "Auto-package action"
-
   # test action works running from the graph
   enforce-changelog:
     runs-on: ubuntu-latest
@@ -41,6 +37,7 @@ jobs:
         with: 
           ref: ${{ github.event.pull_request.head.ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
+          token: ${{ secrets.ACTION_TOKEN }}
 
       - id: read_version
         run: |
