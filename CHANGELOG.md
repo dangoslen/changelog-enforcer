@@ -4,6 +4,10 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [UNRELEASED]
 
+## [v4.0.0]
+
+Test
+
 ## [v3.3.1]
 
 ### Fixed
