@@ -6,7 +6,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [v3.3.2]
 ### Fixed
-- Properly rebuilds the `dist.index.js` to include new dependencies
+- Properly rebuilds the `dist.index.js` meant to be built in `v3.3.1`.
 
 ## [v3.3.1] - YANKED
 
