@@ -4,8 +4,11 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [UNRELEASED]
 
-## [v3.3.1]
+## [v3.3.2]
+### Fixed
+- Properly rebuilds the `dist.index.js` to include new dependencies
 
+## [v3.3.1]
 ### Fixed
 - Removes the deprecated `set-output` command by bumping `@actions/core`. This fixes [issue #222](https://github.com/dangoslen/changelog-enforcer/issues/222)
 
