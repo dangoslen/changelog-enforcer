@@ -4,7 +4,13 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [UNRELEASED]
 
-## [v3.3.1]
+## [v3.3.2]
+### Fixed
+- Properly rebuilds the `dist.index.js` meant to be built in `v3.3.1`.
+
+## [v3.3.1] - YANKED
+
+_This release has been yanked and should not be used. Please use `v3.3.2` instead. The tag for this release will be deleted on `2023-06-01` and will not be usable after that date. If you are using the `v3` tag, you will get the latest version automatically._
 
 ### Fixed
 - Removes the deprecated `set-output` command by bumping `@actions/core`. This fixes [issue #222](https://github.com/dangoslen/changelog-enforcer/issues/222)
