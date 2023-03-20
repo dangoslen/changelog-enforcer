@@ -3,6 +3,8 @@
 Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [UNRELEASED]
+### Dependencies
+- Bump `actions/checkout` from 3.2.0 to 3.4.0
 
 ## [v3.3.2]
 ### Fixed
