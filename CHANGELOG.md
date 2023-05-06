@@ -3,6 +3,8 @@
 Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [UNRELEASED]
+### Dependencies
+- Bump `jest` from 29.3.1 to 29.5.0 (#242)
 
 ## [v3.3.2]
 ### Fixed
