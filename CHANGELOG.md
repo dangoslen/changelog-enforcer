@@ -3,6 +3,8 @@
 Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [UNRELEASED]
+### Dependencies
+- Bump `eslint` from 8.31.0 to 8.40.0 (#248)
 
 ## [v3.4.0]
 ### Chnaged
