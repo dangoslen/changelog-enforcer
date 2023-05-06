@@ -4,6 +4,15 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [UNRELEASED]
 
+## [v3.4.0]
+### Chnaged
+- Switches the default branch from `master` to `main`
+
+### Dependencies
+- Bump `actions/checkout` from 3.2.0 to 3.5.2 (#245)
+- Bump `jest` from 29.3.1 to 29.5.0 (#242)
+- Bump `node-fetch` from 2.6.7 to 2.6.9 (#241)
+
 ## [v3.3.2]
 ### Fixed
 - Properly rebuilds the `dist.index.js` meant to be built in `v3.3.1`.

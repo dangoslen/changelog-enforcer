@@ -5,13 +5,13 @@ on:
       - 'releases/v1.6'
       - 'releases/v2.3'
       - 'releases/v3.3.0'
-      - 'master'
+      - 'main'
 
 jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3.2.0
+      - uses: actions/checkout@v3.5.2
 
       - name: read versions
         id: read-version
