@@ -3,6 +3,8 @@
 Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [UNRELEASED]
+### Dependencies
+- Bump `node-fetch` from 2.6.7 to 2.6.9 (#241)
 
 ## [v3.3.2]
 ### Fixed
