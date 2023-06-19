@@ -5,7 +5,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ## [UNRELEASED]
 ### Dependencies
 - Bump `@vercel/ncc` from 0.34.0 to 0.36.1 (#247)
-- Bump `eslint` from 8.31.0 to 8.42.0 (#249)
+- Bump `eslint` from 8.31.0 to 8.43.0 (#249, #252)
 - Bump `actions/checkout` from 3.5.2 to 3.5.3 (#250)
 - Bump `node-fetch` from 2.6.9 to 2.6.11 (#251)
 
