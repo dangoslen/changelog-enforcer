@@ -3,6 +3,8 @@
 Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [UNRELEASED]
+
+## [v3.5.0]
 ### Dependencies
 - Bump `@vercel/ncc` from 0.34.0 to 0.36.1 (#247)
 - Bump `eslint` from 8.31.0 to 8.42.0 (#249)
@@ -10,10 +12,10 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Bump `node-fetch` from 2.6.9 to 2.6.12 (#251, #253)
 
 ### Fixed
-- Handle `skipLabels` that contain a `/`
+- Handle `skipLabels` that contain a `/` (#254)
 
 ## [v3.4.0]
-### Chnaged
+### Changed
 - Switches the default branch from `master` to `main`
 
 ### Dependencies
