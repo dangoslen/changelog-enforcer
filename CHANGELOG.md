@@ -9,6 +9,9 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Bump `actions/checkout` from 3.5.2 to 3.5.3 (#250)
 - Bump `node-fetch` from 2.6.9 to 2.6.11 (#251)
 
+### Fixed
+- Handle `skipLabels` that contain a `/`
+
 ## [v3.4.0]
 ### Chnaged
 - Switches the default branch from `master` to `main`
@@ -49,7 +52,7 @@ _This release has been yanked and should not be used. Please use `v3.3.2` instea
 
 ## [v3.2.1]
 ### Changed
-- `expectedLatestVersion` no longer enforces validation if the only version in the changelog is an unreleased version. 
+- `expectedLatestVersion` no longer enforces validation if the only version in the changelog is an unreleased version.
   - See more in the [README](./README.md#expectedlatestversion)
 
 ## [v3.2.0]
@@ -153,7 +156,7 @@ _This release has been yanked and should not be used. Please use `v3.3.2` instea
 - Bumps `@vercel/ncc` from `0.25.1` to `0.26.1` (#63)
 - Bumps `eslint` from `7.15.0` to `7.17.0` (#64, #70)
 - Bumps `node-notifier` from `8.0.0` to `8.0.1` (#65)
- 
+
 ## [v1.6.1]
 ### Fixed
 - Fixes #58 by properly accounting for whitespace characters in label names.
@@ -180,7 +183,7 @@ _This release has been yanked and should not be used. Please use `v3.3.2` instea
 
 ## [v1.5.0]
 ### Added
-- New input parameter `expectedLatestVersion`. 
+- New input parameter `expectedLatestVersion`.
   - When supplied, the Changelog Enforcer validates that this is the latest version in the changelog or the latest version after an "Unreleased" version if one exists.
 - New input parameter `versionPattern`.
   - Used in conjunction with `expectedLatestVersion`. This is a javascript string that is converted to a regular expression that is used to extract the versions in the changelog identified by the `changeLogPath` input. By default is uses a regular expression for the [KeepAChangelog.org format](https://keepachangelog.com/en/1.0.0/).
@@ -209,10 +212,10 @@ Please upgrade to use with `actions/checkout@v2`!
 ## [v1.2.0]
 ### Added
 - Automatically builds the distribution on pull requests if all tests and enforcement pass
- 
+
 ### Updated
 - Small `README` updates
- 
+
 ## [v1.1.2]
 ### Security
 - `lodash@4.17.15` to `lodash@4.17.19`
@@ -220,22 +223,22 @@ Please upgrade to use with `actions/checkout@v2`!
 ## [v1.1.1]
 ### Fixes
 - Referencing proper step id in workflow for creating releases
- 
+
 ## [v1.1.0]
 ### Added
 - Using [Changelog Reader](https://github.com/marketplace/actions/changelog-reader) to automate creating GitHub Releases from this `CHANGELOG.md`
- 
+
 ## [v1.0.2]
-### Security 
-- Update uglify-js to 2.6.0 per [CVE-2015-8857](https://github.com/advisories/GHSA-34r7-q49f-h37c) 
- 
+### Security
+- Update uglify-js to 2.6.0 per [CVE-2015-8857](https://github.com/advisories/GHSA-34r7-q49f-h37c)
+
 ## [v1.0.1]
-### Fixed  
+### Fixed
 - Fixes spelling of `skipLabel` property in `README.md`
- 
+
 ## [v1.0.0]
 ### Added
 - Adds updates to the `README.md` and `action.yaml` to prepare to the GitHub marketplace
- 
+
 ## [v0.1.0]
 - Initial `Changelog Enforcer` functionality, including the use of a label to skip
