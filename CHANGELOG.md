@@ -4,6 +4,9 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [UNRELEASED]
 
+### Dependencies
+- Bump `eslint` from 8.42.0 to 8.45.0 ([#256](https://github.com/dangoslen/changelog-enforcer/pull/256))
+
 ## [v3.5.0]
 ### Dependencies
 - Bump `@vercel/ncc` from 0.34.0 to 0.36.1 (#247)
