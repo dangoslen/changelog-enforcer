@@ -8,6 +8,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ### Dependencies
 - Bump `jest` from 29.5.0 to 29.6.2 ([#260](https://github.com/dangoslen/changelog-enforcer/pull/260))
+- Bump `eslint` from 8.42.0 to 8.46.0 ([#261](https://github.com/dangoslen/changelog-enforcer/pull/261))
 
 ## [v3.5.0]
 ### Dependencies
