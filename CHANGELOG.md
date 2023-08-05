@@ -6,6 +6,9 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Security
 - Removes `uglify-js` and `dist` packages
 
+### Dependencies
+- Bump `jest` from 29.5.0 to 29.6.2 ([#260](https://github.com/dangoslen/changelog-enforcer/pull/260))
+
 ## [v3.5.0]
 ### Dependencies
 - Bump `@vercel/ncc` from 0.34.0 to 0.36.1 (#247)
