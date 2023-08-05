@@ -3,6 +3,8 @@
 Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [UNRELEASED]
+### Security
+- Removes `uglify-js` and `dist` packages
 
 ## [v3.5.0]
 ### Dependencies
