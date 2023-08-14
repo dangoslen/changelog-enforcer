@@ -4,6 +4,9 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [UNRELEASED]
 
+### Dependencies
+- Bump `eslint` from 8.46.0 to 8.47.0 ([#263](https://github.com/dangoslen/changelog-enforcer/pull/263))
+
 ## [v3.5.1]
 ### Security
 - Removes `uglify-js` and `dist` packages
