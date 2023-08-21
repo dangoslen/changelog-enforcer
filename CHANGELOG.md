@@ -4,6 +4,9 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [UNRELEASED]
 
+### Dependencies
+- Bump `node-fetch` from 2.6.12 to 2.6.13 ([#264](https://github.com/dangoslen/changelog-enforcer/pull/264))
+
 ## [v3.5.1]
 ### Security
 - Removes `uglify-js` and `dist` packages
