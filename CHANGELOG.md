@@ -4,6 +4,9 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [UNRELEASED]
 
+### Dependencies
+- Bump `actions/checkout` from 3.5.3 to 3.6.0 ([#266](https://github.com/dangoslen/changelog-enforcer/pull/266))
+
 ## [v3.5.1]
 ### Security
 - Removes `uglify-js` and `dist` packages
