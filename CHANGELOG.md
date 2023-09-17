@@ -6,6 +6,8 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ### Dependencies
 - Bump `eslint` from 8.46.0 to 8.47.0 ([#263](https://github.com/dangoslen/changelog-enforcer/pull/263))
+- Bump `node-fetch` from 2.6.12 to 2.6.13 ([#264](https://github.com/dangoslen/changelog-enforcer/pull/264))
+- Bump `actions/checkout` from 3.5.3 to 3.6.0 ([#266](https://github.com/dangoslen/changelog-enforcer/pull/266))
 
 ## [v3.5.1]
 ### Security
