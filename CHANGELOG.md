@@ -8,6 +8,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Bump `node-fetch` from 2.6.12 to 2.6.13 ([#264](https://github.com/dangoslen/changelog-enforcer/pull/264))
 - Bump `actions/checkout` from 3.5.3 to 4.0.0 ([#266](https://github.com/dangoslen/changelog-enforcer/pull/266), [#267](https://github.com/dangoslen/changelog-enforcer/pull/267))
 - Bump `@vercel/ncc` from 0.36.1 to 0.38.0 ([#268](https://github.com/dangoslen/changelog-enforcer/pull/268))
+- Bump `stefanzweifel/git-auto-commit-action` from 4.16.0 to 5.0.0 ([#272](https://github.com/dangoslen/changelog-enforcer/pull/272))
 
 ## [v3.5.1]
 ### Security
