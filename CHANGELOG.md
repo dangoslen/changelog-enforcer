@@ -10,6 +10,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Bump `@vercel/ncc` from 0.36.1 to 0.38.0 ([#268](https://github.com/dangoslen/changelog-enforcer/pull/268))
 - Bump `jest` from 29.6.2 to 29.7.0 ([#269](https://github.com/dangoslen/changelog-enforcer/pull/269))
 - Bump `stefanzweifel/git-auto-commit-action` from 4.16.0 to 5.0.0 ([#272](https://github.com/dangoslen/changelog-enforcer/pull/272))
+- Bump `@actions/github` from 5.1.1 to 6.0.0 ([#273](https://github.com/dangoslen/changelog-enforcer/pull/273))
 
 ## [v3.5.1]
 ### Security
