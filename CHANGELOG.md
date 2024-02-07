@@ -4,6 +4,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [UNRELEASED]
 
+## [v3.6.0]
 ### Changed
 - Now runs on Node 20
   - Updates `.nvmrc` to set the version

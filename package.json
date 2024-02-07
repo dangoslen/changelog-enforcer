@@ -1,6 +1,6 @@
 {
   "name": "changelog-enforcer",
-  "version": "3.5.1",
+  "version": "3.6.0",
   "description": "Enforces that a changelog is kept up-to-date",
   "main": "index.js",
   "scripts": {
