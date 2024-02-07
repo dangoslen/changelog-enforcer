@@ -4,6 +4,10 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [UNRELEASED]
 
+### Changed
+- Now runs on Node 20
+  - Updates `.nvmrc` to set the version
+  - Updates node version in `action.yml`
 ### Dependencies
 - Bump `node-fetch` from 2.6.12 to 2.7.0 ([#264](https://github.com/dangoslen/changelog-enforcer/pull/264), [#270](https://github.com/dangoslen/changelog-enforcer/pull/270))
 - Bump `actions/checkout` from 3.5.3 to 4.1.1 ([#266](https://github.com/dangoslen/changelog-enforcer/pull/266), [#267](https://github.com/dangoslen/changelog-enforcer/pull/267), [#271](https://github.com/dangoslen/changelog-enforcer/pull/271), [#275](https://github.com/dangoslen/changelog-enforcer/pull/275))
@@ -12,6 +16,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Bump `stefanzweifel/git-auto-commit-action` from 4.16.0 to 5.0.0 ([#272](https://github.com/dangoslen/changelog-enforcer/pull/272))
 - Bump `@actions/github` from 5.1.1 to 6.0.0 ([#273](https://github.com/dangoslen/changelog-enforcer/pull/273))
 - Bump `@actions/core` from 1.10.0 to 1.10.1 ([#274](https://github.com/dangoslen/changelog-enforcer/pull/274))
+- Bump `eslint` from 8.46.0 to 8.56.0 ([#279](https://github.com/dangoslen/changelog-enforcer/pull/279))
 
 ## [v3.5.1]
 ### Security
