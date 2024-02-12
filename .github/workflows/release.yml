@@ -36,7 +36,7 @@ jobs:
           echo "missing=$MISSING" >> $GITHUB_OUTPUT
         
       - name: create release
-        if: ${{ steps.check_release.outputs.missing == 'true' }}
+        if: ${{ steps.check_release.outputs.missing != 'true' }}
         id: create_release
         uses: ncipollo/release-action@v1.14.0
         env:
