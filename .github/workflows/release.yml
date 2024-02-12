@@ -6,6 +6,7 @@ on:
       - 'releases/v2.3'
       - 'releases/v3.3.0'
       - 'main'
+  pull_request:
 
 jobs:
   release:
