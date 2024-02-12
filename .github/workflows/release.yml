@@ -37,15 +37,16 @@ jobs:
       - name: create release
         if: ${{ steps.check_release.outputs.missing == 'true' }}
         id: create_release
-        uses: actions/create-release@v1.1.4
+        uses: ncipollo/release-action@v1.14.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: "${{ steps.read-version.outputs.tag }}"
-          release_name: Changelog Enforcer ${{ steps.read-version.outputs.version }}
+          tag: "${{ steps.read-version.outputs.tag }}"
+          name: Changelog Enforcer ${{ steps.read-version.outputs.version }}
           body: ${{ steps.changelog_reader.outputs.changes }} 
           draft: false
           prerelease: false
+          token: ${{ env.GITHUB_TOKEN }}
 
       - name: update major version tag
         if: ${{ steps.check_release.outputs.missing == 'true' }}
