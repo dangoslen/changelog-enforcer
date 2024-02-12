@@ -4,7 +4,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [UNRELEASED]
 ### Changed
-- Fix Github Actions Annotations ([#???](https://github.com/dangoslen/changelog-enforcer/pull/???))
+- Fix Github Actions Annotations ([#281](https://github.com/dangoslen/changelog-enforcer/pull/281))
 
 ## [v3.6.0]
 ### Changed
