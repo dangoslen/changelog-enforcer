@@ -6,6 +6,9 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Changed
 - Fix Github Actions Annotations ([#281](https://github.com/dangoslen/changelog-enforcer/pull/281))
 
+### Dependencies
+- Bump `eslint` from 8.56.0 to 8.57.0 ([#282](https://github.com/dangoslen/changelog-enforcer/pull/282))
+
 ## [v3.6.0]
 ### Changed
 - Now runs on Node 20
