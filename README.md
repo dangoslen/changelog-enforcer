@@ -8,7 +8,7 @@
 
 <center>
 
-![Drake says "No" to neglected changelogs](https://i.imgflip.com/8mfoo1.jpg)
+<img src="https://i.imgflip.com/8mfoo1.jpg" alt="Drake says 'No' to neglected changelogs" />
 
 </center>
 
