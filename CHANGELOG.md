@@ -10,6 +10,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Handle `skipLabels` that contains emojis by properly looking for `:` characters in the label extractor regex (fixes #284)
 
 ### Dependencies
+- Bump `eslint` from 8.56.0 to 8.57.0 ([#282](https://github.com/dangoslen/changelog-enforcer/pull/282))
 - Bump `actions/checkout` from 4.1.1 to 4.1.2 ([#283](https://github.com/dangoslen/changelog-enforcer/pull/283))
 
 ## [v3.6.0]
