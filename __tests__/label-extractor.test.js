@@ -41,4 +41,11 @@ describe('the label-extractor', () => {
 
     expect(labels).toStrictEqual(['skip/changelog', 'no/changelog'])
   })
+
+
+  it('should handle multiple labels containing a `:` characters (emoji usage)', () => {
+    const labels = labelExtractor.extractLabels(':wrench: GitHub Actions, :smile: Best Label Ever')
+
+    expect(labels).toStrictEqual([':wrench: GitHub Actions', ':smile: Best Label Ever'])
+  })
 })
