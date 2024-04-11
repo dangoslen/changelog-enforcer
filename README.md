@@ -6,12 +6,6 @@
 
 ## Changelog Enforcer
 
-<p align="center">
-
-<img src="https://i.imgflip.com/8mfoo1.jpg" alt="Drake says 'No' to neglected changelogs" />
-
-</p>
-
 The purpose of this action is to enforce that every pull request in a repository includes a change to an ongoing changelog file. Inspired by [KeepAChangelog](https://keepachangelog.com/en/1.0.0/), this action helps development teams to keep a change file up to date as new features or fixes are implemented. 
 
 ### Usage
