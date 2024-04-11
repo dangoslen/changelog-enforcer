@@ -6,6 +6,9 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Changed
 - Fix Github Actions Annotations ([#281](https://github.com/dangoslen/changelog-enforcer/pull/281))
 
+### Fixed
+- Handle `skipLabels` that contains emojis by properly looking for `:` characters in the label extractor regex (fixes #284)
+
 ### Dependencies
 - Bump `actions/checkout` from 4.1.1 to 4.1.2 ([#283](https://github.com/dangoslen/changelog-enforcer/pull/283))
 
