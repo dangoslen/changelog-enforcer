@@ -4,6 +4,9 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [UNRELEASED]
 
+### Dependencies
+- Bump `stefanzweifel/git-auto-commit-action` from 5.0.0 to 5.0.1 ([#287](https://github.com/dangoslen/changelog-enforcer/pull/287))
+
 ## [v3.6.1]
 ### Changed
 - Fix Github Actions Annotations ([#281](https://github.com/dangoslen/changelog-enforcer/pull/281))
