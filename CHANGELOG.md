@@ -4,6 +4,9 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [UNRELEASED]
 
+### Dependencies
+- Bump `eslint` from 8.57.0 to 9.0.0 ([#288](https://github.com/dangoslen/changelog-enforcer/pull/288))
+
 ## [v3.6.1]
 ### Changed
 - Fix Github Actions Annotations ([#281](https://github.com/dangoslen/changelog-enforcer/pull/281))
