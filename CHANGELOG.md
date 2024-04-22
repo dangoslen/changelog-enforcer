@@ -4,6 +4,9 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [UNRELEASED]
 
+### Dependencies
+- Bump `actions/checkout` from 4.1.2 to 4.1.3 ([#289](https://github.com/dangoslen/changelog-enforcer/pull/289))
+
 ## [v3.6.1]
 ### Changed
 - Fix Github Actions Annotations ([#281](https://github.com/dangoslen/changelog-enforcer/pull/281))
