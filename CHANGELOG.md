@@ -6,6 +6,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ### Dependencies
 - Bump `eslint` from 8.57.0 to 9.7.0 ([#288](https://github.com/dangoslen/changelog-enforcer/pull/288))
+- Bump `@eslint/js` from 9.7.0 to 9.8.0 ([#291](https://github.com/dangoslen/changelog-enforcer/pull/291))
 
 ## [v3.6.1]
 ### Changed
