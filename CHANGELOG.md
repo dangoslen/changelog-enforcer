@@ -5,6 +5,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ## [UNRELEASED]
 
 ### Dependencies
+- Bump `stefanzweifel/git-auto-commit-action` from 5.0.0 to 5.0.1 ([#287](https://github.com/dangoslen/changelog-enforcer/pull/287))
 - Bump `eslint` from 8.57.0 to 9.7.0 ([#288](https://github.com/dangoslen/changelog-enforcer/pull/288))
 
 ## [v3.6.1]
