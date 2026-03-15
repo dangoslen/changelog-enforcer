@@ -5,7 +5,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ## [UNRELEASED]
 
 ### Changed
-- Now runs on Node 20
+- Now runs on Node 24
   - Updates `.nvmrc` to set the version
   - Updates node version in `action.yml`
 
