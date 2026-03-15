@@ -31,6 +31,7 @@ jobs:
 
   # test action works running from the graph
   enforce-changelog:
+    needs: [ verify ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4.1.2
