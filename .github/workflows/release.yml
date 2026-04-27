@@ -37,7 +37,7 @@ jobs:
       - name: create release
         if: ${{ steps.check_release.outputs.missing == 'true' }}
         id: create_release
-        uses: ncipollo/release-action@v1.14.0
+        uses: ncipollo/release-action@v1.21.0
         with:
           tag: "${{ steps.read-version.outputs.tag }}"
           name: Changelog Enforcer ${{ steps.read-version.outputs.version }}
