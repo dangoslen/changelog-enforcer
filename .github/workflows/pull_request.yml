@@ -60,7 +60,7 @@ jobs:
           expectedLatestVersion: ${{ steps.read_version.outputs.tag }}
           
       - if: failure()
-        uses: thollander/actions-comment-pull-request@v2
+        uses: thollander/actions-comment-pull-request@v3
         with:
           message: |
             Hey @${{ github.event.pull_request.user.login }}, the Changelog Enforcer failed. Can you take a look at the error below and correct it? Thanks!
@@ -83,7 +83,7 @@ jobs:
           echo "missing=$MISSING" >> $GITHUB_OUTPUT
 
       - if: ${{ steps.check_release.outputs.missing == 'true' }}
-        uses: thollander/actions-comment-pull-request@v2
+        uses: thollander/actions-comment-pull-request@v3
         with:
           message: |
             <details>
