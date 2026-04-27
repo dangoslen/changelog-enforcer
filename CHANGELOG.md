@@ -4,6 +4,9 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [UNRELEASED]
 
+### Dependencies
+- Bump `ncipollo/release-action` from 1.14.0 to 1.21.0 ([#308](https://github.com/dangoslen/changelog-enforcer/pull/308))
+
 ## [v3.7.0]
 
 ### Changed
