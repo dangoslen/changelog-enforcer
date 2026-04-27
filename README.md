@@ -27,7 +27,7 @@ jobs:
   changelog:
     runs-on: ubuntu-latest
     steps:
-    - uses: dangoslen/changelog-enforcer@v3
+    - uses: dangoslen/changelog-enforcer@v3.7.0
 ```
 
 Other examples can be seen in the [example-workflows](./example-workflows) directory in this repository.
