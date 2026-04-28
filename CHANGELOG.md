@@ -16,6 +16,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Bump `eslint` from 8.57.0 to 9.7.0 ([#288](https://github.com/dangoslen/changelog-enforcer/pull/288))
 - Bump `thollander/actions-comment-pull-request` from 2 to 3 ([#303](https://github.com/dangoslen/changelog-enforcer/pull/303))
 - Bump `actions/checkout` from 4.1.2 to 6.0.2 ([#302](https://github.com/dangoslen/changelog-enforcer/pull/302))
+- Bump `jest` from 29.7.0 to 30.3.0 ([#304](https://github.com/dangoslen/changelog-enforcer/pull/304))
 
 ## [v3.6.1]
 ### Changed
