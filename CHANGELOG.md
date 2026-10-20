@@ -4,6 +4,9 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [UNRELEASED]
 
+### Security
+- Harden repository workflows: remove the `verified` label from pull requests when new commits are pushed, and update `actions/checkout` to `v6`
+
 ## [v3.7.0]
 
 ### Changed
