@@ -4,8 +4,12 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [UNRELEASED]
 
+### Dependencies
+- Bump `dangoslen/dependabot-changelog-helper` from 3 to 4 ([#309](https://github.com/dangoslen/changelog-enforcer/pull/309))
+
 ### Security
 - Harden repository workflows: remove the `verified` label from pull requests when new commits are pushed, and update `actions/checkout` to `v6`
+
 
 ## [v3.7.0]
 
