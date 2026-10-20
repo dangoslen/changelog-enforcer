@@ -1,0 +1,18 @@
+name: "Remove Verified Label"
+on:
+  pull_request_target:
+    types: [synchronize]
+
+permissions:
+  pull-requests: write
+
+jobs:
+  # requires a new review of every push by removing the label that gates the pull request workflow
+  remove-verified-label:
+    runs-on: ubuntu-latest
+    steps:
+      - run: gh pr edit "$PR_NUMBER" --repo "$REPO" --remove-label verified
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
