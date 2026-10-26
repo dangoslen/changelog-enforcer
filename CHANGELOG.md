@@ -7,6 +7,7 @@ Inspired from [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Dependencies
 - Bump `dangoslen/dependabot-changelog-helper` from 3 to 4 ([#309](https://github.com/dangoslen/changelog-enforcer/pull/309))
 - Bump `ncipollo/release-action` from 1.14.0 to 1.21.0 ([#308](https://github.com/dangoslen/changelog-enforcer/pull/308))
+- Bump `actions/checkout` from 6 to 7 ([#311](https://github.com/dangoslen/changelog-enforcer/pull/311))
 
 ### Security
 - Harden repository workflows: remove the `verified` label from pull requests when new commits are pushed, and update `actions/checkout` to `v6`
